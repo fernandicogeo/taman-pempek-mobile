@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TamanPempek</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Nama</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="role">Mendaftar sebagai</string>
+    <string name="link_register">Belum memiliki akun? Register disini.</string>
+    <string name="link_login">Sudah memiliki akun? Login disini.</string>
 </resources>
