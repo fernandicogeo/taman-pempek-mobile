@@ -10,5 +10,6 @@ data class UserModel(
     var password: String? = null,
     var whatsapp: String? = null,
     var gender: String? = null,
-    var role: String? = null
+    var role: String? = null,
+    var accessToken: String? = null
 ) : Parcelable
