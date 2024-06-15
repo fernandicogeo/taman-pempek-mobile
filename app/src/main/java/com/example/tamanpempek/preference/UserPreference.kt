@@ -9,6 +9,7 @@ class UserPreference(context: Context) {
 
     fun saveLoginSession(user: UserModel) {
         val prefEdit = pref.edit()
+        prefEdit.putInt(USER_ID, user.id)
         prefEdit.putString(USER_NAME, user.name)
         prefEdit.putString(USER_EMAIL, user.email)
         prefEdit.putString(USER_PASSWORD, user.password)
@@ -20,6 +21,7 @@ class UserPreference(context: Context) {
     }
 
     fun getLoginSession() : UserModel {
+        val id = pref.getInt(USER_ID, -1)
         val name = pref.getString(USER_NAME, null)
         val email = pref.getString(USER_EMAIL, null)
         val password = pref.getString(USER_PASSWORD, null)
@@ -28,7 +30,7 @@ class UserPreference(context: Context) {
         val role = pref.getString(USER_ROLE, null)
         val accessToken = pref.getString(USER_TOKEN, null)
 
-        return UserModel(name, email, password, whatsapp, gender, role, accessToken)
+        return UserModel(id, name, email, password, whatsapp, gender, role, accessToken)
     }
 
     fun clearLoginSession() {
@@ -39,6 +41,7 @@ class UserPreference(context: Context) {
 
 
     companion object {
+        private const val USER_ID = "user_id"
         private const val USER_NAME = "user_name"
         private const val USER_EMAIL = "user_email"
         private const val USER_PASSWORD = "user_password"

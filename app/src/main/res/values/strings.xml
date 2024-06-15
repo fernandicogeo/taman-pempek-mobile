@@ -10,4 +10,19 @@
     <string name="role">Mendaftar sebagai</string>
     <string name="link_register">Belum memiliki akun? Register disini.</string>
     <string name="link_login">Sudah memiliki akun? Login disini.</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="pesanan">Pesanan</string>
+    <string name="rekening">Rekening</string>
+    <string name="profil">Profil</string>
+    <string name="setting">Setting</string>
+    <string name="add_product">Tambah Produk</string>
+    <string name="product">Produk</string>
+    <string name="stock">Stock : %s</string>
+    <string name="category1">All Menu</string>
+    <string name="category2">Pempek</string>
+    <string name="category3">Lainnya</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

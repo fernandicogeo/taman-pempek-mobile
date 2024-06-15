@@ -12,19 +12,19 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.MainActivity
-import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityLoginBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.response.LoginResponse
+import com.example.tamanpempek.ui.seller.DashboardSellerActivity
 import com.example.tamanpempek.viewmodel.LoginViewModel
-import com.example.tamanpempek.viewmodel.ViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels { factory }
-    private lateinit var factory: ViewModelFactory
+    private lateinit var factory: UserViewModelFactory
     private lateinit var preference: UserPreference
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        factory = ViewModelFactory.getInstanceAuth(binding.root.context)
+        factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
         preference = UserPreference(this)
 
         setupView()
@@ -85,16 +85,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isLoginSession() {
         if (preference.getLoginSession().name != null && preference.getLoginSession().email != null && preference.getLoginSession().accessToken != null)
-            startActivity(Intent(this, MainActivity::class.java))
+            if (preference.getLoginSession().role == "Pembeli") startActivity(Intent(this, DashboardSellerActivity::class.java))
+            else if (preference.getLoginSession().role == "Penjual") startActivity(Intent(this, DashboardSellerActivity::class.java))
     }
 
     private fun showDialog(isSuccess: Boolean) {
         if (isSuccess) {
             AlertDialog.Builder(this).apply {
                 setTitle("Login berhasil!!")
-                setMessage("Selamat datang di Tolong!.")
+                setMessage("Selamat datang di Taman Pempek!.")
                 setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(context, MainActivity::class.java)
+                    val intent = Intent(context, DashboardSellerActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                     finish()
@@ -114,9 +115,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveLoginSession(login: LoginResponse) {
         val loginPref = UserPreference(this)
-        Log.d("LOGINDATA", login.toString())
         val loginResult = login.data
-        val user = UserModel(name = loginResult.name, email = loginResult.email, password = loginResult.password, whatsapp = loginResult.whatsapp, gender = loginResult.gender, accessToken = login.token)
+        val user = UserModel(id = loginResult.id, name = loginResult.name, email = loginResult.email, password = loginResult.password, whatsapp = loginResult.whatsapp, gender = loginResult.gender, role = loginResult.role, accessToken = login.token)
         loginPref.saveLoginSession(user)
     }
 

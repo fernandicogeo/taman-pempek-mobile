@@ -1,12 +1,14 @@
-package com.example.tamanpempek.viewmodel
+package com.example.tamanpempek.viewmodel.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tamanpempek.helper.Injection
 import com.example.tamanpempek.repository.UserRepository
+import com.example.tamanpempek.viewmodel.LoginViewModel
+import com.example.tamanpempek.viewmodel.RegisterViewModel
 
-class ViewModelFactory private constructor(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+class UserViewModelFactory private constructor(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -21,10 +23,10 @@ class ViewModelFactory private constructor(private val repository: UserRepositor
 
     companion object {
         @Volatile
-        private var instance: ViewModelFactory? = null
-        fun getInstanceAuth(context: Context): ViewModelFactory {
+        private var instance: UserViewModelFactory? = null
+        fun getInstanceAuth(context: Context): UserViewModelFactory {
             return instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepositoryAuth(context))
+                instance ?: UserViewModelFactory(Injection.provideRepositoryAuth(context))
             }.also { instance = it }
         }
     }

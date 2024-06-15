@@ -21,7 +21,7 @@ import com.example.tamanpempek.databinding.ActivityRegisterBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.ui.customview.SubmitButton
 import com.example.tamanpempek.viewmodel.RegisterViewModel
-import com.example.tamanpempek.viewmodel.ViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,7 +29,7 @@ import com.google.android.material.textfield.TextInputLayout
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private val registerViewModel: RegisterViewModel by viewModels { factory }
-    private lateinit var factory: ViewModelFactory
+    private lateinit var factory: UserViewModelFactory
 
     private lateinit var registerTitleTextView: TextView
     private lateinit var nameTextView: TextView
@@ -62,7 +62,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        factory = ViewModelFactory.getInstanceAuth(binding.root.context)
+        factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
 
         setupView()
         setupAction()
