@@ -4,10 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.request.BankRequest
+import com.example.tamanpempek.request.RegisterRequest
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.ProductResponse
+import com.example.tamanpempek.response.RegisterResponse
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.awaitResponse
 
 class BankRepository(private val apiService: ApiService) {
@@ -46,6 +52,24 @@ class BankRepository(private val apiService: ApiService) {
             }
         } catch (e: Exception) {
             emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun createBank(name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val request = BankRequest(name, type, number)
+            val json = Gson().toJson(request)
+            val requestBody = json.toRequestBody("application/json".toMediaType())
+
+            val response = apiService.createBank(requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
         }
     }
 

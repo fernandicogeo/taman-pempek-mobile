@@ -12,6 +12,7 @@ import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityBankSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.preference.UserPreference
+import com.example.tamanpempek.ui.seller.product.AddProductSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.viewmodel.BankViewModel
 import com.example.tamanpempek.viewmodel.factory.BankViewModelFactory
@@ -29,6 +30,10 @@ class BankSellerActivity : AppCompatActivity() {
 
         setupRecyclerView()
         bottomNav()
+
+        binding.btnAddRekening.setOnClickListener {
+            startActivity(Intent(this, AddBankSellerActivity::class.java))
+        }
 
         bankViewModel.getBanks().observe(this) {
             Log.d("ITBANK", it.toString())

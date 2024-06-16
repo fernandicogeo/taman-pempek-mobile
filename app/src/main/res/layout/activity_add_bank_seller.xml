@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.seller.product.AddProductSellerActivity">
+    tools:context=".ui.RegisterActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_register_title"
-            android:text="@string/add_product"
+            android:text="@string/add_rekening"
             android:fontFamily="@font/gothicextrabold"
             android:textColor="@color/blue"
             android:textSize="37sp"
@@ -64,49 +64,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_category"
+            android:id="@+id/tv_type"
             android:alpha="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:text="@string/category"
+            android:text="@string/bank"
             android:textSize="17sp"
             android:fontFamily="@font/gothicregular"
             android:textColor="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etl_name" />
 
-        <Spinner
-            android:id="@+id/spinner_category"
-            android:alpha="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:background="@color/yellow"
-            android:textColor="@color/blue"
-            android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category" />
-
-        <TextView
-            android:id="@+id/tv_description"
-            android:alpha="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/description"
-            android:textSize="17sp"
-            android:fontFamily="@font/gothicregular"
-            android:textColor="@color/blue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_description"
+            android:id="@+id/etl_type"
             android:alpha="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -114,35 +86,34 @@
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+            app:layout_constraintTop_toBottomOf="@+id/tv_type">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_description"
+                android:id="@+id/et_type"
                 android:textColor="@color/blue"
                 android:background="@color/yellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 tools:ignore="SpeakableTextPresentCheck" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_number"
             android:alpha="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:text="@string/price"
+            android:text="@string/number"
             android:textSize="17sp"
             android:fontFamily="@font/gothicregular"
             android:textColor="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_description" />
+            app:layout_constraintTop_toBottomOf="@+id/etl_type" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_price"
+            android:id="@+id/etl_number"
             android:alpha="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -150,83 +121,17 @@
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_price">
+            app:layout_constraintTop_toBottomOf="@+id/tv_number">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_price"
+                android:id="@+id/et_number"
                 android:textColor="@color/blue"
                 android:background="@color/yellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_stock"
-            android:alpha="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/stock"
-            android:textSize="17sp"
-            android:fontFamily="@font/gothicregular"
-            android:textColor="@color/blue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_price" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_stock"
-            android:alpha="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_stock">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_stock"
-                android:textColor="@color/blue"
-                android:background="@color/yellow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_upload_image"
-            android:alpha="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/upload_image"
-            android:textSize="17sp"
-            android:fontFamily="@font/gothicregular"
-            android:textColor="@color/blue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_stock" />
-
-        <Button
-            android:id="@+id/btn_upload_image"
-            android:alpha="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:padding="15dp"
-            android:fontFamily="@font/gothicsemibold"
-            android:textSize="16sp"
-            android:textColor="@color/blue"
-            android:backgroundTint="@color/yellow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_upload_image" />
 
         <com.example.tamanpempek.ui.customview.SubmitButton
             android:id="@+id/btn_submit"
@@ -243,7 +148,7 @@
             android:text="@string/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_upload_image" />
+            app:layout_constraintTop_toBottomOf="@+id/etl_number" />
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -40,6 +40,8 @@
     <string name="type_template">Bank: %1$s</string>
     <string name="number_template">Nomor: %1$s</string>
     <string name="success_upload_image">Berhasil memilih gambar</string>
+    <string name="bank">Bank</string>
+    <string name="number">Nomor Rekening</string>
     <string-array name="category_array">
         <item>Pempek</item>
         <item>Lainnya</item>

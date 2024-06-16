@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
+            android:name=".ui.seller.bank.AddBankSellerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.seller.bank.DetailBankSellerActivity"
             android:exported="false" />
         <activity

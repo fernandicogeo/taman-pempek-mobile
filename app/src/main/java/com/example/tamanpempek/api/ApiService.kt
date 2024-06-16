@@ -79,4 +79,8 @@ interface ApiService {
     fun getBankById(
         @Path("id") id: Int,
     ): Call<BankResponse>
+
+    @POST("bank/create")
+    @Headers("Content-Type: application/json")
+    suspend fun createBank(@Body requestBody: RequestBody): BankResponse
 }
