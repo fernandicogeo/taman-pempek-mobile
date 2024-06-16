@@ -16,18 +16,28 @@
     <string name="profil">Profil</string>
     <string name="setting">Setting</string>
     <string name="add_product">Tambah Produk</string>
+    <string name="edit_product">Edit Produk</string>
+    <string name="delete_product">Hapus Produk</string>
     <string name="product">Produk</string>
-    <string name="stock">Stock : %s</string>
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
     <string name="category3">Lainnya</string>
     <string name="description">Deskripsi</string>
     <string name="price">Harga</string>
-    <string name="stockinput">Stock</string>
+    <string name="stock">Stock</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="upload_image">Upload Image</string>
     <string name="category">Kategori</string>
+    <string name="detail_product">Detail Produk</string>
+    <string name="name_template">Nama: %1$s</string>
+    <string name="stock_template">Stok: %1$s</string>
+    <string name="category_template">Kategori: %1$s</string>
+    <string name="price_template">Harga: %1$s</string>
+    <string-array name="category_array">
+        <item>Pempek</item>
+        <item>Lainnya</item>
+    </string-array>
 
 
 </resources>

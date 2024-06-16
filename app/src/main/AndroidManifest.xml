@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
+            android:name=".ui.seller.DetailProductSellerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.seller.AddProductSellerActivity"
             android:exported="false" />
         <activity

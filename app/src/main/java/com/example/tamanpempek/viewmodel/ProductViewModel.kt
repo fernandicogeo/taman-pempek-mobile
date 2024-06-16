@@ -11,6 +11,8 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
 
     fun getUserProductsByCategory(userId: Int, categoryId: Int) = repository.getUserProductsByCategory(userId, categoryId)
 
+    fun getProductById(userId: Int) = repository.getProductById(userId)
+
 
     fun createProduct(productCreateRequest: ProductCreateRequest, context: Context) = repository.createProduct(productCreateRequest, context)
 

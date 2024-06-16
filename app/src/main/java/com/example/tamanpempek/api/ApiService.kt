@@ -33,6 +33,11 @@ interface ApiService {
         @Path("categoryId") categoryId: Int
     ): Call<ProductsResponse>
 
+    @GET("product/{userId}")
+    fun getProductById(
+        @Path("userId") userId: Int,
+    ): Call<ProductResponse>
+
     @Multipart
     @POST("product/create")
     suspend fun createProduct(

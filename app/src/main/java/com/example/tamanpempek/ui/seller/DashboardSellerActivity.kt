@@ -24,6 +24,7 @@ class DashboardSellerActivity : AppCompatActivity() {
     private lateinit var factory: ProductViewModelFactory
     private lateinit var preference: UserPreference
     private val sectionsPagerAdapter = SectionPagerAdapter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardSellerBinding.inflate(layoutInflater)
@@ -44,6 +45,7 @@ class DashboardSellerActivity : AppCompatActivity() {
         var category3: List<ProductModel>
 
         productViewModel.getProducts().observe(this) { result ->
+            showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }

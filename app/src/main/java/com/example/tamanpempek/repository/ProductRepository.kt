@@ -58,6 +58,30 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
+    fun getProductById(userId: Int): LiveData<ResultCondition<ProductResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getProductById(userId).awaitResponse()
+
+            if (response.isSuccessful) {
+                val productResponse = response.body()
+                if (productResponse != null) {
+                    emit(ResultCondition.SuccessState(productResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun createProduct(productCreateRequest: ProductCreateRequest, context: Context): LiveData<ResultCondition<ProductResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {

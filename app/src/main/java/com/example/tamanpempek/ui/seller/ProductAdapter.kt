@@ -1,9 +1,11 @@
 package com.example.tamanpempek.ui.seller
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ItemProductBinding
 import com.example.tamanpempek.model.ProductModel
 
@@ -24,12 +26,22 @@ class ProductAdapter(private val products: List<ProductModel>) : RecyclerView.Ad
         fun bind(product: ProductModel) {
             binding.apply {
                 titleProduct.text = product.name
-                stockProduct.text = "Stock: " + product.stock.toString()
+                val stockText = itemView.context.getString(R.string.stock_template, product.stock.toString())
+                stockProduct.text = stockText
 
                 Glide.with(itemView.context)
                     .load(product.image)
                     .into(headerImage)
+
+                root.setOnClickListener {
+                    val context = itemView.context
+                    val intent = Intent(context, DetailProductSellerActivity::class.java).apply {
+                        putExtra("PRODUCT_ID", product.id)
+                    }
+                    context.startActivity(intent)
+                }
             }
         }
     }
+
 }
