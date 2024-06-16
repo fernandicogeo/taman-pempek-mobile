@@ -136,6 +136,20 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
+    fun deleteProduct(userId: Int): LiveData<ResultCondition<ProductResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response = apiService.deleteProduct(userId)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     private fun createProductRequest(productCreateRequest: ProductCreateRequest): Map<String, RequestBody> {
         val requestMap = mutableMapOf<String, RequestBody>()
         requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productCreateRequest.user_id.toString())

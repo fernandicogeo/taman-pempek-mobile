@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityDashboardSellerBinding
@@ -51,6 +52,17 @@ class DetailProductSellerActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+        binding.btnDeleteProduct.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("Apakah anda yakin?")
+                setPositiveButton("Ya") { _, _ ->
+                    deleteProduct(productId)
+                }
+                create()
+                show()
+            }
+        }
     }
 
     private fun setDetail(product: ProductModel) {
@@ -71,6 +83,47 @@ class DetailProductSellerActivity : AppCompatActivity() {
             Glide.with(this@DetailProductSellerActivity)
                 .load(product.image)
                 .into(headerImage)
+        }
+    }
+
+    private fun deleteProduct(userId: Int) {
+        productViewModel.deleteProduct(userId).observe(this) {
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                    showLoading(true)
+                }
+                is ResultCondition.ErrorState -> {
+                    showLoading(false)
+                    showDialog(false)
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    showDialog(true)
+                }
+            }
+        }
+    }
+
+    private fun showDialog(isSuccess: Boolean) {
+        if (isSuccess) {
+            AlertDialog.Builder(this).apply {
+                setTitle("Hapus produk berhasil!!")
+                setPositiveButton("Lanjut") { _, _ ->
+                    val intent = Intent(this@DetailProductSellerActivity, DashboardSellerActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                }
+                create()
+                show()
+            }
+        } else {
+            AlertDialog.Builder(this).apply {
+                setTitle("Hapus produk gagal!")
+                setMessage("Silakan coba lagi.")
+                create()
+                show()
+            }
         }
     }
 

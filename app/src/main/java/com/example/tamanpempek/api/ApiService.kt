@@ -8,6 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -64,4 +65,8 @@ interface ApiService {
         @Part("stock") stock: RequestBody
     ): ProductResponse
 
+    @DELETE("product/delete/{userId}")
+    suspend fun deleteProduct(
+        @Path("userId") userId: Int
+    ): ProductResponse
 }
