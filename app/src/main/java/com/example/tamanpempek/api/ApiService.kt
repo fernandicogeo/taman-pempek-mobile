@@ -1,17 +1,19 @@
 package com.example.tamanpempek.api
 
-import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.ProductResponse
+import com.example.tamanpempek.response.ProductsResponse
 import com.example.tamanpempek.response.RegisterResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiService {
     @POST("login")
@@ -23,12 +25,24 @@ interface ApiService {
     suspend fun register(@Body requestBody: RequestBody): RegisterResponse
 
     @GET("products")
-    suspend fun getProducts(): ProductResponse
+    suspend fun getProducts(): ProductsResponse
 
     @GET("products/{userId}/{categoryId}")
     fun getUserProductsByCategory(
         @Path("userId") userId: Int,
         @Path("categoryId") categoryId: Int
-    ): Call<ProductResponse>
+    ): Call<ProductsResponse>
+
+    @Multipart
+    @POST("product/create")
+    suspend fun createProduct(
+        @Part("user_id") userId: RequestBody,
+        @Part("category_id") categoryId: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part("description") description: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("stock") stock: RequestBody
+    ): ProductResponse
 
 }

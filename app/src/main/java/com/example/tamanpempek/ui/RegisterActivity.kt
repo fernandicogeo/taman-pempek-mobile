@@ -220,10 +220,10 @@ class RegisterActivity : AppCompatActivity() {
                     } is ResultCondition.ErrorState -> {
                     showLoading(false)
                     showDialog(false)
-                } is ResultCondition.SuccessState -> {
-                    showLoading(false)
-                    showDialog(true)
-                }
+                    } is ResultCondition.SuccessState -> {
+                        showLoading(false)
+                        showDialog(true)
+                    }
                 }
             }
         }

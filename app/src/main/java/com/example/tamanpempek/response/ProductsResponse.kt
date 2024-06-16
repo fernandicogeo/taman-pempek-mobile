@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProductResponse(
+data class ProductsResponse(
     @field:SerializedName("error")
     val error: Boolean,
 
@@ -14,5 +14,5 @@ data class ProductResponse(
     val msg: String,
 
     @field:SerializedName("data")
-    val data: ProductModel
+    val data: List<ProductModel>
 ) : Parcelable

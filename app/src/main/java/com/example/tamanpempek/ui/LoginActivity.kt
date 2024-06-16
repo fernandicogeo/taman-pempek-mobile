@@ -71,13 +71,13 @@ class LoginActivity : AppCompatActivity() {
                     is ResultCondition.LoadingState -> {
                         showLoading(true)
                     } is ResultCondition.ErrorState -> {
-                    showLoading(false)
-                    showDialog(false)
-                } is ResultCondition.SuccessState -> {
-                    showLoading(false)
-                    saveLoginSession(it.data)
-                    showDialog(true)
-                }
+                        showLoading(false)
+                        showDialog(false)
+                    } is ResultCondition.SuccessState -> {
+                        showLoading(false)
+                        saveLoginSession(it.data)
+                        showDialog(true)
+                    }
                 }
             }
         }
