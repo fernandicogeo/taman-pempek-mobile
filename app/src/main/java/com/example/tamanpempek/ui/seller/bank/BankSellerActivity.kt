@@ -20,14 +20,12 @@ class BankSellerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBankSellerBinding
     private val bankViewModel: BankViewModel by viewModels { factory }
     private lateinit var factory: BankViewModelFactory
-    private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBankSellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = BankViewModelFactory.getInstanceBank(binding.root.context)
-        preference = UserPreference(this)
 
         setupRecyclerView()
         bottomNav()

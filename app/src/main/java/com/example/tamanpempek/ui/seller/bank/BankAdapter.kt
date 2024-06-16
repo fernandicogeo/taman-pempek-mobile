@@ -30,7 +30,7 @@ class BankAdapter(private val banks: List<BankModel>) : RecyclerView.Adapter<Ban
 
                 root.setOnClickListener {
                     val context = itemView.context
-                    val intent = Intent(context, DetailProductSellerActivity::class.java).apply {
+                    val intent = Intent(context, DetailBankSellerActivity::class.java).apply {
                         putExtra("BANK_ID", bank.id)
                     }
                     context.startActivity(intent)

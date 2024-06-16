@@ -1,5 +1,6 @@
 package com.example.tamanpempek.api
 
+import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.ProductResponse
@@ -73,4 +74,9 @@ interface ApiService {
 
     @GET("banks")
     suspend fun getBanks(): BanksResponse
+
+    @GET("bank/{id}")
+    fun getBankById(
+        @Path("id") id: Int,
+    ): Call<BankResponse>
 }

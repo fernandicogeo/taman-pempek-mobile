@@ -36,6 +36,9 @@
     <string name="stock_template">Stok: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>
     <string name="price_template">Harga: %1$s</string>
+    <string name="detail_rekening">Detail Rekening</string>
+    <string name="type_template">Bank: %1$s</string>
+    <string name="number_template">Nomor: %1$s</string>
     <string name="success_upload_image">Berhasil memilih gambar</string>
     <string-array name="category_array">
         <item>Pempek</item>
