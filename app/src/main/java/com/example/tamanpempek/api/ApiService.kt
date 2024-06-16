@@ -12,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 
@@ -45,6 +46,19 @@ interface ApiService {
         @Part("category_id") categoryId: RequestBody,
         @Part("name") name: RequestBody,
         @Part image: MultipartBody.Part,
+        @Part("description") description: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("stock") stock: RequestBody
+    ): ProductResponse
+
+    @Multipart
+    @PUT("product/update/{id}")
+    suspend fun updateProduct(
+        @Path("id") id: Int,
+        @Part("user_id") userId: RequestBody,
+        @Part("category_id") categoryId: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part image: MultipartBody.Part?,
         @Part("description") description: RequestBody,
         @Part("price") price: RequestBody,
         @Part("stock") stock: RequestBody

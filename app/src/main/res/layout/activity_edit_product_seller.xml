@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_register_title"
-            android:text="@string/add_product"
+            android:text="@string/edit_product"
             android:fontFamily="@font/gothicextrabold"
             android:textColor="@color/blue"
             android:textSize="37sp"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -16,34 +17,42 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityAddProductSellerBinding
+import com.example.tamanpempek.databinding.ActivityEditProductSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.ProductCreateRequest
+import com.example.tamanpempek.request.ProductUpdateRequest
+import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 
-class AddProductSellerActivity : AppCompatActivity() {
+class EditProductSellerActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddProductSellerBinding
+    private lateinit var binding: ActivityEditProductSellerBinding
     private val productViewModel: ProductViewModel by viewModels { factory }
     private lateinit var factory: ProductViewModelFactory
     private lateinit var preference: UserPreference
 
     var selectedCategory: Int = 0
     private var selectedImageUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddProductSellerBinding.inflate(layoutInflater)
+        binding = ActivityEditProductSellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
         preference = UserPreference(this)
 
+        val productId = intent.getIntExtra("PRODUCT_ID", -1)
+        if (productId != -1) {
+            getProductDetail(productId)
+        }
+
         setupView()
-        setupAction()
+        setupAction(productId)
     }
 
     private fun setupView() {
@@ -71,7 +80,7 @@ class AddProductSellerActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupAction() {
+    private fun setupAction(id: Int) {
         showLoading(false)
 
         binding.btnUploadImage.setOnClickListener {
@@ -98,23 +107,19 @@ class AddProductSellerActivity : AppCompatActivity() {
                 stock == null -> {
                     binding.etlStock.error = "Masukkan stok yang valid"
                 }
-                selectedImageUri == null -> {
-                    Toast.makeText(this, "Masukkan gambar", Toast.LENGTH_SHORT).show()
-                }
                 else -> {
-                    createProduct(userId, category, name, selectedImageUri!!, description, price, stock)
+                    updateProduct(id, userId, category, name, selectedImageUri, description, price, stock)
                 }
             }
         }
     }
 
-    private fun createProduct(userId: Int, categoryId: Int, name: String, imageUri: Uri?, description: String, price: Int, stock: Int) {
-        if (imageUri == null) {
-            Toast.makeText(this, "Masukkan gambar", Toast.LENGTH_SHORT).show()
-            return
-        }
+    private fun updateProduct(id: Int, userId: Int, categoryId: Int, name: String, imageUri: Uri?, description: String, price: Int, stock: Int) {
+        val imageUriToUse = imageUri?.toString()
 
-        productViewModel.createProduct(ProductCreateRequest(userId, categoryId, name, imageUri, description, price, stock), this).observe(this) {
+        val request = ProductUpdateRequest(userId, categoryId, name, imageUriToUse?.let { Uri.parse(it) }, description, price, stock)
+
+        productViewModel.updateProduct(id, request, this).observe(this) {
             when (it) {
                 is ResultCondition.LoadingState -> {
                     showLoading(true)
@@ -144,12 +149,38 @@ class AddProductSellerActivity : AppCompatActivity() {
         }
     }
 
+    private fun getProductDetail(productId: Int) {
+        productViewModel.getProductById(productId).observe(this) {
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                    showLoading(true)
+                }
+                is ResultCondition.ErrorState -> {
+                    showLoading(false)
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    populateProductDetails(it.data)
+                }
+            }
+        }
+    }
+
+    private fun populateProductDetails(product: ProductResponse) {
+        binding.etName.setText(product.data.name)
+        binding.etDescription.setText(product.data.description)
+        binding.etPrice.setText(product.data.price.toString())
+        binding.etStock.setText(product.data.stock.toString())
+        binding.spinnerCategory.setSelection(product.data.category_id - 1)
+        binding.btnUploadImage.text = getString(R.string.success_upload_image)
+    }
+
     private fun showDialog(isSuccess: Boolean) {
         if (isSuccess) {
             AlertDialog.Builder(this).apply {
-                setTitle("Tambah produk berhasil!!")
+                setTitle("Edit produk berhasil!!")
                 setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(this@AddProductSellerActivity, DashboardSellerActivity::class.java)
+                    val intent = Intent(this@EditProductSellerActivity, DashboardSellerActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                     finish()
@@ -159,7 +190,7 @@ class AddProductSellerActivity : AppCompatActivity() {
             }
         } else {
             AlertDialog.Builder(this).apply {
-                setTitle("Tambah produk gagal!")
+                setTitle("Edit produk gagal!")
                 setMessage("Format inputan anda salah, coba lagi.")
                 create()
                 show()

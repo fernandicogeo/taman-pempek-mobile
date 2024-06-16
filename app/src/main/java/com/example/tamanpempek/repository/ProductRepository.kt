@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.ProductCreateRequest
+import com.example.tamanpempek.request.ProductUpdateRequest
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import kotlinx.coroutines.Dispatchers
@@ -108,6 +109,33 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
+    fun updateProduct(id: Int, productUpdateRequest: ProductUpdateRequest, context: Context): LiveData<ResultCondition<ProductResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val requestMap = updateProductRequest(productUpdateRequest)
+            val imagePart = productUpdateRequest.image?.let { createMultipartBodyPart(it, context) }
+
+            val response = apiService.updateProduct(
+                id = id,
+                userId = requestMap["user_id"]!!,
+                categoryId = requestMap["category_id"]!!,
+                name = requestMap["name"]!!,
+                image = imagePart,
+                description = requestMap["description"]!!,
+                price = requestMap["price"]!!,
+                stock = requestMap["stock"]!!
+            )
+
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     private fun createProductRequest(productCreateRequest: ProductCreateRequest): Map<String, RequestBody> {
         val requestMap = mutableMapOf<String, RequestBody>()
         requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productCreateRequest.user_id.toString())
@@ -116,6 +144,18 @@ class ProductRepository(private val apiService: ApiService) {
         requestMap["description"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productCreateRequest.description)
         requestMap["price"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productCreateRequest.price.toString())
         requestMap["stock"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productCreateRequest.stock.toString())
+
+        return requestMap
+    }
+
+    private fun updateProductRequest(productUpdateRequest: ProductUpdateRequest): Map<String, RequestBody> {
+        val requestMap = mutableMapOf<String, RequestBody>()
+        requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.user_id.toString())
+        requestMap["category_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.category_id.toString())
+        requestMap["name"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.name)
+        requestMap["description"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.description)
+        requestMap["price"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.price.toString())
+        requestMap["stock"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.stock.toString())
 
         return requestMap
     }

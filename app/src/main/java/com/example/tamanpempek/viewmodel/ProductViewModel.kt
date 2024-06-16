@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.tamanpempek.repository.ProductRepository
 import com.example.tamanpempek.request.ProductCreateRequest
+import com.example.tamanpempek.request.ProductUpdateRequest
 import com.example.tamanpempek.ui.seller.AddProductSellerActivity
 
 class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
@@ -15,5 +16,7 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
 
 
     fun createProduct(productCreateRequest: ProductCreateRequest, context: Context) = repository.createProduct(productCreateRequest, context)
+
+    fun updateProduct(id: Int, productUpdateRequest: ProductUpdateRequest, context: Context) = repository.updateProduct(id, productUpdateRequest, context)
 
 }

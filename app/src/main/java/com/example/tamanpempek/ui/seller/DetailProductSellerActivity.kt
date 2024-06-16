@@ -1,5 +1,6 @@
 package com.example.tamanpempek.ui.seller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,13 @@ class DetailProductSellerActivity : AppCompatActivity() {
                 is ResultCondition.ErrorState -> {
                 }
             }
+        }
+
+        binding.btnEditProduct.setOnClickListener {
+            val intent = Intent(this, EditProductSellerActivity::class.java).apply {
+                putExtra("PRODUCT_ID", productId)
+            }
+            startActivity(intent)
         }
     }
 
