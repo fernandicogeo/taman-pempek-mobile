@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller
+package com.example.tamanpempek.ui.seller.product
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,7 @@ import com.example.tamanpempek.databinding.ActivityDashboardSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.RegisterActivity
+import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.google.android.material.tabs.TabLayout
@@ -34,6 +34,7 @@ class DashboardSellerActivity : AppCompatActivity() {
         preference = UserPreference(this)
 
         setupRecyclerView()
+        bottomNav()
 
         binding.btnAddProduct.setOnClickListener {
             startActivity(Intent(this, AddProductSellerActivity::class.java))
@@ -118,6 +119,19 @@ class DashboardSellerActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) binding.progressBar.visibility = View.VISIBLE
         else binding.progressBar.visibility = View.GONE
+    }
+
+    private fun bottomNav() {
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener { item ->
+            when(item.itemId) {
+                R.id.dashboard -> {
+                    startActivity(Intent(this, DashboardSellerActivity::class.java))
+                }
+                R.id.rekening -> {
+                    startActivity(Intent(this, BankSellerActivity::class.java))
+                }
+            }
+        }
     }
 
     companion object {

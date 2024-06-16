@@ -1,20 +1,16 @@
-package com.example.tamanpempek.ui.seller
+package com.example.tamanpempek.ui.seller.product
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivityDashboardSellerBinding
 import com.example.tamanpempek.databinding.ActivityDetailProductSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
-import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 

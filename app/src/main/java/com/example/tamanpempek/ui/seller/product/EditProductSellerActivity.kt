@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller
+package com.example.tamanpempek.ui.seller.product
 
 import android.app.Activity
 import android.content.Intent
@@ -7,22 +7,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivityAddProductSellerBinding
 import com.example.tamanpempek.databinding.ActivityEditProductSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.request.ProductCreateRequest
 import com.example.tamanpempek.request.ProductUpdateRequest
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.viewmodel.ProductViewModel

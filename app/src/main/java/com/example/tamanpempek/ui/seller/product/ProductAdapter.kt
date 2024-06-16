@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller
+package com.example.tamanpempek.ui.seller.product
 
 import android.content.Intent
 import android.view.LayoutInflater

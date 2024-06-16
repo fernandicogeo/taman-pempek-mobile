@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.seller.product.DashboardSellerActivity">
+    tools:context=".ui.seller.bank.BankSellerActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_main_title"
-                android:text="@string/dashboard"
+                android:text="@string/rekening"
                 android:fontFamily="@font/gothicextrabold"
                 android:textColor="@color/blue"
                 android:textSize="37sp"
@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btn_add_product"
+                android:id="@+id/btn_add_rekening"
                 android:alpha="1"
                 android:layout_width="128dp"
                 android:layout_height="64dp"
@@ -42,44 +42,19 @@
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/blue"
-                android:text="@string/add_product"
+                android:text="@string/add_rekening"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_main_title" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:background="@color/blue"
-                android:baselineAligned="false"
-                app:tabIndicatorGravity="bottom"
-                app:tabSelectedTextColor="@color/yellow"
-                app:tabTextColor="@color/white"
-                app:tabIndicatorColor="@color/yellow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_add_product"
-                app:tabMode="fixed" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="380dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"
-                tools:ignore="MissingConstraints" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
+                android:id="@+id/rv_rekening"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"
-                tools:listitem="@layout/item_product" />
+                app:layout_constraintTop_toBottomOf="@id/btn_add_rekening"
+                tools:listitem="@layout/item_rekening" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

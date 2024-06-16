@@ -18,6 +18,9 @@
     <string name="add_product">Tambah Produk</string>
     <string name="edit_product">Edit Produk</string>
     <string name="delete_product">Hapus Produk</string>
+    <string name="add_rekening">Tambah Rekening</string>
+    <string name="edit_rekening">Edit Rekening</string>
+    <string name="delete_rekening">Hapus Rekening</string>
     <string name="product">Produk</string>
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
@@ -25,7 +28,6 @@
     <string name="description">Deskripsi</string>
     <string name="price">Harga</string>
     <string name="stock">Stock</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="upload_image">Upload Image</string>
     <string name="category">Kategori</string>
@@ -39,6 +41,5 @@
         <item>Pempek</item>
         <item>Lainnya</item>
     </string-array>
-
 
 </resources>

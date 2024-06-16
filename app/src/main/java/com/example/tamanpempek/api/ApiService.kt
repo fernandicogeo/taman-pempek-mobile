@@ -1,5 +1,6 @@
 package com.example.tamanpempek.api
 
+import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
@@ -69,4 +70,7 @@ interface ApiService {
     suspend fun deleteProduct(
         @Path("userId") userId: Int
     ): ProductResponse
+
+    @GET("banks")
+    suspend fun getBanks(): BanksResponse
 }

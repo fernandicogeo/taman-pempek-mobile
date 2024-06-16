@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.example.tamanpempek.repository.ProductRepository
 import com.example.tamanpempek.request.ProductCreateRequest
 import com.example.tamanpempek.request.ProductUpdateRequest
-import com.example.tamanpempek.ui.seller.AddProductSellerActivity
 
 class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
     fun getProducts() = repository.getProducts()

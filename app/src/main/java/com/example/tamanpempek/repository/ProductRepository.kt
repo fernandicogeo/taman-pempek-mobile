@@ -208,9 +208,6 @@ class ProductRepository(private val apiService: ApiService) {
         return result ?: "unknown_file"
     }
 
-
-
-
     companion object {
         @Volatile
         private var instanceRepo: ProductRepository? = null

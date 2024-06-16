@@ -13,16 +13,19 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
-            android:name=".ui.seller.EditProductSellerActivity"
+            android:name=".ui.seller.bank.BankSellerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.seller.DetailProductSellerActivity"
+            android:name=".ui.seller.product.EditProductSellerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.seller.AddProductSellerActivity"
+            android:name=".ui.seller.product.DetailProductSellerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.seller.DashboardSellerActivity"
+            android:name=".ui.seller.product.AddProductSellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.product.DashboardSellerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
