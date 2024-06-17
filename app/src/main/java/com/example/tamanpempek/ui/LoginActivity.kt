@@ -16,12 +16,12 @@ import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
-import com.example.tamanpempek.viewmodel.LoginViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels { factory }
+    private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
     private lateinit var preference: UserPreference
     private lateinit var binding: ActivityLoginBinding
@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(userEmail: String, userPassword: String) {
-        loginViewModel.login(userEmail, userPassword).observe(this) {
+        userViewModel.login(userEmail, userPassword).observe(this) {
             if (it != null) {
                 when (it) {
                     is ResultCondition.LoadingState -> {

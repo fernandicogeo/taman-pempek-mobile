@@ -5,17 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tamanpempek.helper.Injection
 import com.example.tamanpempek.repository.UserRepository
-import com.example.tamanpempek.viewmodel.LoginViewModel
-import com.example.tamanpempek.viewmodel.RegisterViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 
 class UserViewModelFactory private constructor(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(repository) as T
-        } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(repository) as T
+        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
+            return UserViewModel(repository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

@@ -20,7 +20,7 @@ import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityRegisterBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.ui.customview.SubmitButton
-import com.example.tamanpempek.viewmodel.RegisterViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -28,7 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
-    private val registerViewModel: RegisterViewModel by viewModels { factory }
+    private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
 
     private lateinit var registerTitleTextView: TextView
@@ -212,7 +212,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(userName: String, userEmail: String, userPassword: String, userWhatsapp: String, userGender: String, userRole: String) {
-        registerViewModel.register(userName, userEmail, userPassword, userWhatsapp, userGender, userRole).observe(this) {
+        userViewModel.register(userName, userEmail, userPassword, userWhatsapp, userGender, userRole).observe(this) {
             if (it != null) {
                 when (it) {
                     is ResultCondition.LoadingState -> {

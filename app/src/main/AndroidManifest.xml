@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
+            android:name=".ui.seller.profile.EditProfileSellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.profile.ProfileSellerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.seller.bank.EditBankSellerActivity"
             android:exported="false" />
         <activity

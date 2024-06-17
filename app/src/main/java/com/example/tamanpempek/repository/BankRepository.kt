@@ -5,11 +5,8 @@ import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.BankRequest
-import com.example.tamanpempek.request.RegisterRequest
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
-import com.example.tamanpempek.response.ProductResponse
-import com.example.tamanpempek.response.RegisterResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaType

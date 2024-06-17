@@ -7,6 +7,17 @@ class UserPreference(context: Context) {
 
     private val pref = context.getSharedPreferences(USER_PREF, Context.MODE_PRIVATE)
 
+    fun saveEditProfile(user: UserModel) {
+        val prefEdit = pref.edit()
+        prefEdit.putInt(USER_ID, user.id)
+        prefEdit.putString(USER_NAME, user.name)
+        prefEdit.putString(USER_EMAIL, user.email)
+        prefEdit.putString(USER_PASSWORD, user.password)
+        prefEdit.putString(USER_WHATSAPP, user.whatsapp)
+        prefEdit.putString(USER_GENDER, user.gender)
+        prefEdit.apply()
+    }
+
     fun saveLoginSession(user: UserModel) {
         val prefEdit = pref.edit()
         prefEdit.putInt(USER_ID, user.id)

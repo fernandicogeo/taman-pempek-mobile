@@ -5,7 +5,7 @@ import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
-import com.example.tamanpempek.response.RegisterResponse
+import com.example.tamanpempek.response.UserResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -26,7 +26,18 @@ interface ApiService {
 
     @POST("user/register")
     @Headers("Content-Type: application/json")
-    suspend fun register(@Body requestBody: RequestBody): RegisterResponse
+    suspend fun register(@Body requestBody: RequestBody): UserResponse
+
+    @GET("user/{userId}")
+    fun getUserById(
+        @Path("userId") userId: Int,
+    ): Call<UserResponse>
+
+    @PUT("user/update/{id}")
+    @Headers("Content-Type: application/json")
+    suspend fun updateUser(
+        @Path("id") id: Int,
+        @Body requestBody: RequestBody): UserResponse
 
     @GET("products")
     suspend fun getProducts(): ProductsResponse

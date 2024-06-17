@@ -65,8 +65,8 @@ class DetailProductSellerActivity : AppCompatActivity() {
         binding.apply {
             tvName.text = product.name
             val categoryArray = resources.getStringArray(R.array.category_array)
-            val categoryName = if (product.category_id in categoryArray.indices) {
-                categoryArray[product.category_id]
+            val categoryName = if (product.category_id - 1 in (categoryArray.indices)) {
+                categoryArray[product.category_id - 1]
             } else {
                 getString(R.string.category)
             }

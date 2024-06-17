@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tamanpempek.helper.Injection
 import com.example.tamanpempek.repository.ProductRepository
-import com.example.tamanpempek.viewmodel.LoginViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
-import com.example.tamanpempek.viewmodel.RegisterViewModel
 
 class ProductViewModelFactory private constructor(private val repository: ProductRepository) : ViewModelProvider.NewInstanceFactory() {
 

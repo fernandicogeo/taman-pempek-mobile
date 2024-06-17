@@ -21,6 +21,7 @@
     <string name="add_rekening">Tambah Rekening</string>
     <string name="edit_rekening">Edit Rekening</string>
     <string name="delete_rekening">Hapus Rekening</string>
+    <string name="edit_profile">Edit Profil</string>
     <string name="product">Produk</string>
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
@@ -39,6 +40,10 @@
     <string name="detail_rekening">Detail Rekening</string>
     <string name="type_template">Bank: %1$s</string>
     <string name="number_template">Nomor: %1$s</string>
+    <string name="email_template">Email: %1$s</string>
+    <string name="password_template">Password: %1$s</string>
+    <string name="whatsapp_template">Whatsapp: %1$s</string>
+    <string name="gender_template">Gender: %1$s</string>
     <string name="success_upload_image">Berhasil memilih gambar</string>
     <string name="bank">Bank</string>
     <string name="number">Nomor Rekening</string>

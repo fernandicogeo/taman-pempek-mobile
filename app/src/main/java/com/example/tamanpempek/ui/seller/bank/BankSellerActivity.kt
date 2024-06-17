@@ -14,6 +14,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.seller.product.AddProductSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
+import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.viewmodel.BankViewModel
 import com.example.tamanpempek.viewmodel.factory.BankViewModelFactory
 
@@ -72,6 +73,9 @@ class BankSellerActivity : AppCompatActivity() {
                 }
                 R.id.rekening -> {
                     startActivity(Intent(this, BankSellerActivity::class.java))
+                }
+                R.id.profil -> {
+                    startActivity(Intent(this, ProfileSellerActivity::class.java))
                 }
             }
         }
