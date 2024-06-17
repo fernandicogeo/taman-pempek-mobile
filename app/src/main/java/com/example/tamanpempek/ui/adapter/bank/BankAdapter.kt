@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller.bank
+package com.example.tamanpempek.ui.adapter.bank
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tamanpempek.databinding.ItemRekeningBinding
 import com.example.tamanpempek.model.BankModel
-import com.example.tamanpempek.ui.seller.product.DetailProductSellerActivity
+import com.example.tamanpempek.ui.seller.bank.DetailBankSellerActivity
 
 class BankAdapter(private val banks: List<BankModel>) : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
 

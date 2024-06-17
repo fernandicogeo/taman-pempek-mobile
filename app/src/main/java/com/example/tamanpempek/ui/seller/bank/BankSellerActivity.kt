@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityBankSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.seller.product.AddProductSellerActivity
+import com.example.tamanpempek.ui.adapter.bank.BankAdapter
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity

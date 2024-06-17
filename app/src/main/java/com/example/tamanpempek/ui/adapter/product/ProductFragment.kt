@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller.product
+package com.example.tamanpempek.ui.adapter.product
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

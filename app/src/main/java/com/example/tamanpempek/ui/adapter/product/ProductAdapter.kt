@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller.product
+package com.example.tamanpempek.ui.adapter.product
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ItemProductBinding
 import com.example.tamanpempek.model.ProductModel
+import com.example.tamanpempek.ui.seller.product.DetailProductSellerActivity
 
 class ProductAdapter(private val products: List<ProductModel>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 

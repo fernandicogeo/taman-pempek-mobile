@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller.product
+package com.example.tamanpempek.ui.user
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +8,13 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivityDashboardSellerBinding
+import com.example.tamanpempek.databinding.ActivityDashboardUserBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.adapter.product.SectionPagerAdapter
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
+import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
+import com.example.tamanpempek.ui.adapter.product.SectionPagerAdapter
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
@@ -21,8 +22,8 @@ import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class DashboardSellerActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDashboardSellerBinding
+class DashboardUserActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDashboardUserBinding
     private val productViewModel: ProductViewModel by viewModels { factory }
     private lateinit var factory: ProductViewModelFactory
     private lateinit var preference: UserPreference
@@ -30,7 +31,7 @@ class DashboardSellerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDashboardSellerBinding.inflate(layoutInflater)
+        binding = ActivityDashboardUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
@@ -39,16 +40,12 @@ class DashboardSellerActivity : AppCompatActivity() {
         setupRecyclerView()
         bottomNav()
 
-        binding.btnAddProduct.setOnClickListener {
-            startActivity(Intent(this, AddProductSellerActivity::class.java))
-        }
-
         val userId = preference.getLoginSession().id
         var category1: List<ProductModel>
         var category2: List<ProductModel>
         var category3: List<ProductModel>
 
-        productViewModel.getProductsByUser(userId).observe(this) { result ->
+        productViewModel.getProducts().observe(this) { result ->
             showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
@@ -62,7 +59,7 @@ class DashboardSellerActivity : AppCompatActivity() {
                 }
             }
         }
-        productViewModel.getUserProductsByCategory(userId, 1).observe(this) { result ->
+        productViewModel.getProductsByCategory(1).observe(this) { result ->
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }
@@ -74,7 +71,7 @@ class DashboardSellerActivity : AppCompatActivity() {
                 }
             }
         }
-        productViewModel.getUserProductsByCategory(userId, 2).observe(this) { result ->
+        productViewModel.getProductsByCategory(2).observe(this) { result ->
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }
@@ -90,7 +87,6 @@ class DashboardSellerActivity : AppCompatActivity() {
     private fun onCategory1DataReceived(category1: List<ProductModel>) {
         sectionsPagerAdapter.category1 = category1
         sectionPage()
-        showNoProductsMessage(category1.isEmpty())
     }
 
     private fun onCategory2DataReceived(category2: List<ProductModel>) {
@@ -103,13 +99,9 @@ class DashboardSellerActivity : AppCompatActivity() {
         sectionPage()
     }
 
-    private fun showNoProductsMessage(show: Boolean) {
-        binding.tvNoProduct.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
     private fun setupRecyclerView() {
         binding.rvProduct.apply {
-            layoutManager = GridLayoutManager(this@DashboardSellerActivity, 2)
+            layoutManager = GridLayoutManager(this@DashboardUserActivity, 2)
             setHasFixedSize(true)
         }
     }

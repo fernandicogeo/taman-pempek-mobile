@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -213,6 +214,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register(userName: String, userEmail: String, userPassword: String, userWhatsapp: String, userGender: String, userRole: String) {
         userViewModel.register(userName, userEmail, userPassword, userWhatsapp, userGender, userRole).observe(this) {
+            Log.d("ITREGIS", it.toString())
             if (it != null) {
                 when (it) {
                     is ResultCondition.LoadingState -> {

@@ -47,15 +47,25 @@ interface ApiService {
     @GET("products")
     suspend fun getProducts(): ProductsResponse
 
+    @GET("products/{userId}")
+    fun getProductsByUser(
+        @Path("userId") userId: Int,
+    ): Call<ProductsResponse>
+
+    @GET("products/category/{categoryId}")
+    fun getProductsByCategory(
+        @Path("categoryId") categoryId: Int,
+    ): Call<ProductsResponse>
+
     @GET("products/{userId}/{categoryId}")
     fun getUserProductsByCategory(
         @Path("userId") userId: Int,
         @Path("categoryId") categoryId: Int
     ): Call<ProductsResponse>
 
-    @GET("product/{userId}")
+    @GET("product/{id}")
     fun getProductById(
-        @Path("userId") userId: Int,
+        @Path("id") id: Int,
     ): Call<ProductResponse>
 
     @Multipart

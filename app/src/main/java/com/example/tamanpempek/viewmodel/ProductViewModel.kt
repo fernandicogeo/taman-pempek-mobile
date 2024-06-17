@@ -8,8 +8,10 @@ import com.example.tamanpempek.request.ProductUpdateRequest
 
 class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
     fun getProducts() = repository.getProducts()
+    fun getProductsByUser(userId: Int) = repository.getProductsByUser(userId)
+    fun getProductsByCategory(categoryId: Int) = repository.getProductsByCategory(categoryId)
     fun getUserProductsByCategory(userId: Int, categoryId: Int) = repository.getUserProductsByCategory(userId, categoryId)
-    fun getProductById(userId: Int) = repository.getProductById(userId)
+    fun getProductById(id: Int) = repository.getProductById(id)
     fun createProduct(productCreateRequest: ProductCreateRequest, context: Context) = repository.createProduct(productCreateRequest, context)
     fun updateProduct(id: Int, productUpdateRequest: ProductUpdateRequest, context: Context) = repository.updateProduct(id, productUpdateRequest, context)
     fun deleteProduct(userId: Int) = repository.deleteProduct(userId)

@@ -35,6 +35,54 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
+    fun getProductsByUser(userId: Int): LiveData<ResultCondition<ProductsResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getProductsByUser(userId).awaitResponse()
+
+            if (response.isSuccessful) {
+                val productResponse = response.body()
+                if (productResponse != null) {
+                    emit(ResultCondition.SuccessState(productResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun getProductsByCategory(categoryId: Int): LiveData<ResultCondition<ProductsResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getProductsByCategory(categoryId).awaitResponse()
+
+            if (response.isSuccessful) {
+                val productResponse = response.body()
+                if (productResponse != null) {
+                    emit(ResultCondition.SuccessState(productResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun getUserProductsByCategory(userId: Int, categoryId: Int): LiveData<ResultCondition<ProductsResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
@@ -59,12 +107,12 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
-    fun getProductById(userId: Int): LiveData<ResultCondition<ProductResponse>> = liveData(
+    fun getProductById(id: Int): LiveData<ResultCondition<ProductResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
         try {
             val response =
-                apiService.getProductById(userId).awaitResponse()
+                apiService.getProductById(id).awaitResponse()
 
             if (response.isSuccessful) {
                 val productResponse = response.body()

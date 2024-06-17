@@ -16,6 +16,7 @@ import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
+import com.example.tamanpempek.ui.user.DashboardUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import kotlin.system.exitProcess
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isLoginSession() {
         if (preference.getLoginSession().name != null && preference.getLoginSession().email != null && preference.getLoginSession().accessToken != null)
-            if (preference.getLoginSession().role == "Pembeli") startActivity(Intent(this, DashboardSellerActivity::class.java))
+            if (preference.getLoginSession().role == "Pembeli") startActivity(Intent(this, DashboardUserActivity::class.java))
             else if (preference.getLoginSession().role == "Penjual") startActivity(Intent(this, DashboardSellerActivity::class.java))
     }
 
