@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -20,6 +21,7 @@ import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityAddBankSellerBinding
 import com.example.tamanpempek.databinding.ActivityBankSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.ProductCreateRequest
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.viewmodel.BankViewModel
@@ -29,12 +31,14 @@ class AddBankSellerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBankSellerBinding
     private val bankViewModel: BankViewModel by viewModels { factory }
     private lateinit var factory: BankViewModelFactory
+    private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBankSellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = BankViewModelFactory.getInstanceBank(binding.root.context)
+        preference = UserPreference(this)
 
         setupView()
         setupAction()
@@ -53,6 +57,8 @@ class AddBankSellerActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        val userId = preference.getLoginSession().id
+
         showLoading(false)
 
         binding.btnSubmit.setOnClickListener {
@@ -70,14 +76,14 @@ class AddBankSellerActivity : AppCompatActivity() {
                     binding.etlNumber.error = "Masukkan nomor rekening"
                 }
                 else -> {
-                    createBank(name, type, number)
+                    createBank(userId, name, type, number)
                 }
             }
         }
     }
 
-    private fun createBank(name: String, type: String, number: String) {
-        bankViewModel.createBank(name, type, number).observe(this) {
+    private fun createBank(userId: Int, name: String, type: String, number: String) {
+        bankViewModel.createBank(userId, name, type, number).observe(this) {
             when (it) {
                 is ResultCondition.LoadingState -> {
                     showLoading(true)

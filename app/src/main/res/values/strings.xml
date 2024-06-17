@@ -45,6 +45,7 @@
     <string name="password_template">Password: %1$s</string>
     <string name="whatsapp_template">Whatsapp: %1$s</string>
     <string name="gender_template">Gender: %1$s</string>
+    <string name="quantity_template">Jumlah: %1$s</string>
     <string name="success_upload_image">Berhasil memilih gambar</string>
     <string name="bank">Bank</string>
     <string name="number">Nomor Rekening</string>
@@ -54,6 +55,9 @@
     <string name="no_product">Tidak ada produk, silakan tambah produk.</string>
     <string name="no_product_user">Belum ada produk.</string>
     <string name="btn_cart">Masukkan keranjang</string>
+    <string name="cart">Keranjang</string>
+    <string name="history">Riwayat</string>
+    <string name="delete">Delete</string>
     <string-array name="category_array">
         <item>Pempek</item>
         <item>Lainnya</item>

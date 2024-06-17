@@ -9,11 +9,14 @@ data class BankModel(
     @SerializedName("id")
     val id: Int,
 
-    @SerializedName("type")
-    val type: String,
+    @SerializedName("user_id")
+    val user_id: Int,
 
     @SerializedName("name")
     val name: String,
+
+    @SerializedName("type")
+    val type: String,
 
     @SerializedName("number")
     val number: String,

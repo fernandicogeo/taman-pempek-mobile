@@ -2,6 +2,7 @@ package com.example.tamanpempek.api
 
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
+import com.example.tamanpempek.response.CartResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
 import com.example.tamanpempek.response.ProductResponse
@@ -101,6 +102,12 @@ interface ApiService {
     @GET("banks")
     suspend fun getBanks(): BanksResponse
 
+    @GET("banks/{userId}")
+    fun getBanksByUser(
+        @Path("userId") userId: Int,
+    ): Call<BanksResponse>
+
+
     @GET("bank/{id}")
     fun getBankById(
         @Path("id") id: Int,
@@ -120,5 +127,9 @@ interface ApiService {
     suspend fun deleteBank(
         @Path("id") id: Int
     ): BankResponse
+
+    @POST("cart/create")
+    @Headers("Content-Type: application/json")
+    suspend fun createCart(@Body requestBody: RequestBody): CartResponse
 
 }

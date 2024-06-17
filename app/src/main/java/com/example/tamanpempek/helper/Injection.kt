@@ -3,6 +3,7 @@ package com.example.tamanpempek.helper
 import android.content.Context
 import com.example.tamanpempek.api.ApiConfig
 import com.example.tamanpempek.repository.BankRepository
+import com.example.tamanpempek.repository.CartRepository
 import com.example.tamanpempek.repository.ProductRepository
 import com.example.tamanpempek.repository.UserRepository
 
@@ -20,5 +21,10 @@ object Injection {
     fun provideRepositoryBank(context: Context): BankRepository {
         val api = ApiConfig.getApiService()
         return BankRepository.getInstance(api)
+    }
+
+    fun provideRepositoryCart(context: Context): CartRepository {
+        val api = ApiConfig.getApiService()
+        return CartRepository.getInstance(api)
     }
 }

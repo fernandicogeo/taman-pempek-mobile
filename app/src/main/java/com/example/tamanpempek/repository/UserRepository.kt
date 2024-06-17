@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.request.BankRequest
 import com.example.tamanpempek.request.LoginRequest
 import com.example.tamanpempek.response.UserResponse
 import com.example.tamanpempek.request.RegisterRequest
 import com.example.tamanpempek.request.UserUpdateRequest
-import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
 import com.google.gson.Gson

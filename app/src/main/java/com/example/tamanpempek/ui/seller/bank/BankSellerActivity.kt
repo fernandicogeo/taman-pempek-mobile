@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityBankSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
@@ -21,12 +22,14 @@ class BankSellerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBankSellerBinding
     private val bankViewModel: BankViewModel by viewModels { factory }
     private lateinit var factory: BankViewModelFactory
+    private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBankSellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = BankViewModelFactory.getInstanceBank(binding.root.context)
+        preference = UserPreference(this)
 
         setupRecyclerView()
         bottomNav()
@@ -35,8 +38,9 @@ class BankSellerActivity : AppCompatActivity() {
             startActivity(Intent(this, AddBankSellerActivity::class.java))
         }
 
-        bankViewModel.getBanks().observe(this) {
-            Log.d("ITBANK", it.toString())
+        val userId = preference.getLoginSession().id
+
+        bankViewModel.getBanksByUser(userId).observe(this) {
             showLoading(true)
             when (it) {
                 is ResultCondition.LoadingState -> {

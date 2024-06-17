@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.request.BankRequest
+import com.example.tamanpempek.request.BankCreateRequest
+import com.example.tamanpempek.request.BankUpdateRequest
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
 import com.google.gson.Gson
@@ -28,12 +29,12 @@ class BankRepository(private val apiService: ApiService) {
         }
     }
 
-    fun getBankById(userId: Int): LiveData<ResultCondition<BankResponse>> = liveData(
+    fun getBanksByUser(userId: Int): LiveData<ResultCondition<BanksResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
         try {
             val response =
-                apiService.getBankById(userId).awaitResponse()
+                apiService.getBanksByUser(userId).awaitResponse()
 
             if (response.isSuccessful) {
                 val bankResponse = response.body()
@@ -52,10 +53,34 @@ class BankRepository(private val apiService: ApiService) {
         }
     }
 
-    fun createBank(name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
+    fun getBankById(id: Int): LiveData<ResultCondition<BankResponse>> = liveData(
+        Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
         try {
-            val request = BankRequest(name, type, number)
+            val response =
+                apiService.getBankById(id).awaitResponse()
+
+            if (response.isSuccessful) {
+                val bankResponse = response.body()
+                if (bankResponse != null) {
+                    emit(ResultCondition.SuccessState(bankResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun createBank(userId: Int, name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val request = BankCreateRequest(userId, name, type, number)
             val json = Gson().toJson(request)
             val requestBody = json.toRequestBody("application/json".toMediaType())
 
@@ -73,7 +98,7 @@ class BankRepository(private val apiService: ApiService) {
     fun updateBank(id: Int, name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {
-            val request = BankRequest(name, type, number)
+            val request = BankUpdateRequest(name, type, number)
             val json = Gson().toJson(request)
             val requestBody = json.toRequestBody("application/json".toMediaType())
 
