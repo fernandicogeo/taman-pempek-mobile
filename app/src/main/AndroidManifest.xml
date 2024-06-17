@@ -13,7 +13,13 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
-            android:name=".ui.user.DashboardUserActivity"
+            android:name=".ui.user.product.DetailProductUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user.setting.SettingUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user.product.DashboardUserActivity"
             android:exported="false" />
         <activity
             android:name=".ui.seller.setting.SettingSellerActivity"

@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.user
+package com.example.tamanpempek.ui.user.product
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +12,8 @@ import com.example.tamanpempek.databinding.ActivityDashboardUserBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
-import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
-import com.example.tamanpempek.ui.adapter.product.SectionPagerAdapter
-import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
-import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
+import com.example.tamanpempek.ui.adapter.user.product.SectionPagerAdapterUser
+import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.google.android.material.tabs.TabLayout
@@ -27,7 +24,7 @@ class DashboardUserActivity : AppCompatActivity() {
     private val productViewModel: ProductViewModel by viewModels { factory }
     private lateinit var factory: ProductViewModelFactory
     private lateinit var preference: UserPreference
-    private val sectionsPagerAdapter = SectionPagerAdapter(this)
+    private val sectionsPagerAdapter = SectionPagerAdapterUser(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +84,7 @@ class DashboardUserActivity : AppCompatActivity() {
     private fun onCategory1DataReceived(category1: List<ProductModel>) {
         sectionsPagerAdapter.category1 = category1
         sectionPage()
+        showNoProductsMessage(category1.isEmpty())
     }
 
     private fun onCategory2DataReceived(category2: List<ProductModel>) {
@@ -97,6 +95,10 @@ class DashboardUserActivity : AppCompatActivity() {
     private fun onCategory3DataReceived(category3: List<ProductModel>) {
         sectionsPagerAdapter.category3 = category3
         sectionPage()
+    }
+
+    private fun showNoProductsMessage(show: Boolean) {
+        binding.tvNoProduct.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun setupRecyclerView() {
@@ -125,16 +127,10 @@ class DashboardUserActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnNavigationItemReselectedListener { item ->
             when(item.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, DashboardSellerActivity::class.java))
-                }
-                R.id.rekening -> {
-                    startActivity(Intent(this, BankSellerActivity::class.java))
-                }
-                R.id.profil -> {
-                    startActivity(Intent(this, ProfileSellerActivity::class.java))
+                    startActivity(Intent(this, DashboardUserActivity::class.java))
                 }
                 R.id.setting -> {
-                    startActivity(Intent(this, SettingSellerActivity::class.java))
+                    startActivity(Intent(this, SettingUserActivity::class.java))
                 }
             }
         }

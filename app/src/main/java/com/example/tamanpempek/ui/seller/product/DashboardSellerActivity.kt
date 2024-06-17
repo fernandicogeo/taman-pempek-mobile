@@ -12,7 +12,7 @@ import com.example.tamanpempek.databinding.ActivityDashboardSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.adapter.product.SectionPagerAdapter
+import com.example.tamanpempek.ui.adapter.seller.product.SectionPagerAdapterSeller
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
@@ -26,7 +26,7 @@ class DashboardSellerActivity : AppCompatActivity() {
     private val productViewModel: ProductViewModel by viewModels { factory }
     private lateinit var factory: ProductViewModelFactory
     private lateinit var preference: UserPreference
-    private val sectionsPagerAdapter = SectionPagerAdapter(this)
+    private val sectionsPagerAdapter = SectionPagerAdapterSeller(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

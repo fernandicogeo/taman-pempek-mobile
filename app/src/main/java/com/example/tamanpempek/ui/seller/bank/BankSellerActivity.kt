@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityBankSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.ui.adapter.bank.BankAdapter
+import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity

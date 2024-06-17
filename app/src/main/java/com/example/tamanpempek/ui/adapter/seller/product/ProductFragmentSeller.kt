@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.adapter.product
+package com.example.tamanpempek.ui.adapter.seller.product
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +12,8 @@ import com.example.tamanpempek.databinding.FragmentProductBinding
 import com.example.tamanpempek.model.ProductModel
 
 
-class ProductFragment : Fragment() {
-    private lateinit var adapter: ProductAdapter
+class ProductFragmentSeller : Fragment() {
+    private lateinit var adapter: ProductAdapterSeller
     private lateinit var recyclerView: RecyclerView
     private var _binding: FragmentProductBinding? = null
     private val binding get() = _binding!!
@@ -51,7 +51,7 @@ class ProductFragment : Fragment() {
         recyclerView = view!!.findViewById(R.id.rv_product)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter = ProductAdapter(datas)
+        adapter = ProductAdapterSeller(datas)
         recyclerView.adapter = adapter
     }
 

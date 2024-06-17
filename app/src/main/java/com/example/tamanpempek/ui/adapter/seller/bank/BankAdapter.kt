@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.adapter.bank
+package com.example.tamanpempek.ui.adapter.seller.bank
 
 import android.content.Intent
 import android.view.LayoutInflater

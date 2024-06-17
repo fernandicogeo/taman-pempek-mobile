@@ -16,7 +16,7 @@ import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
-import com.example.tamanpempek.ui.user.DashboardUserActivity
+import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import kotlin.system.exitProcess

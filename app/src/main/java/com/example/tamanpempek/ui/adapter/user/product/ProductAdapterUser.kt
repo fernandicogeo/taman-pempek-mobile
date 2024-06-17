@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.adapter.product
+package com.example.tamanpempek.ui.adapter.user.product
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ItemProductBinding
 import com.example.tamanpempek.model.ProductModel
-import com.example.tamanpempek.ui.seller.product.DetailProductSellerActivity
+import com.example.tamanpempek.ui.user.product.DetailProductUserActivity
 
-class ProductAdapter(private val products: List<ProductModel>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapterUser(private val products: List<ProductModel>) : RecyclerView.Adapter<ProductAdapterUser.ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +36,7 @@ class ProductAdapter(private val products: List<ProductModel>) : RecyclerView.Ad
 
                 root.setOnClickListener {
                     val context = itemView.context
-                    val intent = Intent(context, DetailProductSellerActivity::class.java).apply {
+                    val intent = Intent(context, DetailProductUserActivity::class.java).apply {
                         putExtra("PRODUCT_ID", product.id)
                     }
                     context.startActivity(intent)
