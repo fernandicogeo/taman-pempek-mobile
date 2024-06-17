@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    tools:context=".ui.seller.setting.SettingSellerActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="85dp"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_settings"
+                    android:text="@string/setting"
+                    android:fontFamily="@font/gothicextrabold"
+                    android:textColor="@color/blue"
+                    android:textSize="37sp"
+                    android:layout_marginTop="70dp"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/card_tentang_kami"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginTop="70dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_settings"
+                    >
+                    <LinearLayout
+                        android:id="@+id/content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_tentang_kami"
+                            android:text="@string/tentang_kami"
+                            android:fontFamily="@font/gothicbold"
+                            android:layout_gravity="top|center_horizontal"
+                            android:paddingTop="20dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dummy"
+                            android:layout_gravity="top|center_horizontal"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:paddingStart="15dp"
+                            android:lineHeight="20dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingEnd="15dp"
+                            android:fontFamily="@font/gothicregular"
+                            android:textSize="13sp"
+                            />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_logout"
+                        android:alpha="1"
+                        android:layout_width="128dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/gothicsemibold"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/blue"
+                        android:text="@string/logout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/card_tentang_kami" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/seller_bottom_menu"
+        app:itemBackground="@color/blue"
+        app:itemRippleColor="@color/yellow"
+        app:itemActiveIndicatorStyle="@color/yellow"
+        app:itemTextAppearanceActive="@color/yellow"
+        app:itemTextAppearanceInactive="@color/yellow"
+        app:itemIconTint="@drawable/bottom_item_selector"
+        app:itemTextColor="@drawable/bottom_item_selector"/>
+</RelativeLayout>

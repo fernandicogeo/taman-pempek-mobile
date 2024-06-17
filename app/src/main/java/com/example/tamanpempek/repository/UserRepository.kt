@@ -11,6 +11,7 @@ import com.example.tamanpempek.request.RegisterRequest
 import com.example.tamanpempek.request.UserUpdateRequest
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.LoginResponse
+import com.example.tamanpempek.response.LogoutResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaType
@@ -44,6 +45,20 @@ class UserRepository(private val apiService: ApiService) {
             val requestBody = json.toRequestBody("application/json".toMediaType())
 
             val response = apiService.register(requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
+    fun logout() : LiveData<ResultCondition<LogoutResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response = apiService.logout()
             if (response.error) {
                 emit(ResultCondition.ErrorState(response.msg))
             } else {

@@ -14,6 +14,7 @@ import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
+import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.google.android.material.tabs.TabLayout
@@ -133,6 +134,9 @@ class DashboardSellerActivity : AppCompatActivity() {
                 }
                 R.id.profil -> {
                     startActivity(Intent(this, ProfileSellerActivity::class.java))
+                }
+                R.id.setting -> {
+                    startActivity(Intent(this, SettingSellerActivity::class.java))
                 }
             }
         }

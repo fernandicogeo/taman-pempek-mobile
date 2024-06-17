@@ -1,4 +1,4 @@
-package com.example.tamanpempek.ui.seller.profile
+package com.example.tamanpempek.ui.seller.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,64 +7,60 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivityAddProductSellerBinding
-import com.example.tamanpempek.databinding.ActivityProfileSellerBinding
-import com.example.tamanpempek.databinding.ActivityRegisterBinding
+import com.example.tamanpempek.databinding.ActivityEditProfileSellerBinding
+import com.example.tamanpempek.databinding.ActivitySettingSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.model.BankModel
-import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
+import com.example.tamanpempek.ui.LoginActivity
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
-import com.example.tamanpempek.ui.seller.product.EditProductSellerActivity
-import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
+import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
-import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
+import com.google.android.gms.location.LocationServices
 
-class ProfileSellerActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileSellerBinding
+class SettingSellerActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingSellerBinding
     private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileSellerBinding.inflate(layoutInflater)
+        binding = ActivitySettingSellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
         preference = UserPreference(this)
-        val userId = preference.getLoginSession().id
 
-        userViewModel.getUserById(userId).observe(this) { result ->
+        showLoading(false)
+
+        binding.btnLogout.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("Apakah anda yakin?")
+                setPositiveButton("Ya") { _, _ ->
+                    logout()
+                }
+                create()
+                show()
+            }
+        }
+        bottomNav()
+    }
+
+    private fun logout() {
+        userViewModel.logout().observe(this) { result ->
             showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    detailUser(result.data.data)
+                    preference.clearLoginSession()
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
                 is ResultCondition.ErrorState -> {
                 }
             }
-        }
-
-        binding.btnEditProfile.setOnClickListener {
-            val intent = Intent(this, EditProfileSellerActivity::class.java)
-            startActivity(intent)
-        }
-
-        bottomNav()
-    }
-
-    private fun detailUser(user: UserModel) {
-        binding.apply {
-            tvName.text = getString(R.string.name_template, user.name)
-            tvEmail.text = getString(R.string.email_template, user.email)
-            tvPassword.text = getString(R.string.password_template, user.password)
-            tvWhatsapp.text = getString(R.string.whatsapp_template, user.whatsapp)
-            tvGender.text = getString(R.string.gender_template, user.gender)
         }
     }
 
@@ -85,7 +81,7 @@ class ProfileSellerActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.bottomNavigationView.setSelectedItemId(R.id.profil)
+        binding.bottomNavigationView.setSelectedItemId(R.id.setting)
     }
 
     private fun showLoading(isLoading: Boolean) {

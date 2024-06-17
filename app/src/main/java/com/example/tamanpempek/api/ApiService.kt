@@ -3,6 +3,7 @@ package com.example.tamanpempek.api
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.LoginResponse
+import com.example.tamanpempek.response.LogoutResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import com.example.tamanpempek.response.UserResponse
@@ -27,6 +28,10 @@ interface ApiService {
     @POST("user/register")
     @Headers("Content-Type: application/json")
     suspend fun register(@Body requestBody: RequestBody): UserResponse
+
+    @POST("logout")
+    @Headers("Content-Type: application/json")
+    suspend fun logout() : LogoutResponse
 
     @GET("user/{userId}")
     fun getUserById(
