@@ -73,6 +73,38 @@ class BankRepository(private val apiService: ApiService) {
         }
     }
 
+    fun updateBank(id: Int, name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val request = BankRequest(name, type, number)
+            val json = Gson().toJson(request)
+            val requestBody = json.toRequestBody("application/json".toMediaType())
+
+            val response = apiService.updateBank(id, requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
+    fun deleteBank(id: Int): LiveData<ResultCondition<BankResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response = apiService.deleteBank(id)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     companion object {
         @Volatile
         private var instanceRepo: BankRepository? = null

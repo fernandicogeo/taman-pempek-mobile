@@ -83,4 +83,16 @@ interface ApiService {
     @POST("bank/create")
     @Headers("Content-Type: application/json")
     suspend fun createBank(@Body requestBody: RequestBody): BankResponse
+
+    @PUT("bank/update/{id}")
+    @Headers("Content-Type: application/json")
+    suspend fun updateBank(
+        @Path("id") id: Int,
+        @Body requestBody: RequestBody): BankResponse
+
+    @DELETE("bank/delete/{id}")
+    suspend fun deleteBank(
+        @Path("id") id: Int
+    ): BankResponse
+
 }
