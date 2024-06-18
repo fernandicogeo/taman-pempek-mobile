@@ -32,6 +32,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_no_cart"
+                android:text="@string/no_cart_user"
+                android:fontFamily="@font/gothicthin"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_title"/>
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cart"
                 android:layout_width="match_parent"
@@ -59,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/seller_bottom_menu"
+        app:menu="@menu/user_bottom_menu"
         app:itemBackground="@color/blue"
         app:itemRippleColor="@color/yellow"
         app:itemActiveIndicatorStyle="@color/yellow"

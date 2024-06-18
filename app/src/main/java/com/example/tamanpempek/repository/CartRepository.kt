@@ -5,8 +5,8 @@ import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.CartCreateRequest
-import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.CartResponse
+import com.example.tamanpempek.response.CartsResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaType
@@ -53,6 +53,20 @@ class CartRepository(private val apiService: ApiService) {
             }
         } catch (e: Exception) {
             emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun deleteCart(id: Int): LiveData<ResultCondition<CartResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response = apiService.deleteCart(id)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
         }
     }
     

@@ -51,8 +51,9 @@ class CartUserActivity : AppCompatActivity() {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    val adapter = CartAdapter(it.data.data, productViewModel, this)
+                    val adapter = CartAdapter(it.data.data, productViewModel, cartViewModel, this, binding.progressBar)
                     binding.rvCart.adapter = adapter
+                    showNoCartsMessage(it.data.data.isEmpty())
                 }
                 is ResultCondition.ErrorState -> {
                 }
@@ -70,6 +71,10 @@ class CartUserActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) binding.progressBar.visibility = View.VISIBLE
         else binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showNoCartsMessage(show: Boolean) {
+        binding.tvNoCart.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun bottomNav() {

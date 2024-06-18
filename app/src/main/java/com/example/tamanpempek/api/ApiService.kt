@@ -138,5 +138,9 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     suspend fun createCart(@Body requestBody: RequestBody): CartResponse
 
+    @DELETE("cart/delete/{id}")
+    suspend fun deleteCart(
+        @Path("id") id: Int
+    ): CartResponse
 
 }
