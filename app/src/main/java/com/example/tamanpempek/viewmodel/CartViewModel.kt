@@ -6,4 +6,5 @@ import com.example.tamanpempek.repository.CartRepository
 
 class CartViewModel(private val repository: CartRepository) : ViewModel() {
     fun createCart(userId: Int, productId: Int, paymentId: Int?, quantity: Int, totalPrice: Int, isActived: String) = repository.createCart(userId, productId, paymentId, quantity, totalPrice, isActived)
+    fun getActivedCartsByUser(userId: Int) = repository.getActivedCartsByUser(userId)
 }

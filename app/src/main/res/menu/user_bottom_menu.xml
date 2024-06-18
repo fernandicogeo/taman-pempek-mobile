@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/dashboard"
+        android:id="@+id/dashboard_user"
         android:title="@string/dashboard"
         android:icon="@drawable/baseline_home_24"/>
     <item
-        android:id="@+id/keranjang"
+        android:id="@+id/cart_user"
         android:title="@string/cart"
         android:icon="@drawable/baseline_shopping_cart_24"/>
     <item
-        android:id="@+id/riwayat"
+        android:id="@+id/history_user"
         android:title="@string/history"
         android:icon="@drawable/baseline_history_24"/>
     <item
-        android:id="@+id/profil"
+        android:id="@+id/profile_user"
         android:title="@string/profil"
         android:icon="@drawable/baseline_person_24"/>
     <item
-        android:id="@+id/setting"
+        android:id="@+id/setting_user"
         android:title="@string/setting"
         android:icon="@drawable/baseline_settings_24"/>
 </menu>

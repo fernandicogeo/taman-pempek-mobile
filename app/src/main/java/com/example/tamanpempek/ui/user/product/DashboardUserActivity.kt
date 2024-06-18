@@ -13,6 +13,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.user.product.SectionPagerAdapterUser
+import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
@@ -126,10 +127,13 @@ class DashboardUserActivity : AppCompatActivity() {
     private fun bottomNav() {
         binding.bottomNavigationView.setOnNavigationItemReselectedListener { item ->
             when(item.itemId) {
-                R.id.dashboard -> {
+                R.id.dashboard_user -> {
                     startActivity(Intent(this, DashboardUserActivity::class.java))
                 }
-                R.id.setting -> {
+                R.id.cart_user -> {
+                    startActivity(Intent(this, CartUserActivity::class.java))
+                }
+                R.id.setting_user -> {
                     startActivity(Intent(this, SettingUserActivity::class.java))
                 }
             }

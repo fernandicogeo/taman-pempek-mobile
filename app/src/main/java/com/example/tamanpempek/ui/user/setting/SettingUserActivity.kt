@@ -15,6 +15,7 @@ import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
+import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
@@ -67,10 +68,13 @@ class SettingUserActivity : AppCompatActivity() {
     private fun bottomNav() {
         binding.bottomNavigationView.setOnNavigationItemReselectedListener { item ->
             when(item.itemId) {
-                R.id.dashboard -> {
+                R.id.dashboard_user -> {
                     startActivity(Intent(this, DashboardUserActivity::class.java))
                 }
-                R.id.setting -> {
+                R.id.cart_user -> {
+                    startActivity(Intent(this, CartUserActivity::class.java))
+                }
+                R.id.setting_user -> {
                     startActivity(Intent(this, SettingUserActivity::class.java))
                 }
             }
