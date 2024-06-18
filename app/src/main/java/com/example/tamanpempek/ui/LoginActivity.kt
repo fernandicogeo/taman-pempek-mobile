@@ -83,9 +83,20 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isLoginSession() {
-        if (preference.getLoginSession().name != null && preference.getLoginSession().email != null && preference.getLoginSession().accessToken != null)
-            if (preference.getLoginSession().role == "Pembeli") startActivity(Intent(this, DashboardUserActivity::class.java))
-            else if (preference.getLoginSession().role == "Penjual") startActivity(Intent(this, DashboardSellerActivity::class.java))
+        if (preference.getLoginSession().name != null && preference.getLoginSession().email != null && preference.getLoginSession().accessToken != null) {
+            if (preference.getLoginSession().role == "Pembeli") startActivity(
+                Intent(
+                    this,
+                    DashboardUserActivity::class.java
+                )
+            )
+            else if (preference.getLoginSession().role == "Penjual") startActivity(
+                Intent(
+                    this,
+                    DashboardSellerActivity::class.java
+                )
+            )
+        }
     }
 
     private fun showDialog(isSuccess: Boolean) {
@@ -94,7 +105,13 @@ class LoginActivity : AppCompatActivity() {
                 setTitle("Login berhasil!!")
                 setMessage("Selamat datang di Taman Pempek!.")
                 setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(context, DashboardSellerActivity::class.java)
+                    if (preference.getLoginSession().role == "Pembeli") {
+                        val intent = Intent(context, DashboardUserActivity::class.java)
+                    }
+                    else if (preference.getLoginSession().role == "Penjual") {
+                        val intent = Intent(context, DashboardSellerActivity::class.java)
+                    }
+
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                     finish()
