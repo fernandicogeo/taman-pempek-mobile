@@ -49,6 +49,31 @@ class CartUserActivity : AppCompatActivity() {
         setupRecyclerView()
         bottomNav()
 
+        getActivedCartsByUser(userId)
+
+        cartViewModel.getCartsTotalPriceByUser(userId).observe(this) {
+            showLoading(true)
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    binding.tvPrice.text = getString(R.string.price_template, it.data.data.toString())
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvCart.apply {
+            layoutManager = GridLayoutManager(this@CartUserActivity, 1)
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun getActivedCartsByUser(userId: Int) {
         cartViewModel.getActivedCartsByUser(userId).observe(this) {
             showLoading(true)
             when (it) {
@@ -63,13 +88,6 @@ class CartUserActivity : AppCompatActivity() {
                 is ResultCondition.ErrorState -> {
                 }
             }
-        }
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvCart.apply {
-            layoutManager = GridLayoutManager(this@CartUserActivity, 1)
-            setHasFixedSize(true)
         }
     }
 

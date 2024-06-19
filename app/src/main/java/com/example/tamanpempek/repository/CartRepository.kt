@@ -6,6 +6,7 @@ import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.CartCreateRequest
 import com.example.tamanpempek.response.CartResponse
+import com.example.tamanpempek.response.CartTotalPriceResponse
 import com.example.tamanpempek.response.CartsResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,30 @@ class CartRepository(private val apiService: ApiService) {
         try {
             val response =
                 apiService.getActivedCartsByUser(userId).awaitResponse()
+
+            if (response.isSuccessful) {
+                val cartResponse = response.body()
+                if (cartResponse != null) {
+                    emit(ResultCondition.SuccessState(cartResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun getCartsTotalPriceByUser(userId: Int): LiveData<ResultCondition<CartTotalPriceResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getCartsTotalPriceByUser(userId).awaitResponse()
 
             if (response.isSuccessful) {
                 val cartResponse = response.body()

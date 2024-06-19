@@ -3,6 +3,7 @@ package com.example.tamanpempek.api
 import com.example.tamanpempek.response.BankResponse
 import com.example.tamanpempek.response.BanksResponse
 import com.example.tamanpempek.response.CartResponse
+import com.example.tamanpempek.response.CartTotalPriceResponse
 import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
@@ -133,6 +134,11 @@ interface ApiService {
     fun getActivedCartsByUser(
         @Path("userId") userId: Int,
     ): Call<CartsResponse>
+
+    @GET("carts/total/{userId}")
+    fun getCartsTotalPriceByUser(
+        @Path("userId") userId: Int,
+    ): Call<CartTotalPriceResponse>
 
     @POST("cart/create")
     @Headers("Content-Type: application/json")
