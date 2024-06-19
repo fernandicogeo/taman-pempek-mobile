@@ -36,6 +36,7 @@
     <string name="detail_product">Detail Produk</string>
     <string name="name_template">Nama: %1$s</string>
     <string name="stock_template">Stok: %1$s</string>
+    <string name="seller_template">Penjual: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>
     <string name="price_template">Total Harga: %1$s</string>
     <string name="detail_rekening">Detail Rekening</string>

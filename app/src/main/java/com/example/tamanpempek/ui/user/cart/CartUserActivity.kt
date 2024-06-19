@@ -19,8 +19,10 @@ import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.CartViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
 class CartUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCartUserBinding
@@ -28,6 +30,8 @@ class CartUserActivity : AppCompatActivity() {
     private lateinit var cartFactory: CartViewModelFactory
     private val productViewModel: ProductViewModel by viewModels { productFactory }
     private lateinit var productFactory: ProductViewModelFactory
+    private val userViewModel: UserViewModel by viewModels { userFactory }
+    private lateinit var userFactory: UserViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,7 @@ class CartUserActivity : AppCompatActivity() {
 
         cartFactory = CartViewModelFactory.getInstanceCart(binding.root.context)
         productFactory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
+        userFactory = UserViewModelFactory.getInstanceAuth(binding.root.context)
 
         preference = UserPreference(this)
 
@@ -51,7 +56,7 @@ class CartUserActivity : AppCompatActivity() {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    val adapter = CartAdapter(it.data.data, productViewModel, cartViewModel, this, binding.progressBar)
+                    val adapter = CartAdapter(it.data.data, productViewModel, cartViewModel, userViewModel, this, binding.progressBar)
                     binding.rvCart.adapter = adapter
                     showNoCartsMessage(it.data.data.isEmpty())
                 }

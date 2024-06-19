@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityDetailProductSellerBinding
 import com.example.tamanpempek.databinding.ActivityDetailProductUserBinding
+import com.example.tamanpempek.helper.GetData
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
@@ -21,8 +22,10 @@ import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.CartViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
 class DetailProductUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductUserBinding
@@ -30,6 +33,9 @@ class DetailProductUserActivity : AppCompatActivity() {
     private lateinit var productFactory: ProductViewModelFactory
     private val cartViewModel: CartViewModel by viewModels { cartFactory }
     private lateinit var cartFactory: CartViewModelFactory
+    private val userViewModel: UserViewModel by viewModels { userFactory }
+    private lateinit var userFactory: UserViewModelFactory
+
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,8 @@ class DetailProductUserActivity : AppCompatActivity() {
 
         productFactory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
         cartFactory = CartViewModelFactory.getInstanceCart(binding.root.context)
+        userFactory = UserViewModelFactory.getInstanceAuth(binding.root.context)
+
         preference = UserPreference(this)
 
         val userId = preference.getLoginSession().id
@@ -72,27 +80,31 @@ class DetailProductUserActivity : AppCompatActivity() {
     }
 
     private fun setDetail(product: ProductModel, userId: Int, productId: Int) {
-        binding.apply {
-            tvName.text = product.name
-            val categoryArray = resources.getStringArray(R.array.category_array)
-            val categoryName = if (product.category_id - 1 in (categoryArray.indices)) {
-                categoryArray[product.category_id - 1]
-            } else {
-                getString(R.string.category)
+        GetData.getSellerName(userViewModel, this, product.user_id) { sellerName ->
+            binding.apply {
+                tvName.text = product.name
+                val categoryArray = resources.getStringArray(R.array.category_array)
+                val categoryName = if (product.category_id - 1 in (categoryArray.indices)) {
+                    categoryArray[product.category_id - 1]
+                } else {
+                    getString(R.string.category)
+                }
+
+                tvSeller.text = getString(R.string.seller_template, sellerName)
+                tvCategory.text = getString(R.string.category_template, categoryName)
+                tvPrice.text = getString(R.string.price_template, product.price.toString())
+                tvStock.text = getString(R.string.stock_template, product.stock.toString())
+                description.text = product.description
+
+                Glide.with(this@DetailProductUserActivity)
+                    .load(product.image)
+                    .into(headerImage)
             }
 
-            tvCategory.text = getString(R.string.category_template, categoryName)
-            tvPrice.text = getString(R.string.price_template, product.price.toString())
-            tvStock.text = getString(R.string.stock_template, product.stock.toString())
-            description.text = product.description
-
-            Glide.with(this@DetailProductUserActivity)
-                .load(product.image)
-                .into(headerImage)
+            setupAction(product, userId, productId)
         }
-
-        setupAction(product, userId, productId)
     }
+
 
     private fun setupAction(product: ProductModel, userId: Int, productId: Int) {
         showLoading(false)

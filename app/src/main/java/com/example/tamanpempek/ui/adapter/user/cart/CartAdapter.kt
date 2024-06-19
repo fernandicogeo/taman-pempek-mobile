@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ItemCartBinding
+import com.example.tamanpempek.helper.GetData
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.CartModel
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
@@ -18,18 +19,20 @@ import com.example.tamanpempek.ui.seller.bank.DetailBankSellerActivity
 import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
+import com.example.tamanpempek.viewmodel.UserViewModel
 
 class CartAdapter(
     private val carts: List<CartModel>,
     private val productViewModel: ProductViewModel,
     private val cartViewModel: CartViewModel,
+    private val userViewModel: UserViewModel,
     private val lifecycleOwner: LifecycleOwner,
     private val progressBar: ProgressBar
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val binding = ItemCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CartViewHolder(binding, productViewModel, cartViewModel, lifecycleOwner, progressBar)
+        return CartViewHolder(binding, productViewModel, cartViewModel, userViewModel, lifecycleOwner, progressBar)
     }
 
     override fun getItemCount(): Int = carts.size
@@ -42,6 +45,7 @@ class CartAdapter(
         private val binding: ItemCartBinding,
         private val productViewModel: ProductViewModel,
         private val cartViewModel: CartViewModel,
+        private val userViewModel: UserViewModel,
         private val lifecycleOwner: LifecycleOwner,
         private val progressBar: ProgressBar
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -57,6 +61,9 @@ class CartAdapter(
                         }
                         is ResultCondition.SuccessState -> {
                             tvCartName.text = result.data.data.name
+                            GetData.getSellerName(userViewModel, lifecycleOwner, result.data.data.user_id) {
+                                tvSeller.text = context.getString(R.string.seller_template, it)
+                            }
                         }
                         is ResultCondition.ErrorState -> {
                         }
