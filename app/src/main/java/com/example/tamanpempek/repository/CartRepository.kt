@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.request.CartUpdateStatusRequest
 import com.example.tamanpempek.request.CartCreateRequest
 import com.example.tamanpempek.response.CartResponse
 import com.example.tamanpempek.response.CartTotalPriceResponse
@@ -33,12 +34,30 @@ class CartRepository(private val apiService: ApiService) {
         }
     }
 
-    fun getActivedCartsByUser(userId: Int): LiveData<ResultCondition<CartsResponse>> = liveData(
+    fun updateStatusCart(id: Int, isActived: String): LiveData<ResultCondition<CartResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val request = CartUpdateStatusRequest(isActived = isActived)
+            val json = Gson().toJson(request)
+            val requestBody = json.toRequestBody("application/json".toMediaType())
+
+            val response = apiService.updateCart(id, requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
+    fun FindStatusCardByUser(isActived: String, userId: Int): LiveData<ResultCondition<CartsResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
         try {
             val response =
-                apiService.getActivedCartsByUser(userId).awaitResponse()
+                apiService.FindStatusCardByUser(isActived, userId).awaitResponse()
 
             if (response.isSuccessful) {
                 val cartResponse = response.body()
@@ -57,12 +76,12 @@ class CartRepository(private val apiService: ApiService) {
         }
     }
 
-    fun getCartsTotalPriceByUser(userId: Int): LiveData<ResultCondition<CartTotalPriceResponse>> = liveData(
+    fun getCartsTotalPriceByUser(isActived: String, userId: Int): LiveData<ResultCondition<CartTotalPriceResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)
         try {
             val response =
-                apiService.getCartsTotalPriceByUser(userId).awaitResponse()
+                apiService.getCartsTotalPriceByUser(isActived, userId).awaitResponse()
 
             if (response.isSuccessful) {
                 val cartResponse = response.body()

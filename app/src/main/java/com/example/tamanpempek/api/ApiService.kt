@@ -109,11 +109,14 @@ interface ApiService {
         @Path("userId") userId: Int,
     ): Call<BanksResponse>
 
+    @GET("banks/admin")
+    fun getAdminBanks(): Call<BanksResponse>
 
     @GET("bank/{id}")
     fun getBankById(
         @Path("id") id: Int,
     ): Call<BankResponse>
+
 
     @POST("bank/create")
     @Headers("Content-Type: application/json")
@@ -130,19 +133,27 @@ interface ApiService {
         @Path("id") id: Int
     ): BankResponse
 
-    @GET("carts/actived/{userId}")
-    fun getActivedCartsByUser(
+    @GET("carts/{isActived}/{userId}")
+    fun FindStatusCardByUser(
+        @Path("isActived") isActived: String,
         @Path("userId") userId: Int,
     ): Call<CartsResponse>
 
-    @GET("carts/total/{userId}")
+    @GET("carts/total/{isActived}/{userId}")
     fun getCartsTotalPriceByUser(
+        @Path("isActived") isActived: String,
         @Path("userId") userId: Int,
     ): Call<CartTotalPriceResponse>
 
     @POST("cart/create")
     @Headers("Content-Type: application/json")
     suspend fun createCart(@Body requestBody: RequestBody): CartResponse
+
+    @PUT("cart/update/{id}")
+    @Headers("Content-Type: application/json")
+    suspend fun updateCart(
+        @Path("id") id: Int,
+        @Body requestBody: RequestBody): CartResponse
 
     @DELETE("cart/delete/{id}")
     suspend fun deleteCart(

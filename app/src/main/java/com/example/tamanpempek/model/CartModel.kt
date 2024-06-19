@@ -25,5 +25,5 @@ data class CartModel(
     val total_price: Int,
 
     @SerializedName("isActived")
-    val isActived: String
+    val isActived: String  // actived, checkouted, canceled, paid
 ) : Parcelable

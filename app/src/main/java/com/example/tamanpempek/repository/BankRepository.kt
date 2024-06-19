@@ -77,6 +77,30 @@ class BankRepository(private val apiService: ApiService) {
         }
     }
 
+    fun getAdminBanks(): LiveData<ResultCondition<BanksResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getAdminBanks().awaitResponse()
+
+            if (response.isSuccessful) {
+                val bankResponse = response.body()
+                if (bankResponse != null) {
+                    emit(ResultCondition.SuccessState(bankResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun createBank(userId: Int, name: String, type: String, number: String): LiveData<ResultCondition<BankResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {

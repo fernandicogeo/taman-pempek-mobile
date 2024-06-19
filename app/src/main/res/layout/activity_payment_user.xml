@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.user.cart.CartUserActivity">
+    tools:context=".ui.user.cart.PaymentUserActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_main_title"
-                android:text="@string/cart"
+                android:text="@string/payment"
                 android:fontFamily="@font/gothicextrabold"
                 android:textColor="@color/blue"
                 android:textSize="37sp"
@@ -32,28 +32,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_no_cart"
-                android:text="@string/no_cart_user"
-                android:fontFamily="@font/gothicthin"
-                android:textColor="@color/blue"
-                android:textSize="15sp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_main_title"/>
-
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cart"
+                android:id="@+id/rv_payment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_title"
-                tools:listitem="@layout/item_cart" />
+                tools:listitem="@layout/item_payment" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -66,7 +52,59 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_cart"/>
+                app:layout_constraintTop_toBottomOf="@id/rv_payment"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_rekening"
+                android:text="@string/payment_rekening"
+                android:fontFamily="@font/gothicbold"
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_price"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_rekening"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_rekening"
+                tools:listitem="@layout/item_rekening" />
+
+            <TextView
+                android:id="@+id/tv_upload_image"
+                android:alpha="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/upload_image_rekening"
+                android:textSize="17sp"
+                android:fontFamily="@font/gothicregular"
+                android:textColor="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_rekening" />
+
+            <Button
+                android:id="@+id/btn_upload_image"
+                android:alpha="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:padding="15dp"
+                android:fontFamily="@font/gothicsemibold"
+                android:textSize="16sp"
+                android:textColor="@color/blue"
+                android:backgroundTint="@color/yellow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_upload_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +112,7 @@
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                app:layout_constraintTop_toBottomOf="@+id/btn_upload_image"
                 android:orientation="horizontal">
 
                 <Button
@@ -89,7 +127,23 @@
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/blue"
-                    android:text="@string/checkout" />
+                    android:text="@string/pay" />
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:alpha="1"
+                    android:layout_width="128dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gothicsemibold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/cancel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_main_title" />
 
             </LinearLayout>
 

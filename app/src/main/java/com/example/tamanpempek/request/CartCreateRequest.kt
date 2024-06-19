@@ -6,5 +6,5 @@ data class CartCreateRequest (
     val payment_id: Int?,
     val quantity: Int,
     val total_price: Int,
-    val isActived: String, // actived, canceled, paid
+    val isActived: String,
 )

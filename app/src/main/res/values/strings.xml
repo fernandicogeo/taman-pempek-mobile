@@ -13,6 +13,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="pesanan">Pesanan</string>
     <string name="rekening">Rekening</string>
+    <string name="payment_rekening">Rekening Pembayaran :</string>
     <string name="profil">Profil</string>
     <string name="setting">Setting</string>
     <string name="add_product">Tambah Produk</string>
@@ -22,7 +23,7 @@
     <string name="edit_rekening">Edit Rekening</string>
     <string name="delete_rekening">Hapus Rekening</string>
     <string name="edit_profile">Edit Profil</string>
-    <string name="payment">Bayar</string>
+    <string name="payment">Pembayaran</string>
     <string name="product">Produk</string>
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
@@ -61,6 +62,10 @@
     <string name="cart">Keranjang</string>
     <string name="history">Riwayat</string>
     <string name="delete">Delete</string>
+    <string name="checkout">Checkout</string>
+    <string name="pay">Bayar</string>
+    <string name="cancel">Cancel</string>
+    <string name="upload_image_rekening">Upload bukti transfer</string>
     <string-array name="category_array">
         <item>Pempek</item>
         <item>Lainnya</item>
