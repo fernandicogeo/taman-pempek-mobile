@@ -7,6 +7,7 @@ import com.example.tamanpempek.response.CartTotalPriceResponse
 import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
+import com.example.tamanpempek.response.PaymentResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import com.example.tamanpempek.response.UserResponse
@@ -159,5 +160,16 @@ interface ApiService {
     suspend fun deleteCart(
         @Path("id") id: Int
     ): CartResponse
+
+    @Multipart
+    @POST("payment/create")
+    suspend fun createPayment(
+        @Part("user_id") userId: RequestBody,
+        @Part("delivery_id") deliveryId: RequestBody,
+        @Part("total_price") totalPrice: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part("payment_status") paymentStatus: RequestBody,
+        @Part("delivery_status") deliveryStatus: RequestBody,
+    ): PaymentResponse
 
 }

@@ -10,15 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityCartUserBinding
-import com.example.tamanpempek.databinding.ActivityDashboardUserBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.CartModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
 import com.example.tamanpempek.ui.adapter.user.cart.CartAdapter
-import com.example.tamanpempek.ui.adapter.user.product.SectionPagerAdapterUser
-import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
-import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
@@ -57,28 +52,50 @@ class CartUserActivity : AppCompatActivity() {
 
         setupRecyclerView()
         bottomNav()
-
-        getActivedCartsByUser(userId)
-        getTotalPrice(userId)
-
-        binding.btnPayment.setOnClickListener {
-            AlertDialog.Builder(this).apply {
-                setTitle("Apakah anda yakin?")
-                setPositiveButton("Ya") { _, _ ->
-                    activeCarts.forEach { cart ->
-                        postPayment(cart.id)
-                    }
-                }
-                create()
-                show()
-            }
-        }
     }
 
     private fun setupRecyclerView() {
         binding.rvCart.apply {
             layoutManager = GridLayoutManager(this@CartUserActivity, 1)
             setHasFixedSize(true)
+        }
+    }
+
+    private fun isCheckouted(userId: Int) {
+        cartViewModel.FindStatusCardByUser("checkouted", userId).observe(this) {
+            showLoading(true)
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    if (it.data.data != null && it.data.data.isNotEmpty()) {
+                        startActivity(
+                            Intent(
+                                this,
+                                PaymentUserActivity::class.java
+                            )
+                        )
+                    } else {
+                        getActivedCartsByUser(userId)
+
+                        binding.btnPayment.setOnClickListener {
+                            AlertDialog.Builder(this).apply {
+                                setTitle("Apakah anda yakin?")
+                                setPositiveButton("Ya") { _, _ ->
+                                    activeCarts.forEach { cart ->
+                                        postPayment(cart.id)
+                                    }
+                                }
+                                create()
+                                show()
+                            }
+                        }
+                    }
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
         }
     }
 
@@ -90,10 +107,15 @@ class CartUserActivity : AppCompatActivity() {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    activeCarts = it.data.data
-                    val adapter = CartAdapter(it.data.data, productViewModel, cartViewModel, userViewModel, this, binding.progressBar)
-                    binding.rvCart.adapter = adapter
-                    showNoCartsMessage(it.data.data.isEmpty())
+                    if (it.data.data != null && it.data.data.isNotEmpty()) {
+                        activeCarts = it.data.data
+                        val adapter = CartAdapter(it.data.data, productViewModel, cartViewModel, userViewModel, this, binding.progressBar)
+                        binding.rvCart.adapter = adapter
+                        getTotalPrice(userId)
+                        showNoCartsMessage(false)
+                    } else {
+                        showNoCartsMessage(true)
+                    }
                 }
                 is ResultCondition.ErrorState -> {
                 }
@@ -103,12 +125,10 @@ class CartUserActivity : AppCompatActivity() {
 
     private fun getTotalPrice(userId: Int) {
         cartViewModel.getCartsTotalPriceByUser("actived", userId).observe(this) {
-            showLoading(true)
             when (it) {
                 is ResultCondition.LoadingState -> {
                 }
                 is ResultCondition.SuccessState -> {
-                    showLoading(false)
                     binding.tvPrice.text = getString(R.string.price_template, it.data.data.toString())
                 }
                 is ResultCondition.ErrorState -> {
@@ -133,30 +153,6 @@ class CartUserActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun isCheckouted(userId: Int) {
-        cartViewModel.FindStatusCardByUser("checkouted", userId).observe(this) {
-            showLoading(true)
-            when (it) {
-                is ResultCondition.LoadingState -> {
-                }
-                is ResultCondition.SuccessState -> {
-                    showLoading(false)
-                    if (it.data.data.isNotEmpty()) {
-                        startActivity(
-                            Intent(
-                                this,
-                                PaymentUserActivity::class.java
-                            )
-                        )
-                    }
-                }
-                is ResultCondition.ErrorState -> {
-                }
-            }
-        }
-
     }
 
     private fun showDialog(isSuccess: Boolean) {
@@ -189,6 +185,8 @@ class CartUserActivity : AppCompatActivity() {
 
     private fun showNoCartsMessage(show: Boolean) {
         binding.tvNoCart.visibility = if (show) View.VISIBLE else View.GONE
+        binding.tvPrice.visibility = if (show) View.GONE else View.VISIBLE
+        binding.btnPayment.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     private fun bottomNav() {
