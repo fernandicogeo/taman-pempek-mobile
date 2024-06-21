@@ -28,6 +28,9 @@
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
     <string name="category3">Lainnya</string>
+    <string name="history1">Menunggu</string>
+    <string name="history2">Dikirim</string>
+    <string name="history3">Selesai</string>
     <string name="description">Deskripsi</string>
     <string name="price">Harga</string>
     <string name="quantity">Kuantitas</string>
@@ -36,8 +39,10 @@
     <string name="upload_image">Upload Image</string>
     <string name="category">Kategori</string>
     <string name="detail_product">Detail Produk</string>
+    <string name="detail_history">Detail Riwayat</string>
     <string name="name_template">Nama: %1$s</string>
     <string name="stock_template">Stok: %1$s</string>
+    <string name="payment_status_template">Status: %1$s</string>
     <string name="seller_template">Penjual: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>
     <string name="price_template">Total Harga: %1$s</string>
@@ -57,6 +62,7 @@
     <string name="dummy">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="no_product">Tidak ada produk, silakan tambah produk.</string>
     <string name="no_product_user">Belum ada produk.</string>
+    <string name="no_history_user">Belum ada riwayat transaksi.</string>
     <string name="no_cart_user">Tidak ada produk yang dimasukkan ke keranjang.</string>
     <string name="btn_cart">Masukkan keranjang</string>
     <string name="cart">Keranjang</string>
@@ -64,7 +70,8 @@
     <string name="delete">Delete</string>
     <string name="checkout">Checkout</string>
     <string name="pay">Bayar</string>
-    <string name="cancel">Cancel</string>
+    <string name="finish_transaction">Pesanan selesai</string>
+    <string name="cancel">Batal</string>
     <string name="upload_image_rekening">Upload bukti transfer</string>
     <string-array name="category_array">
         <item>Pempek</item>

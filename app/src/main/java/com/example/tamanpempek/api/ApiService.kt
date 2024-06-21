@@ -8,6 +8,7 @@ import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
 import com.example.tamanpempek.response.PaymentResponse
+import com.example.tamanpempek.response.PaymentsResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import com.example.tamanpempek.response.UserResponse
@@ -118,7 +119,6 @@ interface ApiService {
         @Path("id") id: Int,
     ): Call<BankResponse>
 
-
     @POST("bank/create")
     @Headers("Content-Type: application/json")
     suspend fun createBank(@Body requestBody: RequestBody): BankResponse
@@ -135,9 +135,14 @@ interface ApiService {
     ): BankResponse
 
     @GET("carts/{isActived}/{userId}")
-    fun FindStatusCardByUser(
+    fun getStatusCartByUser(
         @Path("isActived") isActived: String,
         @Path("userId") userId: Int,
+    ): Call<CartsResponse>
+
+    @GET("carts/payment/{paymentId}")
+    fun getCartsByPaymentId(
+        @Path("paymentId") paymentId: Int,
     ): Call<CartsResponse>
 
     @GET("carts/total/{isActived}/{userId}")
@@ -172,4 +177,21 @@ interface ApiService {
         @Part("delivery_status") deliveryStatus: RequestBody,
     ): PaymentResponse
 
+    @GET("payments/{userId}/{paymentStatus}")
+    fun getPaymentsByUserAndPaymentStatus(
+        @Path("userId") userId: Int,
+        @Path("paymentStatus") paymentStatus: String,
+    ): Call<PaymentsResponse>
+
+    @GET("payment/{id}")
+    fun getPaymentById(
+        @Path("id") id: Int,
+    ): Call<PaymentResponse>
+
+    @Multipart
+    @PUT("payment/update/{id}")
+    suspend fun updatePaymentStatus(
+        @Path("id") id: Int,
+        @Part("payment_status") paymentStatus: RequestBody,
+    ): PaymentResponse
 }

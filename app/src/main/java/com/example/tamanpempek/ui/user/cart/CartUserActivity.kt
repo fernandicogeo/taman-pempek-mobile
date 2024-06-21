@@ -14,6 +14,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.CartModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.user.cart.CartAdapter
+import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
@@ -62,7 +63,7 @@ class CartUserActivity : AppCompatActivity() {
     }
 
     private fun isCheckouted(userId: Int) {
-        cartViewModel.FindStatusCardByUser("checkouted", userId).observe(this) {
+        cartViewModel.getStatusCartByUser("checkouted", userId).observe(this) {
             showLoading(true)
             when (it) {
                 is ResultCondition.LoadingState -> {
@@ -100,7 +101,7 @@ class CartUserActivity : AppCompatActivity() {
     }
 
     private fun getActivedCartsByUser(userId: Int) {
-        cartViewModel.FindStatusCardByUser("actived", userId).observe(this) {
+        cartViewModel.getStatusCartByUser("actived", userId).observe(this) {
             showLoading(true)
             when (it) {
                 is ResultCondition.LoadingState -> {
@@ -197,6 +198,9 @@ class CartUserActivity : AppCompatActivity() {
                 }
                 R.id.cart_user -> {
                     startActivity(Intent(this, CartUserActivity::class.java))
+                }
+                R.id.history_user -> {
+                    startActivity(Intent(this, HistoryUserActivity::class.java))
                 }
                 R.id.setting_user -> {
                     startActivity(Intent(this, SettingUserActivity::class.java))

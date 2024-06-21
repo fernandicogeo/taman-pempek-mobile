@@ -21,6 +21,7 @@ import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.PaymentCreateRequest
 import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
 import com.example.tamanpempek.ui.adapter.user.cart.PaymentAdapter
+import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.BankViewModel
@@ -88,7 +89,7 @@ class PaymentUserActivity : AppCompatActivity() {
     }
 
     private fun getCheckoutedCartsByUser(userId: Int) {
-        cartViewModel.FindStatusCardByUser("checkouted", userId).observe(this) {
+        cartViewModel.getStatusCartByUser("checkouted", userId).observe(this) {
             showLoading(true)
             when (it) {
                 is ResultCondition.LoadingState -> {
@@ -220,7 +221,6 @@ class PaymentUserActivity : AppCompatActivity() {
 
     private fun updatePaymentIdCarts(cartId: Int, paymentId: Int) {
         cartViewModel.updatePaymentIdCarts(cartId, paymentId).observe(this) {
-            Log.d("ITPAYMENTID", it.toString())
             when (it) {
                 is ResultCondition.LoadingState -> {
                 }
@@ -304,6 +304,9 @@ class PaymentUserActivity : AppCompatActivity() {
                 }
                 R.id.cart_user -> {
                     startActivity(Intent(this, CartUserActivity::class.java))
+                }
+                R.id.history_user -> {
+                    startActivity(Intent(this, HistoryUserActivity::class.java))
                 }
                 R.id.setting_user -> {
                     startActivity(Intent(this, SettingUserActivity::class.java))

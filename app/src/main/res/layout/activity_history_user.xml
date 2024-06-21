@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    tools:context=".ui.user.product.DashboardUserActivity">
+    tools:context=".ui.user.history.HistoryUserActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:id="@+id/tv_main_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dashboard"
+                android:text="@string/history"
                 android:fontFamily="@font/gothicextrabold"
                 android:textColor="@color/blue"
                 android:textSize="37sp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
+                android:id="@+id/tabs_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -50,35 +50,22 @@
                 app:tabMode="fixed" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
+                android:id="@+id/view_pager_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"
+                app:layout_constraintTop_toBottomOf="@id/tabs_history"
                 tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/tv_no_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_product_user"
-                android:fontFamily="@font/gothicthin"
-                android:textColor="@color/blue"
-                android:textSize="15sp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"/>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
+                android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"
-                tools:listitem="@layout/item_product" />
+                app:layout_constraintTop_toBottomOf="@id/tabs_history"
+                tools:listitem="@layout/item_history" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

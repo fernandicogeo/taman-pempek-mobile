@@ -8,13 +8,67 @@ import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.PaymentCreateRequest
+import com.example.tamanpempek.request.PaymentUpdateStatusRequest
+import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.PaymentResponse
+import com.example.tamanpempek.response.PaymentsResponse
+import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.awaitResponse
 
 class PaymentRepository(private val apiService: ApiService) {
+
+    fun getPaymentById(id: Int): LiveData<ResultCondition<PaymentResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getPaymentById(id).awaitResponse()
+
+            if (response.isSuccessful) {
+                val cartResponse = response.body()
+                if (cartResponse != null) {
+                    emit(ResultCondition.SuccessState(cartResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
+    fun getPaymentsByUserAndPaymentStatus(userId: Int, paymentStatus: String): LiveData<ResultCondition<PaymentsResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getPaymentsByUserAndPaymentStatus(userId, paymentStatus).awaitResponse()
+
+            if (response.isSuccessful) {
+                val cartResponse = response.body()
+                if (cartResponse != null) {
+                    emit(ResultCondition.SuccessState(cartResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun createPayment(paymentCreateRequest: PaymentCreateRequest, context: Context): LiveData<ResultCondition<PaymentResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {
@@ -40,6 +94,26 @@ class PaymentRepository(private val apiService: ApiService) {
         }
     }
 
+    fun updatePaymentStatus(id: Int, paymentUpdateStatusRequest: PaymentUpdateStatusRequest): LiveData<ResultCondition<PaymentResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val requestMap = updatePaymentStatusRequest(paymentUpdateStatusRequest)
+
+            val response = apiService.updatePaymentStatus(
+                id = id,
+                paymentStatus = requestMap["payment_status"]!!,
+            )
+
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     private fun createPaymentRequest(paymentCreateRequest: PaymentCreateRequest): Map<String, RequestBody> {
         val requestMap = mutableMapOf<String, RequestBody>()
         requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.user_id.toString())
@@ -47,6 +121,13 @@ class PaymentRepository(private val apiService: ApiService) {
         requestMap["total_price"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.total_price.toString())
         requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.payment_status)
         requestMap["delivery_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_status.toString())
+
+        return requestMap
+    }
+
+    private fun updatePaymentStatusRequest(paymentUpdateStatusRequest: PaymentUpdateStatusRequest): Map<String, RequestBody> {
+        val requestMap = mutableMapOf<String, RequestBody>()
+        requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusRequest.payment_status)
 
         return requestMap
     }
