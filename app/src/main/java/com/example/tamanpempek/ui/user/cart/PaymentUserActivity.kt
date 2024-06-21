@@ -154,9 +154,22 @@ class PaymentUserActivity : AppCompatActivity() {
                         "null",
                     )
                     checkoutedCarts.forEach { cart ->
-                        updateCarts(cart.id)
+                        updateStatusCarts(cart.id, "paid")
                     }
                 }
+            }
+        }
+
+        binding.btnCancel.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("Apakah anda yakin?")
+                setPositiveButton("Ya") { _, _ ->
+                    checkoutedCarts.forEach { cart ->
+                        updateStatusCarts(cart.id, "canceled")
+                    }
+                }
+                create()
+                show()
             }
         }
     }
@@ -174,29 +187,46 @@ class PaymentUserActivity : AppCompatActivity() {
                 }
                 is ResultCondition.ErrorState -> {
                     showLoading(false)
-                    showDialog(false)
+                    showDialog(false, "paid")
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    showDialog(true)
+                    checkoutedCarts.forEach { cart ->
+                        updatePaymentIdCarts(cart.id, it.data.data.id)
+                    }
+                    showDialog(true, "paid")
                 }
             }
         }
     }
 
-    private fun updateCarts(cartId: Int) {
-        cartViewModel.updateStatusCart(cartId, "paid").observe(this) {
+    private fun updateStatusCarts(cartId: Int, isActived: String) {
+        cartViewModel.updateStatusCart(cartId, isActived).observe(this) {
             when (it) {
                 is ResultCondition.LoadingState -> {
                     showLoading(true)
                 }
                 is ResultCondition.ErrorState -> {
                     showLoading(false)
-                    showDialog(false)
+                    showDialog(false, isActived)
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    showDialog(true)
+                    showDialog(true, isActived)
+                }
+            }
+        }
+    }
+
+    private fun updatePaymentIdCarts(cartId: Int, paymentId: Int) {
+        cartViewModel.updatePaymentIdCarts(cartId, paymentId).observe(this) {
+            Log.d("ITPAYMENTID", it.toString())
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.ErrorState -> {
+                }
+                is ResultCondition.SuccessState -> {
                 }
             }
         }
@@ -215,25 +245,48 @@ class PaymentUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDialog(isSuccess: Boolean) {
-        if (isSuccess) {
-            AlertDialog.Builder(this).apply {
-                setTitle("Pembayaran berhasil!! Silakan menunggu verifikasi dari admin.")
-                setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(this@PaymentUserActivity, DashboardUserActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+    private fun showDialog(isSuccess: Boolean, isActived: String) {
+        if (isActived == "paid") {
+            if (isSuccess) {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Pembayaran berhasil!! Silakan menunggu verifikasi dari admin.")
+                    setPositiveButton("Lanjut") { _, _ ->
+                        val intent = Intent(this@PaymentUserActivity, DashboardUserActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    create()
+                    show()
                 }
-                create()
-                show()
+            } else {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Pembayaran gagal!")
+                    setMessage("Format inputan anda salah, coba lagi.")
+                    create()
+                    show()
+                }
             }
         } else {
-            AlertDialog.Builder(this).apply {
-                setTitle("Pembayaran gagal!")
-                setMessage("Format inputan anda salah, coba lagi.")
-                create()
-                show()
+            if (isSuccess) {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Pembatalan transaksi berhasil!!")
+                    setPositiveButton("Lanjut") { _, _ ->
+                        val intent = Intent(this@PaymentUserActivity, DashboardUserActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    create()
+                    show()
+                }
+            } else {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Pembatalan transaksi gagal!")
+                    setMessage("Silakan coba lagi.")
+                    create()
+                    show()
+                }
             }
         }
     }

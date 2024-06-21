@@ -6,6 +6,7 @@ import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.CartUpdateStatusRequest
 import com.example.tamanpempek.request.CartCreateRequest
+import com.example.tamanpempek.request.CartUpdatePaymentIdRequest
 import com.example.tamanpempek.response.CartResponse
 import com.example.tamanpempek.response.CartTotalPriceResponse
 import com.example.tamanpempek.response.CartsResponse
@@ -38,6 +39,24 @@ class CartRepository(private val apiService: ApiService) {
         emit(ResultCondition.LoadingState)
         try {
             val request = CartUpdateStatusRequest(isActived = isActived)
+            val json = Gson().toJson(request)
+            val requestBody = json.toRequestBody("application/json".toMediaType())
+
+            val response = apiService.updateCart(id, requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
+    fun updatePaymentIdCarts(id: Int, paymentId: Int): LiveData<ResultCondition<CartResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val request = CartUpdatePaymentIdRequest(payment_id = paymentId)
             val json = Gson().toJson(request)
             val requestBody = json.toRequestBody("application/json".toMediaType())
 
