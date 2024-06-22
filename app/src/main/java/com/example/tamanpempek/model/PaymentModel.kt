@@ -25,7 +25,7 @@ data class PaymentModel(
     val image: String,
 
     @SerializedName("payment_status")
-    val payment_status: String, // reviewed, rejected, canceled, sent, finished
+    val payment_status: String, // reviewed, rejected, waiting for sent, canceled, sent, finished
 
     @SerializedName("delivery_status")
     val delivery_status: String?, // on delivery, finish

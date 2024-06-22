@@ -30,12 +30,14 @@ class HistoryUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         historyReviewed = arguments?.getSerializable(ARG_CATEGORY1) as List<PaymentModel>
-        historySent = arguments?.getSerializable(ARG_CATEGORY2) as List<PaymentModel>
-        historyFinished = arguments?.getSerializable(ARG_CATEGORY3) as List<PaymentModel>
-        historyCanceled = arguments?.getSerializable(ARG_CATEGORY4) as List<PaymentModel>
-        historyRejected = arguments?.getSerializable(ARG_CATEGORY5) as List<PaymentModel>
+        historyWaiting = arguments?.getSerializable(ARG_CATEGORY2) as List<PaymentModel>
+        historySent = arguments?.getSerializable(ARG_CATEGORY3) as List<PaymentModel>
+        historyFinished = arguments?.getSerializable(ARG_CATEGORY4) as List<PaymentModel>
+        historyCanceled = arguments?.getSerializable(ARG_CATEGORY5) as List<PaymentModel>
+        historyRejected = arguments?.getSerializable(ARG_CATEGORY6) as List<PaymentModel>
 
         val historyReviewedList: List<PaymentModel> = historyReviewed.toList()
+        val historyWaitingList: List<PaymentModel> = historyWaiting.toList()
         val historySentList: List<PaymentModel> = historySent.toList()
         val historyFinishedList: List<PaymentModel> = historyFinished.toList()
         val historyCanceledList: List<PaymentModel> = historyCanceled.toList()
@@ -45,10 +47,11 @@ class HistoryUserFragment : Fragment() {
 
         when (position) {
             0 -> setHistory(historyReviewedList)
-            1 -> setHistory(historySentList)
-            2 -> setHistory(historyFinishedList)
-            3 -> setHistory(historyCanceledList)
-            4 -> setHistory(historyRejectedList)
+            1 -> setHistory(historyWaitingList)
+            2 -> setHistory(historySentList)
+            3 -> setHistory(historyFinishedList)
+            4 -> setHistory(historyCanceledList)
+            5 -> setHistory(historyRejectedList)
         }
     }
 
@@ -64,14 +67,16 @@ class HistoryUserFragment : Fragment() {
     companion object {
         const val ARG_POSITION = "arg_position"
         const val ARG_CATEGORY1 = "arg_historyReviewed"
-        const val ARG_CATEGORY2 = "arg_historySent"
-        const val ARG_CATEGORY3 = "arg_historyFinished"
-        const val ARG_CATEGORY4 = "arg_historyCanceled"
-        const val ARG_CATEGORY5 = "arg_historyRejected"
+        const val ARG_CATEGORY2 = "arg_historyWaiting"
+        const val ARG_CATEGORY3 = "arg_historySent"
+        const val ARG_CATEGORY4 = "arg_historyFinished"
+        const val ARG_CATEGORY5 = "arg_historyCanceled"
+        const val ARG_CATEGORY6 = "arg_historyRejected"
 
         var position: Int = 0
 
         var historyReviewed: List<PaymentModel> = emptyList()
+        var historyWaiting: List<PaymentModel> = emptyList()
         var historySent: List<PaymentModel> = emptyList()
         var historyFinished: List<PaymentModel> = emptyList()
         var historyCanceled: List<PaymentModel> = emptyList()

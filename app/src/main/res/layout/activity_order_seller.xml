@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    tools:context=".ui.user.history.HistoryUserActivity">
+    tools:context=".ui.seller.order.OrderSellerActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:id="@+id/tv_main_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/history"
+                android:text="@string/order"
                 android:fontFamily="@font/gothicextrabold"
                 android:textColor="@color/blue"
                 android:textSize="37sp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_history"
+                android:id="@+id/tabs_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -47,25 +47,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_title"
-                app:tabMode="scrollable" />
+                app:tabMode="fixed" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager_history"
+                android:id="@+id/view_pager_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs_history"
+                app:layout_constraintTop_toBottomOf="@id/tabs_order"
                 tools:ignore="MissingConstraints" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_history"
+                android:id="@+id/rv_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs_history"
-                tools:listitem="@layout/item_history" />
+                app:layout_constraintTop_toBottomOf="@id/tabs_order"
+                tools:listitem="@layout/item_order" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/user_bottom_menu"
+        app:menu="@menu/seller_bottom_menu"
         app:itemBackground="@color/blue"
         app:itemRippleColor="@color/yellow"
         app:itemActiveIndicatorStyle="@color/yellow"

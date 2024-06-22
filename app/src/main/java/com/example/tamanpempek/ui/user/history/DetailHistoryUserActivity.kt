@@ -92,6 +92,12 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.VISIBLE
                         }
+                        "waiting for sent" -> {
+                            binding.tvPaymentStatus.text =
+                                getString(R.string.payment_status_template, "Menunggu pesanan dikirim")
+                            binding.btnFinish.visibility = View.GONE
+                            binding.btnCancel.visibility = View.VISIBLE
+                        }
                         "sent" -> {
                             binding.tvPaymentStatus.text = getString(
                                 R.string.payment_status_template,

@@ -29,10 +29,11 @@
     <string name="category2">Pempek</string>
     <string name="category3">Lainnya</string>
     <string name="history1">Review</string>
-    <string name="history2">Dikirim</string>
-    <string name="history3">Selesai</string>
-    <string name="history4">Batal</string>
-    <string name="history5">Ditolak</string>
+    <string name="history2">Menunggu dikirim</string>
+    <string name="history3">Dikirim</string>
+    <string name="history4">Selesai</string>
+    <string name="history5">Batal</string>
+    <string name="history6">Ditolak</string>
     <string name="description">Deskripsi</string>
     <string name="price">Harga</string>
     <string name="quantity">Kuantitas</string>
@@ -46,6 +47,7 @@
     <string name="stock_template">Stok: %1$s</string>
     <string name="payment_status_template">Status: %1$s</string>
     <string name="seller_template">Penjual: %1$s</string>
+    <string name="user_template">Pembeli: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>
     <string name="price_template">Total Harga: %1$s</string>
     <string name="detail_rekening">Detail Rekening</string>
@@ -69,6 +71,7 @@
     <string name="btn_cart">Masukkan keranjang</string>
     <string name="cart">Keranjang</string>
     <string name="history">Riwayat</string>
+    <string name="order">Pesanan</string>
     <string name="delete">Delete</string>
     <string name="checkout">Checkout</string>
     <string name="pay">Bayar</string>

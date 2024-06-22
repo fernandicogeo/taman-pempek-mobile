@@ -31,6 +31,7 @@ class HistoryUserActivity : AppCompatActivity() {
     private lateinit var preference: UserPreference
 
     private var historyReviewed: List<PaymentModel> = emptyList()
+    private var historyWaiting: List<PaymentModel> = emptyList()
     private var historySent: List<PaymentModel> = emptyList()
     private var historyFinished: List<PaymentModel> = emptyList()
     private var historyCanceled: List<PaymentModel> = emptyList()
@@ -70,6 +71,21 @@ class HistoryUserActivity : AppCompatActivity() {
                     showLoading(false)
                     historyReviewed = result.data.data
                     reviewedDataReceived()
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
+
+        paymentViewModel.getPaymentsByUserAndPaymentStatus(userId, "waiting for sent").observe(this) { result ->
+            showLoading(true)
+            when (result) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    historyWaiting = result.data.data
+                    waitingDataReceived()
                 }
                 is ResultCondition.ErrorState -> {
                 }
@@ -142,6 +158,11 @@ class HistoryUserActivity : AppCompatActivity() {
         sectionPage()
     }
 
+    private fun waitingDataReceived() {
+        sectionsPagerAdapter.historyWaiting = historyWaiting
+        sectionPage()
+    }
+
     private fun sentDataReceived() {
         sectionsPagerAdapter.historySent = historySent
         sectionPage()
@@ -207,6 +228,7 @@ class HistoryUserActivity : AppCompatActivity() {
             R.string.history3,
             R.string.history4,
             R.string.history5,
+            R.string.history6,
         )
     }
 }
