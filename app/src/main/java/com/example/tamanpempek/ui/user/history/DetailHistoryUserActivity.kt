@@ -75,6 +75,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                     binding.tvPrice.text = getString(R.string.price_template, payment.total_price.toString())
                     binding.tvAddress.text = getString(R.string.address_template, payment.address)
                     binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
+                    binding.tvDeliveryName.text = getString(R.string.delivery_template, payment.delivery_name)
 
                     when (payment.payment_status) {
                         "reviewed" -> {
@@ -82,12 +83,14 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                                 getString(R.string.payment_status_template, "Menunggu review")
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.VISIBLE
+                            binding.tvDeliveryName.visibility = View.GONE
                         }
                         "waiting for sent" -> {
                             binding.tvPaymentStatus.text =
                                 getString(R.string.payment_status_template, "Menunggu pesanan dikirim")
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.VISIBLE
+                            binding.tvDeliveryName.visibility = View.GONE
                         }
                         "sent" -> {
                             binding.tvPaymentStatus.text = getString(
@@ -96,24 +99,28 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             )
                             binding.btnFinish.visibility = View.VISIBLE
                             binding.btnCancel.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.VISIBLE
                         }
                         "finished" -> {
                             binding.tvPaymentStatus.text =
                                 getString(R.string.payment_status_template, "Pesanan selesai")
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.VISIBLE
                         }
                         "canceled" -> {
                             binding.tvPaymentStatus.text =
                                 getString(R.string.payment_status_template, "Pesanan dibatalkan pembeli")
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.GONE
                         }
                         "rejected" -> {
                             binding.tvPaymentStatus.text =
                                 getString(R.string.payment_status_template, "Pesanan ditolak")
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.GONE
                         }
                     }
 
