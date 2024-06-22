@@ -1,8 +1,10 @@
 package com.example.tamanpempek.ui.seller.order
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,10 +17,12 @@ import com.example.tamanpempek.model.PaymentModel
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.seller.order.SectionPagerOrderAdapter
+import com.example.tamanpempek.ui.adapter.user.history.SectionPagerHistoryAdapterUser
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
+import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.PaymentViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
@@ -44,11 +48,12 @@ class OrderSellerActivity : AppCompatActivity() {
     private var cartsData: List<CartModel> = emptyList()
     private var paymentsData: List<PaymentModel> = emptyList()
 
-    private var orderWaiting: List<CartModel> = emptyList()
-    private var orderSent: List<CartModel> = emptyList()
-    private var orderFinished: List<CartModel> = emptyList()
+    private var orderWaiting: MutableList<CartModel> = mutableListOf()
+    private var orderSent: MutableList<CartModel> = mutableListOf()
+    private var orderFinished: MutableList<CartModel> = mutableListOf()
 
     private val sectionsPagerAdapter = SectionPagerOrderAdapter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderSellerBinding.inflate(layoutInflater)
@@ -109,35 +114,25 @@ class OrderSellerActivity : AppCompatActivity() {
 
     private fun getPaymentsData(paymentId: Int, cart: CartModel) {
         paymentViewModel.getPaymentById(paymentId).observe(this) { result ->
-            showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
+                    showLoading(true)
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    paymentsData = paymentsData.toMutableList().apply {
-                        add(result.data.data)
-                    }
-                    paymentsData.forEach {payment ->
-                        when (payment.payment_status) {
-                            "waiting for sent" -> {
-                                orderWaiting = orderWaiting.toMutableList().apply {
-                                    add(cart)
-                                }
-                                waitingDataReceived()
-                            }
-                            "sent" -> {
-                                orderSent = orderSent.toMutableList().apply {
-                                    add(cart)
-                                }
-                                sentDataReceived()
-                            }
-                            "finished" -> {
-                                orderFinished = orderFinished.toMutableList().apply {
-                                    add(cart)
-                                }
-                                finishedDataReceived()
-                            }
+                    val payment = result.data.data
+                    when (payment.payment_status) {
+                        "waiting for sent" -> {
+                            orderWaiting.add(cart)
+                            waitingDataReceived()
+                        }
+                        "sent" -> {
+                            orderSent.add(cart)
+                            sentDataReceived()
+                        }
+                        "finished" -> {
+                            orderFinished.add(cart)
+                            finishedDataReceived()
                         }
                     }
                 }
@@ -162,6 +157,7 @@ class OrderSellerActivity : AppCompatActivity() {
         sectionsPagerAdapter.orderFinished = orderFinished
         sectionPage()
     }
+
     private fun sectionPage() {
         val viewPager: ViewPager2 = findViewById(R.id.view_pager_order)
         viewPager.adapter = sectionsPagerAdapter
@@ -173,8 +169,7 @@ class OrderSellerActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) binding.progressBar.visibility = View.VISIBLE
-        else binding.progressBar.visibility = View.GONE
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun bottomNav() {

@@ -48,6 +48,7 @@
     <string name="name_template">Nama: %1$s</string>
     <string name="stock_template">Stok: %1$s</string>
     <string name="payment_status_template">Status: %1$s</string>
+    <string name="delivery_template">Jasa pengiriman: %1$s</string>
     <string name="seller_template">Penjual: %1$s</string>
     <string name="user_template">Pembeli: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>

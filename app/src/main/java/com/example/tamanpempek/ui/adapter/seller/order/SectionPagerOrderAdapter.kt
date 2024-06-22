@@ -11,6 +11,7 @@ class SectionPagerOrderAdapter(activity: AppCompatActivity) : FragmentStateAdapt
     var orderWaiting: List<CartModel> = emptyList()
     var orderSent: List<CartModel> = emptyList()
     var orderFinished: List<CartModel> = emptyList()
+
     override fun createFragment(position: Int): Fragment {
         val fragment = OrderSellerFragment()
         fragment.arguments = Bundle().apply {

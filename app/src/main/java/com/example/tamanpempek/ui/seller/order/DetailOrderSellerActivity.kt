@@ -78,6 +78,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                     binding.tvAddress.text = getString(R.string.address_template, payment.address)
                     binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
                     binding.tvPaymentStatus.text = getString(R.string.payment_status_template, payment.payment_status)
+                    binding.tvDeliveryName.text = getString(R.string.delivery_template, payment.delivery_name)
 
                     when (payment.payment_status) {
                         "waiting for sent" -> {
@@ -87,6 +88,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.etDelivery.visibility = View.VISIBLE
                             binding.etlDelivery.visibility = View.VISIBLE
                             binding.btnSend.visibility = View.VISIBLE
+                            binding.tvDeliveryName.visibility = View.GONE
 
                             btnAction(payment.id, "sent")
                         }
@@ -99,6 +101,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.etDelivery.visibility = View.GONE
                             binding.etlDelivery.visibility = View.GONE
                             binding.btnSend.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.VISIBLE
                         }
                         "finished" -> {
                             binding.tvPaymentStatus.text =
@@ -107,6 +110,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.etDelivery.visibility = View.GONE
                             binding.etlDelivery.visibility = View.GONE
                             binding.btnSend.visibility = View.GONE
+                            binding.tvDeliveryName.visibility = View.VISIBLE
                         }
                     }
                 }
