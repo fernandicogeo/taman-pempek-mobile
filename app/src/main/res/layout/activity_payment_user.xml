@@ -69,7 +69,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_price"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_rekening"
+                android:id="@+id/rv_rekening_user"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
                 android:fontFamily="@font/gothicregular"
                 android:textColor="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_rekening" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_rekening_user" />
 
             <Button
                 android:id="@+id/btn_upload_image"

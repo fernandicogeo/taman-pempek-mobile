@@ -19,7 +19,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.CartModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.PaymentCreateRequest
-import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
+import com.example.tamanpempek.ui.adapter.user.bank.BankAdapterUser
 import com.example.tamanpempek.ui.adapter.user.cart.PaymentAdapter
 import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
@@ -83,7 +83,7 @@ class PaymentUserActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(this@PaymentUserActivity, 1)
             setHasFixedSize(true)
         }
-        binding.rvRekening.apply {
+        binding.rvRekeningUser.apply {
             layoutManager = GridLayoutManager(this@PaymentUserActivity, 1)
             setHasFixedSize(true)
         }
@@ -113,8 +113,8 @@ class PaymentUserActivity : AppCompatActivity() {
                 is ResultCondition.LoadingState -> {
                 }
                 is ResultCondition.SuccessState -> {
-                    val adapter = BankAdapter(it.data.data)
-                    binding.rvRekening.adapter = adapter
+                    val adapter = BankAdapterUser(it.data.data)
+                    binding.rvRekeningUser.adapter = adapter
                 }
                 is ResultCondition.ErrorState -> {
                 }
@@ -248,7 +248,7 @@ class PaymentUserActivity : AppCompatActivity() {
                 AlertDialog.Builder(this).apply {
                     setTitle("Pembayaran berhasil!! Silakan menunggu verifikasi dari admin.")
                     setPositiveButton("Lanjut") { _, _ ->
-                        val intent = Intent(this@PaymentUserActivity, DashboardUserActivity::class.java)
+                        val intent = Intent(this@PaymentUserActivity, HistoryUserActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
