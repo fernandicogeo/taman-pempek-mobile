@@ -23,6 +23,7 @@ import com.example.tamanpempek.ui.adapter.seller.bank.BankAdapter
 import com.example.tamanpempek.ui.adapter.user.cart.PaymentAdapter
 import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
+import com.example.tamanpempek.ui.user.profile.ProfileUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.BankViewModel
 import com.example.tamanpempek.viewmodel.CartViewModel
@@ -303,6 +304,9 @@ class PaymentUserActivity : AppCompatActivity() {
                 }
                 R.id.history_user -> {
                     startActivity(Intent(this, HistoryUserActivity::class.java))
+                }
+                R.id.profile_user -> {
+                    startActivity(Intent(this, ProfileUserActivity::class.java))
                 }
                 R.id.setting_user -> {
                     startActivity(Intent(this, SettingUserActivity::class.java))

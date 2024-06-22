@@ -1,66 +1,73 @@
-package com.example.tamanpempek.ui.user.setting
+package com.example.tamanpempek.ui.user.profile
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivitySettingUserBinding
+import com.example.tamanpempek.databinding.ActivityProfileSellerBinding
+import com.example.tamanpempek.databinding.ActivityProfileUserBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
-import com.example.tamanpempek.ui.LoginActivity
+import com.example.tamanpempek.ui.seller.profile.EditProfileSellerActivity
 import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
-import com.example.tamanpempek.ui.user.profile.ProfileUserActivity
+import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
-class SettingUserActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySettingUserBinding
+class ProfileUserActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityProfileUserBinding
     private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingUserBinding.inflate(layoutInflater)
+        binding = ActivityProfileUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
         preference = UserPreference(this)
+        val userId = preference.getLoginSession().id
 
-        showLoading(false)
-
-        binding.btnLogout.setOnClickListener {
-            AlertDialog.Builder(this).apply {
-                setTitle("Apakah anda yakin?")
-                setPositiveButton("Ya") { _, _ ->
-                    logout()
-                }
-                create()
-                show()
-            }
-        }
-        bottomNav()
-    }
-
-    private fun logout() {
-        userViewModel.logout().observe(this) { result ->
+        userViewModel.getUserById(userId).observe(this) { result ->
             showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    preference.clearLoginSession()
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    detailUser(result.data.data)
                 }
                 is ResultCondition.ErrorState -> {
                 }
             }
         }
+
+        binding.btnEditProfile.setOnClickListener {
+            val intent = Intent(this, EditProfileUserActivity::class.java)
+            startActivity(intent)
+        }
+
+        bottomNav()
+    }
+
+    private fun detailUser(user: UserModel) {
+        binding.apply {
+            tvName.text = getString(R.string.name_template, user.name)
+            tvEmail.text = getString(R.string.email_template, user.email)
+            tvPassword.text = getString(R.string.password_template, user.password)
+            tvWhatsapp.text = getString(R.string.whatsapp_template, user.whatsapp)
+            tvGender.text = getString(R.string.gender_template, user.gender)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) binding.progressBar.visibility = View.VISIBLE
+        else binding.progressBar.visibility = View.GONE
     }
 
     private fun bottomNav() {
@@ -83,11 +90,6 @@ class SettingUserActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.bottomNavigationView.setSelectedItemId(R.id.setting)
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) binding.progressBar.visibility = View.VISIBLE
-        else binding.progressBar.visibility = View.GONE
+        binding.bottomNavigationView.setSelectedItemId(R.id.profile_user)
     }
 }
