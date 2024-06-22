@@ -39,5 +39,4 @@ class HistoryAdapterUser(private val payments: List<PaymentModel>) : RecyclerVie
             }
         }
     }
-
 }

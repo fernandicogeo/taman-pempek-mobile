@@ -106,6 +106,18 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
                         }
+                        "canceled" -> {
+                            binding.tvPaymentStatus.text =
+                                getString(R.string.payment_status_template, "Pesanan dibatalkan pembeli")
+                            binding.btnFinish.visibility = View.GONE
+                            binding.btnCancel.visibility = View.GONE
+                        }
+                        "rejected" -> {
+                            binding.tvPaymentStatus.text =
+                                getString(R.string.payment_status_template, "Pesanan ditolak")
+                            binding.btnFinish.visibility = View.GONE
+                            binding.btnCancel.visibility = View.GONE
+                        }
                     }
 
                     binding.btnCancel.setOnClickListener {

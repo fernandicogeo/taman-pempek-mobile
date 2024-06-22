@@ -28,9 +28,11 @@
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
     <string name="category3">Lainnya</string>
-    <string name="history1">Menunggu</string>
+    <string name="history1">Review</string>
     <string name="history2">Dikirim</string>
     <string name="history3">Selesai</string>
+    <string name="history4">Batal</string>
+    <string name="history5">Ditolak</string>
     <string name="description">Deskripsi</string>
     <string name="price">Harga</string>
     <string name="quantity">Kuantitas</string>

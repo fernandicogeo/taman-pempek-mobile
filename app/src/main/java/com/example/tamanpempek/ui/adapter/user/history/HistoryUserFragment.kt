@@ -1,6 +1,7 @@
 package com.example.tamanpempek.ui.adapter.user.history
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,10 +32,14 @@ class HistoryUserFragment : Fragment() {
         historyReviewed = arguments?.getSerializable(ARG_CATEGORY1) as List<PaymentModel>
         historySent = arguments?.getSerializable(ARG_CATEGORY2) as List<PaymentModel>
         historyFinished = arguments?.getSerializable(ARG_CATEGORY3) as List<PaymentModel>
+        historyCanceled = arguments?.getSerializable(ARG_CATEGORY4) as List<PaymentModel>
+        historyRejected = arguments?.getSerializable(ARG_CATEGORY5) as List<PaymentModel>
 
         val historyReviewedList: List<PaymentModel> = historyReviewed.toList()
         val historySentList: List<PaymentModel> = historySent.toList()
         val historyFinishedList: List<PaymentModel> = historyFinished.toList()
+        val historyCanceledList: List<PaymentModel> = historyCanceled.toList()
+        val historyRejectedList: List<PaymentModel> = historyRejected.toList()
 
         position = arguments!!.getInt(ARG_POSITION)
 
@@ -42,6 +47,8 @@ class HistoryUserFragment : Fragment() {
             0 -> setHistory(historyReviewedList)
             1 -> setHistory(historySentList)
             2 -> setHistory(historyFinishedList)
+            3 -> setHistory(historyCanceledList)
+            4 -> setHistory(historyRejectedList)
         }
     }
 
@@ -59,9 +66,15 @@ class HistoryUserFragment : Fragment() {
         const val ARG_CATEGORY1 = "arg_historyReviewed"
         const val ARG_CATEGORY2 = "arg_historySent"
         const val ARG_CATEGORY3 = "arg_historyFinished"
+        const val ARG_CATEGORY4 = "arg_historyCanceled"
+        const val ARG_CATEGORY5 = "arg_historyRejected"
+
         var position: Int = 0
+
         var historyReviewed: List<PaymentModel> = emptyList()
         var historySent: List<PaymentModel> = emptyList()
         var historyFinished: List<PaymentModel> = emptyList()
+        var historyCanceled: List<PaymentModel> = emptyList()
+        var historyRejected: List<PaymentModel> = emptyList()
     }
 }

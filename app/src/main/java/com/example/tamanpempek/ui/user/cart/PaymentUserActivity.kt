@@ -182,20 +182,16 @@ class PaymentUserActivity : AppCompatActivity() {
         }
 
         paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, paymentStatus, deliveryStatus), this).observe(this) {
+            Log.d("ITCREATEPAYMENT", it.toString())
             when (it) {
                 is ResultCondition.LoadingState -> {
-                    showLoading(true)
                 }
                 is ResultCondition.ErrorState -> {
-                    showLoading(false)
-                    showDialog(false, "paid")
                 }
                 is ResultCondition.SuccessState -> {
-                    showLoading(false)
                     checkoutedCarts.forEach { cart ->
                         updatePaymentIdCarts(cart.id, it.data.data.id)
                     }
-                    showDialog(true, "paid")
                 }
             }
         }

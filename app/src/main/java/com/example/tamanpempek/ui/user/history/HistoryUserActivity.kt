@@ -32,6 +32,8 @@ class HistoryUserActivity : AppCompatActivity() {
     private var historyReviewed: List<PaymentModel> = emptyList()
     private var historySent: List<PaymentModel> = emptyList()
     private var historyFinished: List<PaymentModel> = emptyList()
+    private var historyCanceled: List<PaymentModel> = emptyList()
+    private var historyRejected: List<PaymentModel> = emptyList()
 
     private val sectionsPagerAdapter = SectionPagerHistoryAdapterUser(this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,6 +104,36 @@ class HistoryUserActivity : AppCompatActivity() {
                 }
             }
         }
+
+        paymentViewModel.getPaymentsByUserAndPaymentStatus(userId, "canceled").observe(this) { result ->
+            showLoading(true)
+            when (result) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    historyCanceled = result.data.data
+                    canceledDataReceived()
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
+
+        paymentViewModel.getPaymentsByUserAndPaymentStatus(userId, "rejected").observe(this) { result ->
+            showLoading(true)
+            when (result) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    historyRejected = result.data.data
+                    rejectedDataReceived()
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
     }
 
     private fun reviewedDataReceived() {
@@ -116,6 +148,16 @@ class HistoryUserActivity : AppCompatActivity() {
 
     private fun finishedDataReceived() {
         sectionsPagerAdapter.historyFinished = historyFinished
+        sectionPage()
+    }
+
+    private fun canceledDataReceived() {
+        sectionsPagerAdapter.historyCanceled = historyCanceled
+        sectionPage()
+    }
+
+    private fun rejectedDataReceived() {
+        sectionsPagerAdapter.historyRejected = historyRejected
         sectionPage()
     }
 
@@ -159,6 +201,8 @@ class HistoryUserActivity : AppCompatActivity() {
             R.string.history1,
             R.string.history2,
             R.string.history3,
+            R.string.history4,
+            R.string.history5,
         )
     }
 }
