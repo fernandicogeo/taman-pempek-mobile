@@ -150,6 +150,11 @@ interface ApiService {
         @Path("productId") productId: Int,
     ): Call<CartsResponse>
 
+    @GET("cart/{id}")
+    fun getCartById(
+        @Path("id") id: Int,
+    ): Call<CartResponse>
+
     @GET("carts/total/{isActived}/{userId}")
     fun getCartsTotalPriceByUser(
         @Path("isActived") isActived: String,
@@ -181,7 +186,7 @@ interface ApiService {
         @Part("address") address: RequestBody,
         @Part("whatsapp") whatsapp: RequestBody,
         @Part("payment_status") paymentStatus: RequestBody,
-        @Part("delivery_status") deliveryStatus: RequestBody,
+        @Part("delivery_name") deliveryName: RequestBody,
     ): PaymentResponse
 
     @GET("payments/{userId}/{paymentStatus}")
@@ -200,5 +205,13 @@ interface ApiService {
     suspend fun updatePaymentStatus(
         @Path("id") id: Int,
         @Part("payment_status") paymentStatus: RequestBody,
+    ): PaymentResponse
+
+    @Multipart
+    @PUT("payment/update/{id}")
+    suspend fun updatePaymentStatusAndDelivery(
+        @Path("id") id: Int,
+        @Part("payment_status") paymentStatus: RequestBody,
+        @Part("delivery_name") deliveryName: RequestBody,
     ): PaymentResponse
 }

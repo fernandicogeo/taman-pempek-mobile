@@ -10,5 +10,5 @@ data class PaymentCreateRequest (
     val address: String,
     val whatsapp: String,
     val payment_status: String,
-    val delivery_status: String?,
+    val delivery_name: String?,
 )

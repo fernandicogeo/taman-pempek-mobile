@@ -10,6 +10,7 @@ class CartViewModel(private val repository: CartRepository) : ViewModel() {
     fun updatePaymentIdCarts(id: Int, paymentId: Int) = repository.updatePaymentIdCarts(id, paymentId)
     fun getCartsByPaymentId(paymentId: Int) = repository.getCartsByPaymentId(paymentId)
     fun getCartsByProductId(productId: Int) = repository.getCartsByProductId(productId)
+    fun getCartById(id: Int) = repository.getCartById(id)
     fun getStatusCartByUser(isActived: String, userId: Int) = repository.getStatusCartByUser(isActived, userId)
     fun getCartsTotalPriceByUser(isActived: String, userId: Int) = repository.getCartsTotalPriceByUser(isActived, userId)
     fun deleteCart(id: Int) = repository.deleteCart(id)

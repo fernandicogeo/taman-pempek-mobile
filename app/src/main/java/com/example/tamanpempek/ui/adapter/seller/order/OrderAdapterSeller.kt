@@ -10,6 +10,7 @@ import com.example.tamanpempek.databinding.ItemOrderBinding
 import com.example.tamanpempek.helper.GetData
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.CartModel
+import com.example.tamanpempek.ui.seller.order.DetailOrderSellerActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 
 class OrderAdapterSeller(
@@ -50,13 +51,13 @@ class OrderAdapterSeller(
                         }
                     }
                 }
-//                root.setOnClickListener {
-//                    val context = itemView.context
-//                    val intent = Intent(context, DetailOrderUserActivity::class.java).apply {
-//                        putExtra("PAYMENT_ID", payment.id)
-//                    }
-//                    context.startActivity(intent)
-//                }
+                root.setOnClickListener {
+                    val context = itemView.context
+                    val intent = Intent(context, DetailOrderSellerActivity::class.java).apply {
+                        putExtra("CART_ID", cart.id)
+                    }
+                    context.startActivity(intent)
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.PaymentCreateRequest
+import com.example.tamanpempek.request.PaymentUpdateStatusAndDeliveryRequest
 import com.example.tamanpempek.request.PaymentUpdateStatusRequest
 import com.example.tamanpempek.response.CartsResponse
 import com.example.tamanpempek.response.PaymentResponse
@@ -83,7 +84,7 @@ class PaymentRepository(private val apiService: ApiService) {
                 address = requestMap["address"]!!,
                 whatsapp = requestMap["whatsapp"]!!,
                 paymentStatus = requestMap["payment_status"]!!,
-                deliveryStatus = requestMap["delivery_status"]!!
+                deliveryName = requestMap["delivery_name"]!!
             )
 
             if (response.error) {
@@ -116,6 +117,27 @@ class PaymentRepository(private val apiService: ApiService) {
         }
     }
 
+    fun updatePaymentStatusAndDelivery(id: Int, paymentUpdateStatusAndDeliveryRequest: PaymentUpdateStatusAndDeliveryRequest): LiveData<ResultCondition<PaymentResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val requestMap = paymentUpdateStatusAndDeliveryRequest(paymentUpdateStatusAndDeliveryRequest)
+
+            val response = apiService.updatePaymentStatusAndDelivery(
+                id = id,
+                paymentStatus = requestMap["payment_status"]!!,
+                deliveryName = requestMap["delivery_name"]!!
+            )
+
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     private fun createPaymentRequest(paymentCreateRequest: PaymentCreateRequest): Map<String, RequestBody> {
         val requestMap = mutableMapOf<String, RequestBody>()
         requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.user_id.toString())
@@ -124,7 +146,15 @@ class PaymentRepository(private val apiService: ApiService) {
         requestMap["address"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.address)
         requestMap["whatsapp"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.whatsapp)
         requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.payment_status)
-        requestMap["delivery_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_status.toString())
+        requestMap["delivery_name"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_name.toString())
+
+        return requestMap
+    }
+
+    private fun paymentUpdateStatusAndDeliveryRequest(paymentUpdateStatusAndDeliveryRequest: PaymentUpdateStatusAndDeliveryRequest): Map<String, RequestBody> {
+        val requestMap = mutableMapOf<String, RequestBody>()
+        requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusAndDeliveryRequest.payment_status)
+        requestMap["delivery_name"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusAndDeliveryRequest.delivery_name)
 
         return requestMap
     }
