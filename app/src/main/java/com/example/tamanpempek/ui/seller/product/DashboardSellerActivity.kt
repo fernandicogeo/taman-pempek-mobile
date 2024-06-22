@@ -14,6 +14,7 @@ import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.seller.product.SectionPagerAdapterSeller
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
+import com.example.tamanpempek.ui.seller.order.OrderSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
@@ -134,6 +135,9 @@ class DashboardSellerActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.dashboard -> {
                     startActivity(Intent(this, DashboardSellerActivity::class.java))
+                }
+                R.id.order -> {
+                    startActivity(Intent(this, OrderSellerActivity::class.java))
                 }
                 R.id.rekening -> {
                     startActivity(Intent(this, BankSellerActivity::class.java))

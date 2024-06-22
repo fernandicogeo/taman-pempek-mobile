@@ -5,8 +5,8 @@
         android:title="@string/dashboard"
         android:icon="@drawable/baseline_home_24"/>
     <item
-        android:id="@+id/pesanan"
-        android:title="@string/pesanan"
+        android:id="@+id/order"
+        android:title="@string/order"
         android:icon="@drawable/baseline_shopping_cart_24"/>
     <item
         android:id="@+id/rekening"

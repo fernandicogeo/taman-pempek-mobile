@@ -95,6 +95,30 @@ class CartRepository(private val apiService: ApiService) {
         }
     }
 
+    fun getCartsByProductId(productId: Int): LiveData<ResultCondition<CartsResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getCartsByProductId(productId).awaitResponse()
+
+            if (response.isSuccessful) {
+                val cartResponse = response.body()
+                if (cartResponse != null) {
+                    emit(ResultCondition.SuccessState(cartResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun getStatusCartByUser(isActived: String, userId: Int): LiveData<ResultCondition<CartsResponse>> = liveData(
         Dispatchers.IO) {
         emit(ResultCondition.LoadingState)

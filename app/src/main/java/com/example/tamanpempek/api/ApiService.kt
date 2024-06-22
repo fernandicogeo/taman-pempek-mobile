@@ -145,6 +145,11 @@ interface ApiService {
         @Path("paymentId") paymentId: Int,
     ): Call<CartsResponse>
 
+    @GET("carts/product/{productId}")
+    fun getCartsByProductId(
+        @Path("productId") productId: Int,
+    ): Call<CartsResponse>
+
     @GET("carts/total/{isActived}/{userId}")
     fun getCartsTotalPriceByUser(
         @Path("isActived") isActived: String,

@@ -13,6 +13,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.LoginActivity
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
+import com.example.tamanpempek.ui.seller.order.OrderSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
@@ -69,6 +70,9 @@ class SettingSellerActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.dashboard -> {
                     startActivity(Intent(this, DashboardSellerActivity::class.java))
+                }
+                R.id.order -> {
+                    startActivity(Intent(this, OrderSellerActivity::class.java))
                 }
                 R.id.rekening -> {
                     startActivity(Intent(this, BankSellerActivity::class.java))
