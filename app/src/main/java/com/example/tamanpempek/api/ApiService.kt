@@ -178,6 +178,8 @@ interface ApiService {
         @Part("delivery_id") deliveryId: RequestBody,
         @Part("total_price") totalPrice: RequestBody,
         @Part image: MultipartBody.Part,
+        @Part("address") address: RequestBody,
+        @Part("whatsapp") whatsapp: RequestBody,
         @Part("payment_status") paymentStatus: RequestBody,
         @Part("delivery_status") deliveryStatus: RequestBody,
     ): PaymentResponse

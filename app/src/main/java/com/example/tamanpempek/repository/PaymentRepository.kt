@@ -80,6 +80,8 @@ class PaymentRepository(private val apiService: ApiService) {
                 deliveryId = requestMap["delivery_id"]!!,
                 totalPrice = requestMap["total_price"]!!,
                 image = imagePart,
+                address = requestMap["address"]!!,
+                whatsapp = requestMap["whatsapp"]!!,
                 paymentStatus = requestMap["payment_status"]!!,
                 deliveryStatus = requestMap["delivery_status"]!!
             )
@@ -119,6 +121,8 @@ class PaymentRepository(private val apiService: ApiService) {
         requestMap["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.user_id.toString())
         requestMap["delivery_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_id.toString())
         requestMap["total_price"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.total_price.toString())
+        requestMap["address"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.address)
+        requestMap["whatsapp"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.whatsapp)
         requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.payment_status)
         requestMap["delivery_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_status.toString())
 

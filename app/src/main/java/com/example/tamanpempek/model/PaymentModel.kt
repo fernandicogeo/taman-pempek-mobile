@@ -24,6 +24,12 @@ data class PaymentModel(
     @SerializedName("image")
     val image: String,
 
+    @SerializedName("address")
+    val address: String,
+
+    @SerializedName("whatsapp")
+    val whatsapp: String,
+
     @SerializedName("payment_status")
     val payment_status: String, // reviewed, rejected, waiting for sent, canceled, sent, finished
 

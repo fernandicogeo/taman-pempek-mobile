@@ -138,11 +138,21 @@ class PaymentUserActivity : AppCompatActivity() {
     }
 
     private fun btnAction(userId: Int) {
+        binding.etWhatsapp.setText(preference.getLoginSession().whatsapp)
+
         binding.btnUploadImage.setOnClickListener {
             selectImage()
         }
         binding.btnPayment.setOnClickListener {
+            val address = binding.etAddress.text.toString()
+            val whatsapp = binding.etWhatsapp.text.toString()
             when {
+                address.isEmpty() -> {
+                    binding.etlAddress.error = "Masukkan alamat pengiriman"
+                }
+                whatsapp.isEmpty() -> {
+                    binding.etlWhatsapp.error = "Masukkan nomor whatsapp"
+                }
                 selectedImageUri == null -> {
                     Toast.makeText(this, "Masukkan bukti transfer", Toast.LENGTH_SHORT).show()
                 }
@@ -152,6 +162,8 @@ class PaymentUserActivity : AppCompatActivity() {
                         -1,
                         totalPrice,
                         selectedImageUri!!,
+                        address,
+                        whatsapp,
                         "reviewed",
                         "null",
                     )
@@ -176,13 +188,13 @@ class PaymentUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun createProduct(userId: Int, deliveryId: Int?, totalPrice: Int, imageUri: Uri?, paymentStatus: String, deliveryStatus: String?) {
+    private fun createProduct(userId: Int, deliveryId: Int?, totalPrice: Int, imageUri: Uri?, address: String, whatsapp: String, paymentStatus: String, deliveryStatus: String?) {
         if (imageUri == null) {
             Toast.makeText(this, "Masukkan gambar", Toast.LENGTH_SHORT).show()
             return
         }
 
-        paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, paymentStatus, deliveryStatus), this).observe(this) {
+        paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, address, whatsapp, paymentStatus, deliveryStatus), this).observe(this) {
             Log.d("ITCREATEPAYMENT", it.toString())
             when (it) {
                 is ResultCondition.LoadingState -> {

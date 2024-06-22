@@ -15,21 +15,16 @@ import com.example.tamanpempek.model.PaymentModel
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.seller.order.SectionPagerOrderAdapter
-import com.example.tamanpempek.ui.adapter.user.history.SectionPagerHistoryAdapterUser
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
 import com.example.tamanpempek.ui.seller.setting.SettingSellerActivity
-import com.example.tamanpempek.viewmodel.BankViewModel
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.PaymentViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
-import com.example.tamanpempek.viewmodel.UserViewModel
-import com.example.tamanpempek.viewmodel.factory.BankViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.CartViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.PaymentViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
-import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

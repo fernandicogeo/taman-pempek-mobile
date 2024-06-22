@@ -84,6 +84,8 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                     getCartsByPaymentId(paymentId)
 
                     binding.tvPrice.text = getString(R.string.price_template, payment.total_price.toString())
+                    binding.tvAddress.text = getString(R.string.address_template, payment.address)
+                    binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
 
                     when (payment.payment_status) {
                         "reviewed" -> {

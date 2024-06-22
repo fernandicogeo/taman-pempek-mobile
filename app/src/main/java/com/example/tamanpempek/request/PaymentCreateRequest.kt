@@ -7,6 +7,8 @@ data class PaymentCreateRequest (
     val delivery_id: Int?,
     val total_price: Int,
     val image: Uri,
+    val address: String,
+    val whatsapp: String,
     val payment_status: String,
     val delivery_status: String?,
 )

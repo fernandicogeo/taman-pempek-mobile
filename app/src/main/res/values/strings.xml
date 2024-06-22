@@ -49,7 +49,8 @@
     <string name="seller_template">Penjual: %1$s</string>
     <string name="user_template">Pembeli: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>
-    <string name="price_template">Total Harga: %1$s</string>
+    <string name="price_template">Total harga: %1$s</string>
+    <string name="address_template">Alamat pengiriman: %1$s</string>
     <string name="detail_rekening">Detail Rekening</string>
     <string name="type_template">Bank: %1$s</string>
     <string name="number_template">Nomor: %1$s</string>
@@ -78,6 +79,7 @@
     <string name="finish_transaction">Pesanan selesai</string>
     <string name="cancel">Batal</string>
     <string name="upload_image_rekening">Upload bukti transfer</string>
+    <string name="address">Alamat pengiriman</string>
     <string-array name="category_array">
         <item>Pempek</item>
         <item>Lainnya</item>

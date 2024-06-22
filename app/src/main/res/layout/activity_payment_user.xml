@@ -78,6 +78,76 @@
                 tools:listitem="@layout/item_rekening" />
 
             <TextView
+                android:id="@+id/tv_address"
+                android:alpha="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/address"
+                android:textSize="17sp"
+                android:fontFamily="@font/gothicregular"
+                android:textColor="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_rekening_user" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etl_address"
+                android:alpha="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_address"
+                    android:textColor="@color/blue"
+                    android:background="@color/yellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_whatsapp"
+                android:alpha="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/whatsapp"
+                android:textSize="17sp"
+                android:fontFamily="@font/gothicregular"
+                android:textColor="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etl_address" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etl_whatsapp"
+                android:alpha="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_whatsapp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_whatsapp"
+                    android:textColor="@color/blue"
+                    android:background="@color/yellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
                 android:id="@+id/tv_upload_image"
                 android:alpha="1"
                 android:layout_width="wrap_content"
@@ -89,7 +159,7 @@
                 android:fontFamily="@font/gothicregular"
                 android:textColor="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_rekening_user" />
+                app:layout_constraintTop_toBottomOf="@+id/etl_whatsapp" />
 
             <Button
                 android:id="@+id/btn_upload_image"
