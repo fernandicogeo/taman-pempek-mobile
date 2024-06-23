@@ -74,6 +74,7 @@
     <string name="no_cart_user">Tidak ada produk yang dimasukkan ke keranjang.</string>
     <string name="btn_cart">Masukkan keranjang</string>
     <string name="cart">Keranjang</string>
+    <string name="user">Pengguna</string>
     <string name="history">Riwayat</string>
     <string name="order">Pesanan</string>
     <string name="delete">Delete</string>

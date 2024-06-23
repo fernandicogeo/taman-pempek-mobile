@@ -15,6 +15,7 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.response.LoginResponse
+import com.example.tamanpempek.ui.admin.product.DashboardAdminActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.user.product.DashboardUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
@@ -96,6 +97,12 @@ class LoginActivity : AppCompatActivity() {
                     DashboardSellerActivity::class.java
                 )
             )
+            else if (preference.getLoginSession().role == "Admin") startActivity(
+                Intent(
+                    this,
+                    DashboardAdminActivity::class.java
+                )
+            )
         }
     }
 
@@ -105,11 +112,11 @@ class LoginActivity : AppCompatActivity() {
                 setTitle("Login berhasil!!")
                 setMessage("Selamat datang di Taman Pempek!.")
                 setPositiveButton("Lanjut") { _, _ ->
-                    if (preference.getLoginSession().role == "Pembeli") {
-                        val intent = Intent(context, DashboardUserActivity::class.java)
-                    }
-                    else if (preference.getLoginSession().role == "Penjual") {
-                        val intent = Intent(context, DashboardSellerActivity::class.java)
+                    val intent: Intent = when (preference.getLoginSession().role) {
+                        "Pembeli" -> Intent(this@LoginActivity, DashboardUserActivity::class.java)
+                        "Penjual" -> Intent(this@LoginActivity, DashboardSellerActivity::class.java)
+                        "Admin" -> Intent(this@LoginActivity, DashboardAdminActivity::class.java)
+                        else -> throw IllegalStateException("Unexpected role: ${preference.getLoginSession().role}")
                     }
 
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
