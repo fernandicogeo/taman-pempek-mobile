@@ -109,6 +109,13 @@ interface ApiService {
         @Part("stock") stock: RequestBody
     ): ProductResponse
 
+    @Multipart
+    @PUT("product/update/{id}")
+    suspend fun updateProductStock(
+        @Path("id") id: Int,
+        @Part("stock") stock: RequestBody
+    ): ProductResponse
+
     @DELETE("product/delete/{userId}")
     suspend fun deleteProduct(
         @Path("userId") userId: Int

@@ -9,6 +9,7 @@ import com.example.tamanpempek.api.ApiService
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.ProductCreateRequest
 import com.example.tamanpempek.request.ProductUpdateRequest
+import com.example.tamanpempek.request.ProductUpdateStockRequest
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import kotlinx.coroutines.Dispatchers
@@ -184,6 +185,26 @@ class ProductRepository(private val apiService: ApiService) {
         }
     }
 
+    fun updateProductStock(id: Int, productUpdateStockRequest: ProductUpdateStockRequest): LiveData<ResultCondition<ProductResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val requestMap = updateProductStockRequest(productUpdateStockRequest)
+
+            val response = apiService.updateProductStock(
+                id = id,
+                stock = requestMap["stock"]!!
+            )
+
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
     fun deleteProduct(userId: Int): LiveData<ResultCondition<ProductResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {
@@ -218,6 +239,13 @@ class ProductRepository(private val apiService: ApiService) {
         requestMap["description"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.description)
         requestMap["price"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.price.toString())
         requestMap["stock"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateRequest.stock.toString())
+
+        return requestMap
+    }
+
+    private fun updateProductStockRequest(productUpdateStockRequest: ProductUpdateStockRequest): Map<String, RequestBody> {
+        val requestMap = mutableMapOf<String, RequestBody>()
+        requestMap["stock"] = RequestBody.create("text/plain".toMediaTypeOrNull(), productUpdateStockRequest.stock.toString())
 
         return requestMap
     }

@@ -1,8 +1,10 @@
 package com.example.tamanpempek.ui.seller.order
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -13,6 +15,8 @@ import com.example.tamanpempek.databinding.ActivityDetailOrderSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.request.PaymentUpdateStatusAndDeliveryRequest
 import com.example.tamanpempek.request.PaymentUpdateStatusRequest
+import com.example.tamanpempek.request.ProductUpdateRequest
+import com.example.tamanpempek.request.ProductUpdateStockRequest
 import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
 import com.example.tamanpempek.viewmodel.PaymentViewModel
@@ -20,6 +24,7 @@ import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.CartViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.PaymentViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
 class DetailOrderSellerActivity : AppCompatActivity() {
@@ -27,9 +32,11 @@ class DetailOrderSellerActivity : AppCompatActivity() {
     private val cartViewModel: CartViewModel by viewModels { cartFactory }
     private val paymentViewModel: PaymentViewModel by viewModels { paymentFactory }
     private val userViewModel: UserViewModel by viewModels { userFactory }
+    private val productViewModel: ProductViewModel by viewModels { productFactory }
     private lateinit var cartFactory: CartViewModelFactory
     private lateinit var paymentFactory: PaymentViewModelFactory
     private lateinit var userFactory: UserViewModelFactory
+    private lateinit var productFactory: ProductViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailOrderSellerBinding.inflate(layoutInflater)
@@ -38,6 +45,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
         cartFactory = CartViewModelFactory.getInstanceCart(binding.root.context)
         paymentFactory = PaymentViewModelFactory.getInstancePayment(binding.root.context)
         userFactory = UserViewModelFactory.getInstanceAuth(binding.root.context)
+        productFactory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
 
         val cartId = intent.getIntExtra("CART_ID", -1)
 
@@ -57,10 +65,26 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                     binding.tvQuantity.text = getString(R.string.quantity_template, cart.quantity.toString())
                     binding.tvPrice.text = getString(R.string.price_template, cart.total_price.toString())
 
+                    getProductName(cart.product_id)
                     getPaymentById(cart.payment_id)
                     getUserName(cart.user_id)
                 }
                 is ResultCondition.ErrorState -> {
+                }
+            }
+        }
+    }
+
+    private fun getProductName(productId: Int) {
+        productViewModel.getProductById(productId).observe(this) { product ->
+            Log.d("GETPRODUCTNAME", product.toString())
+            when (product) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.ErrorState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    binding.tvProduct.text = getString(R.string.product_template, product.data.data.name)
                 }
             }
         }
@@ -156,15 +180,58 @@ class DetailOrderSellerActivity : AppCompatActivity() {
         paymentViewModel.updatePaymentStatusAndDelivery(id, request).observe(this) {
             when (it) {
                 is ResultCondition.LoadingState -> {
-                    showLoading(true)
                 }
                 is ResultCondition.ErrorState -> {
-                    showLoading(false)
-                    showDialog(false)
                 }
                 is ResultCondition.SuccessState -> {
-                    showLoading(false)
-                    showDialog(true)
+                    val cartId = intent.getIntExtra("CART_ID", -1)
+                    updateProductStock(cartId)
+                }
+            }
+        }
+    }
+
+    private fun updateProductStock(cartId: Int) {
+        cartViewModel.getCartById(cartId).observe(this) { result ->
+            when (result) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    val cart = result.data.data
+                    val productId = cart.product_id
+                    val quantity = cart.quantity
+
+                    productViewModel.getProductById(productId).observe(this) { product ->
+                        when (product) {
+                            is ResultCondition.LoadingState -> {
+                            }
+                            is ResultCondition.ErrorState -> {
+                            }
+                            is ResultCondition.SuccessState -> {
+                                val stock = product.data.data.stock - quantity
+                                val request = ProductUpdateStockRequest(stock)
+
+                                productViewModel.updateProductStock(productId, request).observe(this) { result ->
+                                    when (result) {
+                                        is ResultCondition.LoadingState -> {
+                                            showLoading(true)
+                                        }
+                                        is ResultCondition.ErrorState -> {
+                                            showLoading(false)
+                                            showDialog(false)
+                                        }
+                                        is ResultCondition.SuccessState -> {
+                                            showLoading(false)
+                                            showDialog(true)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                is ResultCondition.ErrorState -> {
+                    showDialog(false)
                 }
             }
         }

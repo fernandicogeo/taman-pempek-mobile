@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tamanpempek.databinding.FragmentOrderSellerBinding
 import com.example.tamanpempek.model.CartModel
+import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.UserViewModel
+import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
 class OrderSellerFragment : Fragment() {
@@ -19,6 +21,8 @@ class OrderSellerFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userViewModel: UserViewModel
     private lateinit var userFactory: UserViewModelFactory
+    private lateinit var productViewModel: ProductViewModel
+    private lateinit var productFactory: ProductViewModelFactory
     private lateinit var adapter: OrderAdapterSeller
     private lateinit var recyclerView: RecyclerView
 
@@ -36,6 +40,8 @@ class OrderSellerFragment : Fragment() {
 
         userFactory = UserViewModelFactory.getInstanceAuth(requireContext())
         userViewModel = ViewModelProvider(this, userFactory).get(UserViewModel::class.java)
+        productFactory = ProductViewModelFactory.getInstanceProduct(requireContext())
+        productViewModel = ViewModelProvider(this, productFactory).get(ProductViewModel::class.java)
 
         val orderWaiting = arguments?.getSerializable(ARG_CATEGORY2) as? List<CartModel> ?: emptyList()
         val orderSent = arguments?.getSerializable(ARG_CATEGORY3) as? List<CartModel> ?: emptyList()
@@ -59,7 +65,7 @@ class OrderSellerFragment : Fragment() {
             else -> emptyList()
         }
 
-        adapter = OrderAdapterSeller(data, userViewModel, viewLifecycleOwner)
+        adapter = OrderAdapterSeller(data, userViewModel, productViewModel, viewLifecycleOwner)
         recyclerView.adapter = adapter
     }
 

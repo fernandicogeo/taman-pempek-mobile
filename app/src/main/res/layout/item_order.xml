@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gothicbold"
-                    android:text="@string/order"
+                    android:text="@string/product_template"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="17sp"

@@ -50,6 +50,7 @@
     <string name="detail_history">Detail Riwayat</string>
     <string name="detail_payment">Detail Transaksi</string>
     <string name="detail_order">Detail Pesanan</string>
+    <string name="product_template">Produk: %1$s</string>
     <string name="name_template">Nama: %1$s</string>
     <string name="stock_template">Stok: %1$s</string>
     <string name="payment_status_template">Status: %1$s</string>
