@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.admin.profile.ProfileAdminActivity">
+    tools:context=".ui.admin.profile.DetailBankAdminActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_profile"
-                    android:text="@string/profil"
+                    android:text="@string/detail_rekening"
                     android:fontFamily="@font/gothicextrabold"
                     android:textColor="@color/blue"
                     android:textSize="37sp"
@@ -56,8 +56,8 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_email"
-                    android:text="@string/email_template"
+                    android:id="@+id/tv_type"
+                    android:text="@string/type_template"
                     android:fontFamily="@font/gothicbold"
                     android:textColor="@color/blue"
                     android:textSize="20sp"
@@ -69,57 +69,15 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_password"
-                    android:text="@string/password_template"
+                    android:id="@+id/tv_number"
+                    android:text="@string/number_template"
                     android:fontFamily="@font/gothicbold"
                     android:textColor="@color/blue"
                     android:textSize="15sp"
                     android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_email"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_whatsapp"
-                    android:text="@string/whatsapp_template"
-                    android:fontFamily="@font/gothicbold"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_password"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_gender"
-                    android:text="@string/gender_template"
-                    android:fontFamily="@font/gothicbold"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_whatsapp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_rekening"
-                    android:text="@string/payment_rekening"
-                    android:fontFamily="@font/gothicbold"
-                    android:textColor="@color/blue"
-                    android:textSize="20sp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_price"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_type"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -130,43 +88,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_add_rekening"
-                        android:alpha="1"
-                        android:layout_width="128dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/gothicsemibold"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/blue"
-                        android:text="@string/add_rekening"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_main_title" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_rekening_admin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_rekening"
-                    tools:listitem="@layout/item_rekening_admin" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_edit_profile"
+                        android:id="@+id/btn_edit_bank"
                         android:alpha="1"
                         android:layout_width="128dp"
                         android:layout_height="64dp"
@@ -177,7 +99,23 @@
                         android:textSize="16sp"
                         android:textColor="@color/white"
                         android:backgroundTint="@color/blue"
-                        android:text="@string/edit_profile"
+                        android:text="@string/edit_rekening"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_main_title" />
+                    <Button
+                        android:id="@+id/btn_delete_bank"
+                        android:alpha="1"
+                        android:layout_width="128dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/gothicsemibold"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/delete_rekening"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_main_title" />
@@ -185,7 +123,7 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -196,17 +134,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/admin_bottom_menu"
-        app:itemBackground="@color/blue"
-        app:itemRippleColor="@color/yellow"
-        app:itemActiveIndicatorStyle="@color/yellow"
-        app:itemTextAppearanceActive="@color/yellow"
-        app:itemTextAppearanceInactive="@color/yellow"
-        app:itemIconTint="@drawable/bottom_item_selector"
-        app:itemTextColor="@drawable/bottom_item_selector"/>
+
 </RelativeLayout>
