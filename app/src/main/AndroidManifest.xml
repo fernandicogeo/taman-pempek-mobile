@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TamanPempek"
         tools:targetApi="31">
         <activity
+            android:name=".ui.admin.setting.SettingAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.admin.profile.EditProfileAdminActivity"
             android:exported="false" />
         <activity

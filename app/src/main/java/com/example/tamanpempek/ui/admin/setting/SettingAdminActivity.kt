@@ -1,67 +1,66 @@
-package com.example.tamanpempek.ui.admin.profile
+package com.example.tamanpempek.ui.admin.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.R
-import com.example.tamanpempek.databinding.ActivityProfileAdminBinding
-import com.example.tamanpempek.databinding.ActivityProfileUserBinding
+import com.example.tamanpempek.databinding.ActivitySettingAdminBinding
+import com.example.tamanpempek.databinding.ActivitySettingUserBinding
 import com.example.tamanpempek.helper.ResultCondition
-import com.example.tamanpempek.model.UserModel
 import com.example.tamanpempek.preference.UserPreference
+import com.example.tamanpempek.ui.LoginActivity
 import com.example.tamanpempek.ui.admin.payment.PaymentAdminActivity
 import com.example.tamanpempek.ui.admin.product.DashboardAdminActivity
-import com.example.tamanpempek.ui.admin.setting.SettingAdminActivity
+import com.example.tamanpempek.ui.admin.profile.ProfileAdminActivity
 import com.example.tamanpempek.ui.admin.users.UserAdminActivity
-import com.example.tamanpempek.ui.user.profile.EditProfileUserActivity
 import com.example.tamanpempek.viewmodel.UserViewModel
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
-class ProfileAdminActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileAdminBinding
+class SettingAdminActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingAdminBinding
     private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileAdminBinding.inflate(layoutInflater)
+        binding = ActivitySettingAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
         preference = UserPreference(this)
-        val userId = preference.getLoginSession().id
 
-        userViewModel.getUserById(userId).observe(this) { result ->
+        showLoading(false)
+
+        binding.btnLogout.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("Apakah anda yakin?")
+                setPositiveButton("Ya") { _, _ ->
+                    logout()
+                }
+                create()
+                show()
+            }
+        }
+        bottomNav()
+    }
+
+    private fun logout() {
+        userViewModel.logout().observe(this) { result ->
             showLoading(true)
             when (result) {
                 is ResultCondition.LoadingState -> {
                 }
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
-                    detailUser(result.data.data)
+                    preference.clearLoginSession()
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
                 is ResultCondition.ErrorState -> {
                 }
             }
-        }
-
-        binding.btnEditProfile.setOnClickListener {
-            val intent = Intent(this, EditProfileAdminActivity::class.java)
-            startActivity(intent)
-        }
-
-        bottomNav()
-    }
-
-    private fun detailUser(user: UserModel) {
-        binding.apply {
-            tvName.text = getString(R.string.name_template, user.name)
-            tvEmail.text = getString(R.string.email_template, user.email)
-            tvPassword.text = getString(R.string.password_template, user.password)
-            tvWhatsapp.text = getString(R.string.whatsapp_template, user.whatsapp)
-            tvGender.text = getString(R.string.gender_template, user.gender)
         }
     }
 
@@ -90,6 +89,6 @@ class ProfileAdminActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.bottomNavigationView.setSelectedItemId(R.id.profile_admin)
+        binding.bottomNavigationView.setSelectedItemId(R.id.setting_admin)
     }
 }
