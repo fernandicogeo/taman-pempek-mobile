@@ -72,6 +72,8 @@ class DetailPaymentAdminActivity : AppCompatActivity() {
 
                     getCartsByPaymentId(paymentId)
 
+                    getUserName(payment.user_id)
+
                     binding.tvPrice.text = getString(R.string.price_template, payment.total_price.toString())
                     binding.tvAddress.text = getString(R.string.address_template, payment.address)
                     binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
@@ -150,6 +152,22 @@ class DetailPaymentAdminActivity : AppCompatActivity() {
                         }
                     }
                 }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
+    }
+
+    private fun getUserName(userId: Int) {
+        userViewModel.getUserById(userId).observe(this) {
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+
+                is ResultCondition.SuccessState -> {
+                    binding.tvUser.text = getString(R.string.user_template, it.data.data.name)
+                }
+
                 is ResultCondition.ErrorState -> {
                 }
             }
