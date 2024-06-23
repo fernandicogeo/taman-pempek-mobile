@@ -206,6 +206,11 @@ interface ApiService {
         @Path("paymentStatus") paymentStatus: String,
     ): Call<PaymentsResponse>
 
+    @GET("payments/status/{paymentStatus}")
+    fun getPaymentsByPaymentStatus(
+        @Path("paymentStatus") paymentStatus: String,
+    ): Call<PaymentsResponse>
+
     @GET("payment/{id}")
     fun getPaymentById(
         @Path("id") id: Int,
