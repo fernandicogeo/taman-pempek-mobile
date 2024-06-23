@@ -14,6 +14,7 @@ import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.ui.adapter.admin.product.SectionPagerAdapterAdmin
 import com.example.tamanpempek.ui.admin.payment.PaymentAdminActivity
+import com.example.tamanpempek.ui.admin.profile.ProfileAdminActivity
 import com.example.tamanpempek.ui.admin.users.UserAdminActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
@@ -135,6 +136,9 @@ class DashboardAdminActivity : AppCompatActivity() {
                 }
                 R.id.payment_admin -> {
                     startActivity(Intent(this, PaymentAdminActivity::class.java))
+                }
+                R.id.profile_admin -> {
+                    startActivity(Intent(this, ProfileAdminActivity::class.java))
                 }
             }
         }
