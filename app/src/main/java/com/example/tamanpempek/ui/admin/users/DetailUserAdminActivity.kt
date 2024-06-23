@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityDetailUserAdminBinding
 import com.example.tamanpempek.databinding.ActivityProfileUserBinding
@@ -13,10 +14,13 @@ import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.PaymentModel
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.model.UserModel
+import com.example.tamanpempek.ui.adapter.user.bank.BankAdapterUser
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.user.profile.EditProfileUserActivity
+import com.example.tamanpempek.viewmodel.BankViewModel
 import com.example.tamanpempek.viewmodel.ProductViewModel
 import com.example.tamanpempek.viewmodel.UserViewModel
+import com.example.tamanpempek.viewmodel.factory.BankViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
@@ -26,6 +30,8 @@ class DetailUserAdminActivity : AppCompatActivity() {
     private lateinit var userFactory: UserViewModelFactory
     private val productViewModel: ProductViewModel by viewModels { productFactory }
     private lateinit var productFactory: ProductViewModelFactory
+    private val bankViewModel: BankViewModel by viewModels { bankFactory }
+    private lateinit var bankFactory: BankViewModelFactory
     private var userProducts: List<ProductModel> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +40,13 @@ class DetailUserAdminActivity : AppCompatActivity() {
 
         userFactory = UserViewModelFactory.getInstanceAuth(binding.root.context)
         productFactory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
+        bankFactory = BankViewModelFactory.getInstanceBank(binding.root.context)
 
         val userId = intent.getIntExtra("USER_ID", -1)
 
         getProducts(userId)
+        getBanks(userId)
+        setupRecyclerView()
 
         userViewModel.getUserById(userId).observe(this) { result ->
             showLoading(true)
@@ -75,6 +84,13 @@ class DetailUserAdminActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupRecyclerView() {
+        binding.rvRekeningUser.apply {
+            layoutManager = GridLayoutManager(this@DetailUserAdminActivity, 1)
+            setHasFixedSize(true)
+        }
+    }
+
     private fun detailUser(user: UserModel) {
         binding.apply {
             tvName.text = getString(R.string.name_template, user.name)
@@ -83,6 +99,10 @@ class DetailUserAdminActivity : AppCompatActivity() {
             tvWhatsapp.text = getString(R.string.whatsapp_template, user.whatsapp)
             tvGender.text = getString(R.string.gender_template, user.gender)
             tvRole.text = getString(R.string.role_template, user.role)
+        }
+        if (user.role == "Pembeli") {
+            binding.tvRekening.visibility = View.GONE
+            binding.rvRekeningUser.visibility = View.GONE
         }
     }
 
@@ -126,6 +146,21 @@ class DetailUserAdminActivity : AppCompatActivity() {
                 is ResultCondition.SuccessState -> {
                     showLoading(false)
                     showDialog(true)
+                }
+            }
+        }
+    }
+
+    private fun getBanks(userId: Int) {
+        bankViewModel.getBanksByUser(userId).observe(this) {
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    val adapter = BankAdapterUser(it.data.data)
+                    binding.rvRekeningUser.adapter = adapter
+                }
+                is ResultCondition.ErrorState -> {
                 }
             }
         }
