@@ -24,7 +24,10 @@
     <string name="edit_rekening">Edit Rekening</string>
     <string name="delete_rekening">Hapus Rekening</string>
     <string name="edit_profile">Edit Profil</string>
-    <string name="payment">Pembayaran</string>
+    <string name="delete_profile">Hapus Profil</string>
+    <string name="edit_user">Edit Pengguna</string>
+    <string name="delete_user">Hapus Pengguna</string>
+    <string name="payment">Transaksi</string>
     <string name="product">Produk</string>
     <string name="category1">All Menu</string>
     <string name="category2">Pempek</string>
@@ -43,6 +46,7 @@
     <string name="upload_image">Upload Image</string>
     <string name="category">Kategori</string>
     <string name="detail_product">Detail Produk</string>
+    <string name="detail_user">Detail Pengguna</string>
     <string name="detail_history">Detail Riwayat</string>
     <string name="detail_order">Detail Pesanan</string>
     <string name="name_template">Nama: %1$s</string>
@@ -61,6 +65,7 @@
     <string name="password_template">Password: %1$s</string>
     <string name="whatsapp_template">Whatsapp: %1$s</string>
     <string name="gender_template">Gender: %1$s</string>
+    <string name="role_template">Mendaftar sebagai: %1$s</string>
     <string name="quantity_template">Jumlah: %1$s</string>
     <string name="success_upload_image">Berhasil memilih gambar</string>
     <string name="bank">Bank</string>
@@ -85,6 +90,8 @@
     <string name="upload_image_rekening">Upload bukti transfer</string>
     <string name="address">Alamat pengiriman</string>
     <string name="send">Kirim Pesanan</string>
+    <string name="seller">Penjual</string>
+    <string name="buyer">Pembeli</string>
     <string-array name="category_array">
         <item>Pempek</item>
         <item>Lainnya</item>

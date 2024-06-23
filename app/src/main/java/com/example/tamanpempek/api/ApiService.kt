@@ -12,6 +12,7 @@ import com.example.tamanpempek.response.PaymentsResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
 import com.example.tamanpempek.response.UserResponse
+import com.example.tamanpempek.response.UsersResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -43,11 +44,21 @@ interface ApiService {
         @Path("userId") userId: Int,
     ): Call<UserResponse>
 
+    @GET("users/role/{role}")
+    fun getUsersByRole(
+        @Path("role") role: String,
+    ): Call<UsersResponse>
+
     @PUT("user/update/{id}")
     @Headers("Content-Type: application/json")
     suspend fun updateUser(
         @Path("id") id: Int,
         @Body requestBody: RequestBody): UserResponse
+
+    @DELETE("user/delete/{userId}")
+    suspend fun deleteUser(
+        @Path("userId") userId: Int
+    ): UserResponse
 
     @GET("products")
     suspend fun getProducts(): ProductsResponse

@@ -10,6 +10,7 @@ import com.example.tamanpempek.request.RegisterRequest
 import com.example.tamanpempek.request.UserUpdateRequest
 import com.example.tamanpempek.response.LoginResponse
 import com.example.tamanpempek.response.LogoutResponse
+import com.example.tamanpempek.response.UsersResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaType
@@ -91,6 +92,30 @@ class UserRepository(private val apiService: ApiService) {
         }
     }
 
+    fun getUsersByRole(role: String): LiveData<ResultCondition<UsersResponse>> = liveData(
+        Dispatchers.IO) {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response =
+                apiService.getUsersByRole(role).awaitResponse()
+
+            if (response.isSuccessful) {
+                val userResponse = response.body()
+                if (userResponse != null) {
+                    emit(ResultCondition.SuccessState(userResponse))
+                } else {
+                    emit(ResultCondition.ErrorState("Empty response body"))
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMsg = errorBody ?: "Unknown error occurred"
+                emit(ResultCondition.ErrorState(errorMsg))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message ?: "Error occurred"))
+        }
+    }
+
     fun updateUser(id: Int, userName: String, userEmail: String, userPassword: String, userWhatsapp: String, userGender: String): LiveData<ResultCondition<UserResponse>> = liveData {
         emit(ResultCondition.LoadingState)
         try {
@@ -99,6 +124,20 @@ class UserRepository(private val apiService: ApiService) {
             val requestBody = json.toRequestBody("application/json".toMediaType())
 
             val response = apiService.updateUser(id, requestBody)
+            if (response.error) {
+                emit(ResultCondition.ErrorState(response.msg))
+            } else {
+                emit(ResultCondition.SuccessState(response))
+            }
+        } catch (e: Exception) {
+            emit(ResultCondition.ErrorState(e.message.toString()))
+        }
+    }
+
+    fun deleteUser(userId: Int): LiveData<ResultCondition<UserResponse>> = liveData {
+        emit(ResultCondition.LoadingState)
+        try {
+            val response = apiService.deleteUser(userId)
             if (response.error) {
                 emit(ResultCondition.ErrorState(response.msg))
             } else {
