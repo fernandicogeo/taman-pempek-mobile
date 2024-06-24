@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
@@ -18,6 +19,7 @@ import com.example.tamanpempek.helper.GetData
 import com.example.tamanpempek.helper.ResultCondition
 import com.example.tamanpempek.model.ProductModel
 import com.example.tamanpempek.preference.UserPreference
+import com.example.tamanpempek.ui.adapter.user.cart.CartAdapter
 import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.user.cart.CartUserActivity
 import com.example.tamanpempek.viewmodel.CartViewModel
@@ -110,19 +112,36 @@ class DetailProductUserActivity : AppCompatActivity() {
         showLoading(false)
 
         binding.btnCart.setOnClickListener {
-            val quantity = binding.etQuantity.text.toString()
-            when {
-                quantity.isEmpty() -> {
-                    binding.etlQuantity.error = "Masukkan kuantitas produk"
-                }
-                quantity.toInt() > product.stock -> {
-                    binding.etlQuantity.error = "Jumlah kuantitas melebihi stok produk"
-                }
-                else -> {
-                    val totalPrice = quantity.toInt() * product.price
-                    createCart(userId, productId, quantity.toInt(), totalPrice)
+            cartViewModel.getStatusCartByUser("checkouted", userId).observe(this) {
+                showLoading(true)
+                when (it) {
+                    is ResultCondition.LoadingState -> {
+                    }
+                    is ResultCondition.SuccessState -> {
+                        showLoading(false)
+                        if (it.data.data != null && it.data.data.isNotEmpty()) {
+                            Toast.makeText(this, "Saat ini ada produk yang masih belum dibayar. Selesaikan transaksi terlebih dahulu", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val quantity = binding.etQuantity.text.toString()
+                            when {
+                                quantity.isEmpty() -> {
+                                    binding.etlQuantity.error = "Masukkan kuantitas produk"
+                                }
+                                quantity.toInt() > product.stock -> {
+                                    binding.etlQuantity.error = "Jumlah kuantitas melebihi stok produk"
+                                }
+                                else -> {
+                                    val totalPrice = quantity.toInt() * product.price
+                                    createCart(userId, productId, quantity.toInt(), totalPrice)
+                                }
+                            }
+                        }
+                    }
+                    is ResultCondition.ErrorState -> {
+                    }
                 }
             }
+
         }
     }
     private fun createCart(userId: Int, productId: Int, quantity: Int, totalPrice: Int) {

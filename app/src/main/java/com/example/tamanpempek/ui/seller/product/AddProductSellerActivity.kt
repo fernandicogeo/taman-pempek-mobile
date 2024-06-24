@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityAddProductSellerBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.helper.getFileSize
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.ProductCreateRequest
 import com.example.tamanpempek.viewmodel.ProductViewModel
@@ -110,6 +111,12 @@ class AddProductSellerActivity : AppCompatActivity() {
     private fun createProduct(userId: Int, categoryId: Int, name: String, imageUri: Uri?, description: String, price: Int, stock: Int) {
         if (imageUri == null) {
             Toast.makeText(this, "Masukkan gambar", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val fileSize = getFileSize(imageUri, this)
+        if (fileSize > 500 * 1024) {
+            Toast.makeText(this, "Ukuran gambar tidak boleh lebih dari 500KB", Toast.LENGTH_SHORT).show()
             return
         }
 

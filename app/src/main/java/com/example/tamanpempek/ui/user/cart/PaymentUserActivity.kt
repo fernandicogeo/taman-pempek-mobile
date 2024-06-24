@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityPaymentUserBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.helper.getFileSize
 import com.example.tamanpempek.model.CartModel
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.PaymentCreateRequest
@@ -167,9 +168,6 @@ class PaymentUserActivity : AppCompatActivity() {
                         "reviewed",
                         "null",
                     )
-                    checkoutedCarts.forEach { cart ->
-                        updateStatusCarts(cart.id, "paid")
-                    }
                 }
             }
         }
@@ -194,16 +192,26 @@ class PaymentUserActivity : AppCompatActivity() {
             return
         }
 
+        val fileSize = getFileSize(imageUri, this)
+        if (fileSize > 500 * 1024) {
+            Toast.makeText(this, "Ukuran gambar tidak boleh lebih dari 500KB", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, address, whatsapp, paymentStatus, deliveryStatus), this).observe(this) {
             Log.d("ITCREATEPAYMENT", it.toString())
             when (it) {
                 is ResultCondition.LoadingState -> {
+                    showLoading(true)
                 }
                 is ResultCondition.ErrorState -> {
+                    showLoading(false)
                 }
                 is ResultCondition.SuccessState -> {
+                    showLoading(false)
                     checkoutedCarts.forEach { cart ->
                         updatePaymentIdCarts(cart.id, it.data.data.id)
+                        updateStatusCarts(cart.id, "paid")
                     }
                 }
             }
@@ -214,14 +222,11 @@ class PaymentUserActivity : AppCompatActivity() {
         cartViewModel.updateStatusCart(cartId, isActived).observe(this) {
             when (it) {
                 is ResultCondition.LoadingState -> {
-                    showLoading(true)
                 }
                 is ResultCondition.ErrorState -> {
-                    showLoading(false)
                     showDialog(false, isActived)
                 }
                 is ResultCondition.SuccessState -> {
-                    showLoading(false)
                     showDialog(true, isActived)
                 }
             }
