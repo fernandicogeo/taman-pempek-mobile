@@ -83,7 +83,7 @@ class SettingUserActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.bottomNavigationView.setSelectedItemId(R.id.setting)
+        binding.bottomNavigationView.setSelectedItemId(R.id.setting_user)
     }
 
     private fun showLoading(isLoading: Boolean) {

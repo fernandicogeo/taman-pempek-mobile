@@ -12,12 +12,14 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityEditProductAdminBinding
 import com.example.tamanpempek.helper.ResultCondition
+import com.example.tamanpempek.helper.getFileSize
 import com.example.tamanpempek.preference.UserPreference
 import com.example.tamanpempek.request.ProductUpdateRequest
 import com.example.tamanpempek.response.ProductResponse
@@ -110,6 +112,14 @@ class EditProductAdminActivity : AppCompatActivity() {
     }
 
     private fun updateProduct(id: Int, userId: Int, categoryId: Int, name: String, imageUri: Uri?, description: String, price: Int, stock: Int) {
+        if (imageUri != null) {
+            val fileSize = getFileSize(imageUri, this)
+            if (fileSize > 500 * 1024) {
+                Toast.makeText(this, "Ukuran gambar tidak boleh lebih dari 500KB", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
         val imageUriToUse = imageUri?.toString()
 
         val request = ProductUpdateRequest(userId, categoryId, name, imageUriToUse?.let { Uri.parse(it) }, description, price, stock)
