@@ -16,7 +16,7 @@
             android:id="@+id/title"
             android:text="@string/edit_user"
             android:fontFamily="@font/gothicextrabold"
-            android:textColor="@color/blue"
+            android:textColor="@color/orange"
             android:textSize="37sp"
             android:layout_marginTop="70dp"
             android:shadowColor="@color/black"

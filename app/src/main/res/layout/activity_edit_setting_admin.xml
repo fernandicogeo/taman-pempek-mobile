@@ -17,7 +17,7 @@
             android:id="@+id/tv_register_title"
             android:text="@string/edit_setting"
             android:fontFamily="@font/gothicextrabold"
-            android:textColor="@color/blue"
+            android:textColor="@color/orange"
             android:textSize="37sp"
             android:layout_marginTop="70dp"
             android:shadowColor="@color/black"
