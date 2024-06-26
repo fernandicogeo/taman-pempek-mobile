@@ -76,6 +76,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                     binding.tvAddress.text = getString(R.string.address_template, payment.address)
                     binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
                     binding.tvDeliveryName.text = getString(R.string.delivery_template, payment.delivery_name)
+                    binding.tvResi.text = getString(R.string.resi_template, payment.resi)
 
                     when (payment.payment_status) {
                         "reviewed" -> {
@@ -84,6 +85,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.VISIBLE
                             binding.tvDeliveryName.visibility = View.GONE
+                            binding.tvResi.visibility = View.GONE
                         }
                         "waiting for sent" -> {
                             binding.tvPaymentStatus.text =
@@ -91,6 +93,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.VISIBLE
                             binding.tvDeliveryName.visibility = View.GONE
+                            binding.tvResi.visibility = View.GONE
                         }
                         "sent" -> {
                             binding.tvPaymentStatus.text = getString(
@@ -100,6 +103,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.VISIBLE
                             binding.btnCancel.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.VISIBLE
+                            binding.tvResi.visibility = View.VISIBLE
                         }
                         "finished" -> {
                             binding.tvPaymentStatus.text =
@@ -107,6 +111,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.VISIBLE
+                            binding.tvResi.visibility = View.VISIBLE
                         }
                         "canceled" -> {
                             binding.tvPaymentStatus.text =
@@ -114,6 +119,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.GONE
+                            binding.tvResi.visibility = View.GONE
                         }
                         "rejected" -> {
                             binding.tvPaymentStatus.text =
@@ -121,6 +127,7 @@ class DetailHistoryUserActivity : AppCompatActivity() {
                             binding.btnFinish.visibility = View.GONE
                             binding.btnCancel.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.GONE
+                            binding.tvResi.visibility = View.GONE
                         }
                     }
 

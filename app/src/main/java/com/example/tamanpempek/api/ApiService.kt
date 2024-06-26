@@ -206,6 +206,7 @@ interface ApiService {
         @Part("whatsapp") whatsapp: RequestBody,
         @Part("payment_status") paymentStatus: RequestBody,
         @Part("delivery_name") deliveryName: RequestBody,
+        @Part("resi") resi: RequestBody,
     ): PaymentResponse
 
     @GET("payments/{userId}/{paymentStatus}")
@@ -237,6 +238,7 @@ interface ApiService {
         @Path("id") id: Int,
         @Part("payment_status") paymentStatus: RequestBody,
         @Part("delivery_name") deliveryName: RequestBody,
+        @Part("resi") resi: RequestBody,
     ): PaymentResponse
 
     @GET("setting/{id}")

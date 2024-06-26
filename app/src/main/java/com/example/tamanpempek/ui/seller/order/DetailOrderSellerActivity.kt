@@ -103,6 +103,7 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                     binding.tvWhatsapp.text = getString(R.string.whatsapp_template, payment.whatsapp)
                     binding.tvPaymentStatus.text = getString(R.string.payment_status_template, payment.payment_status)
                     binding.tvDeliveryName.text = getString(R.string.delivery_template, payment.delivery_name)
+                    binding.tvResi.text = getString(R.string.resi_template, payment.resi)
 
                     when (payment.payment_status) {
                         "waiting for sent" -> {
@@ -111,8 +112,12 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.tvDelivery.visibility = View.VISIBLE
                             binding.etDelivery.visibility = View.VISIBLE
                             binding.etlDelivery.visibility = View.VISIBLE
+                            binding.tvResiNumber.visibility = View.VISIBLE
+                            binding.etResiNumber.visibility = View.VISIBLE
+                            binding.etlResiNumber.visibility = View.VISIBLE
                             binding.btnSend.visibility = View.VISIBLE
                             binding.tvDeliveryName.visibility = View.GONE
+                            binding.tvResi.visibility = View.GONE
 
                             btnAction(payment.id, "sent")
                         }
@@ -124,8 +129,12 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.tvDelivery.visibility = View.GONE
                             binding.etDelivery.visibility = View.GONE
                             binding.etlDelivery.visibility = View.GONE
+                            binding.tvResiNumber.visibility = View.GONE
+                            binding.etResiNumber.visibility = View.GONE
+                            binding.etlResiNumber.visibility = View.GONE
                             binding.btnSend.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.VISIBLE
+                            binding.tvResi.visibility = View.VISIBLE
                         }
                         "finished" -> {
                             binding.tvPaymentStatus.text =
@@ -133,8 +142,12 @@ class DetailOrderSellerActivity : AppCompatActivity() {
                             binding.tvDelivery.visibility = View.GONE
                             binding.etDelivery.visibility = View.GONE
                             binding.etlDelivery.visibility = View.GONE
+                            binding.tvResiNumber.visibility = View.GONE
+                            binding.etResiNumber.visibility = View.GONE
+                            binding.etlResiNumber.visibility = View.GONE
                             binding.btnSend.visibility = View.GONE
                             binding.tvDeliveryName.visibility = View.VISIBLE
+                            binding.tvResi.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -163,19 +176,23 @@ class DetailOrderSellerActivity : AppCompatActivity() {
     private fun btnAction(paymentId: Int, paymentStatus: String) {
         binding.btnSend.setOnClickListener {
             val delivery = binding.etDelivery.text.toString()
+            val resi = binding.etResiNumber.text.toString()
             when {
                 delivery.isEmpty() -> {
                     binding.etlDelivery.error = "Masukkan jasa pengiriman"
                 }
+                resi.isEmpty() -> {
+                    binding.etlDelivery.error = "Masukkan nomor resi"
+                }
                 else -> {
-                    updatePayment(paymentId, paymentStatus, delivery)
+                    updatePayment(paymentId, paymentStatus, delivery, resi)
                 }
             }
         }
     }
 
-    private fun updatePayment(id: Int, paymentStatus: String, deliveryName: String) {
-        val request = PaymentUpdateStatusAndDeliveryRequest(paymentStatus, deliveryName)
+    private fun updatePayment(id: Int, paymentStatus: String, deliveryName: String, resi: String) {
+        val request = PaymentUpdateStatusAndDeliveryRequest(paymentStatus, deliveryName, resi)
 
         paymentViewModel.updatePaymentStatusAndDelivery(id, request).observe(this) {
             when (it) {

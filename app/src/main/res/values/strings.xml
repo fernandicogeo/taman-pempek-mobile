@@ -7,6 +7,7 @@
     <string name="password">Password</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="delivery">Jasa pengiriman</string>
+    <string name="resi">Nomor resi</string>
     <string name="gender">Jenis Kelamin</string>
     <string name="role">Mendaftar sebagai</string>
     <string name="link_register">Belum memiliki akun? Register disini.</string>
@@ -55,6 +56,7 @@
     <string name="stock_template">Stok: %1$s</string>
     <string name="payment_status_template">Status: %1$s</string>
     <string name="delivery_template">Jasa pengiriman: %1$s</string>
+    <string name="resi_template">Nomor resi: %1$s</string>
     <string name="seller_template">Penjual: %1$s</string>
     <string name="user_template">Pembeli: %1$s</string>
     <string name="category_template">Kategori: %1$s</string>

@@ -108,7 +108,8 @@ class PaymentRepository(private val apiService: ApiService) {
                 address = requestMap["address"]!!,
                 whatsapp = requestMap["whatsapp"]!!,
                 paymentStatus = requestMap["payment_status"]!!,
-                deliveryName = requestMap["delivery_name"]!!
+                deliveryName = requestMap["delivery_name"]!!,
+                resi = requestMap["resi"]!!
             )
 
             if (response.error) {
@@ -149,7 +150,8 @@ class PaymentRepository(private val apiService: ApiService) {
             val response = apiService.updatePaymentStatusAndDelivery(
                 id = id,
                 paymentStatus = requestMap["payment_status"]!!,
-                deliveryName = requestMap["delivery_name"]!!
+                deliveryName = requestMap["delivery_name"]!!,
+                resi = requestMap["resi"]!!
             )
 
             if (response.error) {
@@ -171,6 +173,7 @@ class PaymentRepository(private val apiService: ApiService) {
         requestMap["whatsapp"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.whatsapp)
         requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.payment_status)
         requestMap["delivery_name"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.delivery_name.toString())
+        requestMap["resi"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentCreateRequest.resi.toString())
 
         return requestMap
     }
@@ -179,6 +182,7 @@ class PaymentRepository(private val apiService: ApiService) {
         val requestMap = mutableMapOf<String, RequestBody>()
         requestMap["payment_status"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusAndDeliveryRequest.payment_status)
         requestMap["delivery_name"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusAndDeliveryRequest.delivery_name)
+        requestMap["resi"] = RequestBody.create("text/plain".toMediaTypeOrNull(), paymentUpdateStatusAndDeliveryRequest.resi)
 
         return requestMap
     }

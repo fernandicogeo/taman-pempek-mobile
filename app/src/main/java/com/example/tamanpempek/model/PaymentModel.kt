@@ -35,4 +35,7 @@ data class PaymentModel(
 
     @SerializedName("delivery_name")
     val delivery_name: String?,
+
+    @SerializedName("resi")
+    val resi: String?,
 ) : Parcelable

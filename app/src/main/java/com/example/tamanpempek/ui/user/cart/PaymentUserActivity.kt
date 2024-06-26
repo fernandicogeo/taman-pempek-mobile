@@ -167,6 +167,7 @@ class PaymentUserActivity : AppCompatActivity() {
                         whatsapp,
                         "reviewed",
                         "null",
+                        "null",
                     )
                 }
             }
@@ -186,7 +187,7 @@ class PaymentUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun createProduct(userId: Int, deliveryId: Int?, totalPrice: Int, imageUri: Uri?, address: String, whatsapp: String, paymentStatus: String, deliveryStatus: String?) {
+    private fun createProduct(userId: Int, deliveryId: Int?, totalPrice: Int, imageUri: Uri?, address: String, whatsapp: String, paymentStatus: String, deliveryStatus: String?, resi: String?) {
         if (imageUri == null) {
             Toast.makeText(this, "Masukkan gambar", Toast.LENGTH_SHORT).show()
             return
@@ -198,7 +199,7 @@ class PaymentUserActivity : AppCompatActivity() {
             return
         }
 
-        paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, address, whatsapp, paymentStatus, deliveryStatus), this).observe(this) {
+        paymentViewModel.createPayment(PaymentCreateRequest(userId, deliveryId, totalPrice, imageUri, address, whatsapp, paymentStatus, deliveryStatus, resi), this).observe(this) {
             Log.d("ITCREATEPAYMENT", it.toString())
             when (it) {
                 is ResultCondition.LoadingState -> {
