@@ -6,6 +6,7 @@ import com.example.tamanpempek.repository.BankRepository
 import com.example.tamanpempek.repository.CartRepository
 import com.example.tamanpempek.repository.PaymentRepository
 import com.example.tamanpempek.repository.ProductRepository
+import com.example.tamanpempek.repository.SettingRepository
 import com.example.tamanpempek.repository.UserRepository
 
 object Injection {
@@ -32,5 +33,10 @@ object Injection {
     fun provideRepositoryPayment(context: Context): PaymentRepository {
         val api = ApiConfig.getApiService()
         return PaymentRepository.getInstance(api)
+    }
+
+    fun provideRepositorySetting(context: Context): SettingRepository {
+        val api = ApiConfig.getApiService()
+        return SettingRepository.getInstance(api)
     }
 }

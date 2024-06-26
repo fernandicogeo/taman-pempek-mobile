@@ -73,7 +73,9 @@
     <string name="bank">Bank</string>
     <string name="number">Nomor Rekening</string>
     <string name="logout">Logout</string>
+    <string name="edit_setting">Edit Setting</string>
     <string name="tentang_kami">Tentang kami</string>
+    <string name="kontak_kami">Kontak kami</string>
     <string name="dummy">Taman Pempek adalah marketplace khusus pempek khas Palembang yang menawarkan berbagai pilihan pempek yang lezat. Temukan cita rasa otentik dengan beragam jenis pempek berkualitas hanya di Taman Pempek.</string>
     <string name="no_product">Tidak ada produk, silakan tambah produk.</string>
     <string name="no_product_user">Belum ada produk.</string>

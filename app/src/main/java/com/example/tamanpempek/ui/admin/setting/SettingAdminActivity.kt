@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivitySettingAdminBinding
 import com.example.tamanpempek.databinding.ActivitySettingUserBinding
@@ -16,13 +17,17 @@ import com.example.tamanpempek.ui.admin.payment.PaymentAdminActivity
 import com.example.tamanpempek.ui.admin.product.DashboardAdminActivity
 import com.example.tamanpempek.ui.admin.profile.ProfileAdminActivity
 import com.example.tamanpempek.ui.admin.users.UserAdminActivity
+import com.example.tamanpempek.viewmodel.SettingViewModel
 import com.example.tamanpempek.viewmodel.UserViewModel
+import com.example.tamanpempek.viewmodel.factory.SettingViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 
 class SettingAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingAdminBinding
     private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
+    private val settingViewModel: SettingViewModel by viewModels { settingFactory }
+    private lateinit var settingFactory: SettingViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +35,16 @@ class SettingAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
+        settingFactory = SettingViewModelFactory.getInstanceSetting(binding.root.context)
         preference = UserPreference(this)
 
+        getSetting()
+
         showLoading(false)
+
+        binding.btnEditSetting.setOnClickListener {
+            startActivity(Intent(this, EditSettingAdminActivity::class.java))
+        }
 
         binding.btnLogout.setOnClickListener {
             AlertDialog.Builder(this).apply {
@@ -45,6 +57,29 @@ class SettingAdminActivity : AppCompatActivity() {
             }
         }
         bottomNav()
+    }
+
+    private fun getSetting() {
+        settingViewModel.getSettingById(1).observe(this) {
+            showLoading(true)
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    binding.apply {
+                        tvAbout.text = it.data.data.description
+                        tvContact.text = it.data.data.contact
+
+                        Glide.with(this@SettingAdminActivity)
+                            .load(it.data.data.image)
+                            .into(headerImage)
+                    }
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
     }
 
     private fun logout() {

@@ -11,6 +11,7 @@ import com.example.tamanpempek.response.PaymentResponse
 import com.example.tamanpempek.response.PaymentsResponse
 import com.example.tamanpempek.response.ProductResponse
 import com.example.tamanpempek.response.ProductsResponse
+import com.example.tamanpempek.response.SettingResponse
 import com.example.tamanpempek.response.UserResponse
 import com.example.tamanpempek.response.UsersResponse
 import okhttp3.MultipartBody
@@ -237,4 +238,18 @@ interface ApiService {
         @Part("payment_status") paymentStatus: RequestBody,
         @Part("delivery_name") deliveryName: RequestBody,
     ): PaymentResponse
+
+    @GET("setting/{id}")
+    fun getSettings(
+        @Path("id") id: Int,
+    ): Call<SettingResponse>
+
+    @Multipart
+    @PUT("setting/update/{id}")
+    suspend fun updateSetting(
+        @Path("id") id: Int,
+        @Part image: MultipartBody.Part?,
+        @Part("description") description: RequestBody,
+        @Part("contact") contact: RequestBody,
+    ): SettingResponse
 }
