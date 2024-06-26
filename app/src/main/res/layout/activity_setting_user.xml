@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     tools:context=".ui.user.setting.SettingUserActivity">
 
     <ScrollView
@@ -44,8 +44,7 @@
                     android:id="@+id/card_tentang_kami"
                     app:cardElevation="10dp"
                     app:cardCornerRadius="20dp"
-                    android:layout_marginTop="70dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/grey"
                     app:cardMaxElevation="12dp"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
@@ -72,6 +71,58 @@
                             />
 
                         <TextView
+                            android:id="@+id/tv_about"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dummy"
+                            android:layout_gravity="top|center_horizontal"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:paddingStart="15dp"
+                            android:lineHeight="20dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingEnd="15dp"
+                            android:fontFamily="@font/gothicregular"
+                            android:textSize="13sp"
+                            />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/card_kontak_kami"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/grey"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_settings"
+                    >
+                    <LinearLayout
+                        android:id="@+id/content_kontak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_kontak_kami"
+                            android:text="@string/kontak_kami"
+                            android:fontFamily="@font/gothicbold"
+                            android:layout_gravity="top|center_horizontal"
+                            android:paddingTop="20dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_contact"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dummy"

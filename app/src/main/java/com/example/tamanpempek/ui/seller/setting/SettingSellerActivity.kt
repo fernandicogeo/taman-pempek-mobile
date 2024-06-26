@@ -16,7 +16,9 @@ import com.example.tamanpempek.ui.seller.bank.BankSellerActivity
 import com.example.tamanpempek.ui.seller.order.OrderSellerActivity
 import com.example.tamanpempek.ui.seller.product.DashboardSellerActivity
 import com.example.tamanpempek.ui.seller.profile.ProfileSellerActivity
+import com.example.tamanpempek.viewmodel.SettingViewModel
 import com.example.tamanpempek.viewmodel.UserViewModel
+import com.example.tamanpempek.viewmodel.factory.SettingViewModelFactory
 import com.example.tamanpempek.viewmodel.factory.UserViewModelFactory
 import com.google.android.gms.location.LocationServices
 
@@ -24,6 +26,8 @@ class SettingSellerActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingSellerBinding
     private val userViewModel: UserViewModel by viewModels { factory }
     private lateinit var factory: UserViewModelFactory
+    private val settingViewModel: SettingViewModel by viewModels { settingFactory }
+    private lateinit var settingFactory: SettingViewModelFactory
     private lateinit var preference: UserPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +35,10 @@ class SettingSellerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         factory = UserViewModelFactory.getInstanceAuth(binding.root.context)
+        settingFactory = SettingViewModelFactory.getInstanceSetting(binding.root.context)
         preference = UserPreference(this)
 
-        showLoading(false)
+        getSetting()
 
         binding.btnLogout.setOnClickListener {
             AlertDialog.Builder(this).apply {
@@ -46,6 +51,25 @@ class SettingSellerActivity : AppCompatActivity() {
             }
         }
         bottomNav()
+    }
+
+    private fun getSetting() {
+        settingViewModel.getSettingById(1).observe(this) {
+            showLoading(true)
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    binding.apply {
+                        tvAbout.text = it.data.data.description
+                        tvContact.text = it.data.data.contact
+                    }
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
     }
 
     private fun logout() {

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.tamanpempek.R
 import com.example.tamanpempek.databinding.ActivityDashboardUserBinding
 import com.example.tamanpempek.helper.ResultCondition
@@ -18,7 +19,9 @@ import com.example.tamanpempek.ui.user.history.HistoryUserActivity
 import com.example.tamanpempek.ui.user.profile.ProfileUserActivity
 import com.example.tamanpempek.ui.user.setting.SettingUserActivity
 import com.example.tamanpempek.viewmodel.ProductViewModel
+import com.example.tamanpempek.viewmodel.SettingViewModel
 import com.example.tamanpempek.viewmodel.factory.ProductViewModelFactory
+import com.example.tamanpempek.viewmodel.factory.SettingViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,6 +29,8 @@ class DashboardUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardUserBinding
     private val productViewModel: ProductViewModel by viewModels { factory }
     private lateinit var factory: ProductViewModelFactory
+    private val settingViewModel: SettingViewModel by viewModels { settingFactory }
+    private lateinit var settingFactory: SettingViewModelFactory
     private lateinit var preference: UserPreference
     private val sectionsPagerAdapter = SectionPagerAdapterUser(this)
 
@@ -35,6 +40,7 @@ class DashboardUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         factory = ProductViewModelFactory.getInstanceProduct(binding.root.context)
+        settingFactory = SettingViewModelFactory.getInstanceSetting(binding.root.context)
         preference = UserPreference(this)
 
         setupRecyclerView()
@@ -44,6 +50,24 @@ class DashboardUserActivity : AppCompatActivity() {
         var category1: List<ProductModel>
         var category2: List<ProductModel>
         var category3: List<ProductModel>
+
+        settingViewModel.getSettingById(1).observe(this) {
+            showLoading(true)
+            when (it) {
+                is ResultCondition.LoadingState -> {
+                }
+                is ResultCondition.SuccessState -> {
+                    showLoading(false)
+                    binding.apply {
+                        Glide.with(this@DashboardUserActivity)
+                            .load(it.data.data.image)
+                            .into(headerImage)
+                    }
+                }
+                is ResultCondition.ErrorState -> {
+                }
+            }
+        }
 
         productViewModel.getProducts().observe(this) { result ->
             showLoading(true)
